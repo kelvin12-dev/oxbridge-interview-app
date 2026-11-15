@@ -1,0 +1,37 @@
+workflows:
+  ios-ipa-workflow:
+    name: GoodNotes Pro - iOS IPA Build
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      xcode: latest
+    scripts:
+      - name: Bundle web app into native iOS Resources & Expo bundle
+        script: python3 scripts/bundle_html.py
+      - name: Install XcodeGen if missing
+        script: command -v xcodegen >/dev/null 2>&1 || brew install xcodegen
+      - name: Generate Xcode project and build Release .app
+        script: |
+          cd ios-native
+          xcodegen generate
+          xcodebuild \
+            -project GoodNotesPro.xcodeproj \
+            -scheme GoodNotesPro \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
+            clean build
+      - name: Ad-hoc sign & package GoodNotesPro.ipa
+        script: |
+          mkdir -p ipa_out/Payload
+          APP_PATH=$(find ios-native/build/Build/Products/Release-iphoneos -name "*.app" -maxdepth 1 | head -n 1)
+          cp -R "$APP_PATH" ipa_out/Payload/
+          codesign --force --deep --sign - "ipa_out/Payload/$(basename "$APP_PATH")" || true
+          cd ipa_out
+          zip -r ../GoodNotesPro.ipa Payload
+    artifacts:
+      - GoodNotesPro.ipa

@@ -1,0 +1,7 @@
+node_modules/
+.expo/
+ios-native/build/
+ios-native/GoodNotesPro.xcodeproj/
+ipa_out/
+*.ipa
+.DS_Store

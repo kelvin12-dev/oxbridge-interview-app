@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "GoodNotes Pro",
+    "slug": "goodnotes-pro",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#114bc6"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.goodnotespro.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "UIRequiresFullScreen": false,
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "GoodNotes Pro records lecture and meeting audio synced to your handwriting.",
+        "NSCameraUsageDescription": "GoodNotes Pro uses the camera to scan pages and insert photos.",
+        "NSPhotoLibraryUsageDescription": "GoodNotes Pro accesses photos to insert images into notebooks."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#114bc6"
+      },
+      "package": "com.goodnotespro.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}

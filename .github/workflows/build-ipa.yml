@@ -1,0 +1,67 @@
+name: Build GoodNotes Pro iOS IPA (No Mac Required)
+
+on:
+  push:
+    branches: [ main, master, goodnotes-ipa ]
+  workflow_dispatch:
+
+jobs:
+  build-ios-ipa:
+    name: Build GoodNotesPro.ipa on Cloud Mac
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bundle HTML & presets into native iOS Resources
+        run: python3 scripts/bundle_html.py
+
+      - name: Ensure XcodeGen is installed
+        run: command -v xcodegen >/dev/null 2>&1 || brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios-native
+        run: xcodegen generate
+
+      - name: Build Release .app (Universal iPhone + iPad, zero-signing build)
+        working-directory: ios-native
+        run: |
+          xcodebuild \
+            -project GoodNotesPro.xcodeproj \
+            -scheme GoodNotesPro \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
+            clean build
+
+      - name: Package .app into GoodNotesPro.ipa
+        run: |
+          mkdir -p ipa_out/Payload
+          APP_PATH=$(find ios-native/build/Build/Products/Release-iphoneos -name "*.app" -maxdepth 1 | head -n 1)
+          if [ -z "$APP_PATH" ]; then
+            echo "Error: Could not find built .app bundle"
+            exit 1
+          fi
+          cp -R "$APP_PATH" ipa_out/Payload/
+          codesign --force --deep --sign - "ipa_out/Payload/$(basename "$APP_PATH")" || true
+          cd ipa_out
+          zip -r ../GoodNotesPro.ipa Payload
+          cd ..
+          ls -lh GoodNotesPro.ipa
+
+      - name: Upload downloadable .ipa artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GoodNotesPro-ipa
+          path: GoodNotesPro.ipa
+          retention-days: 30
