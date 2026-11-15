@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Oxbridge AI" />
+  <title>Oxbridge Maths Interviewer AI</title>
+
+  <!-- KaTeX for crisp LaTeX math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg-app: #0d1321;
+      --bg-panel: #141c2f;
+      --bg-elevated: #1c2640;
+      --bg-hover: #253254;
+      --border: rgba(148, 163, 184, 0.18);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #38bdf8;
+      --accent-strong: #0284c7;
+      --oxford: #1d4ed8;
+      --gold: #f59e0b;
+      --green: #10b981;
+      --red: #ef4444;
+      --purple: #a855f7;
+      --paper-bg: #fcfcfa;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background: var(--bg-app);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      overscroll-behavior: none;
+    }
+
+    /* Prevent iPad Safari text-selection loupe while drawing */
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100dvh;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+      padding-left: var(--safe-left);
+      padding-right: var(--safe-right);
+    }
+
+    /* TOP BAR */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      min-height: 52px;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+
+    .topbar-left, .topbar-center, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--bg-hover); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: #fff;
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fff;
+    }
+    .btn-green {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+    .btn-icon {
+      padding: 7px 10px;
+      font-size: 15px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    /* Auto-Vision Status Pill */
+    .vision-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .vision-pill.active {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: rgba(16, 185, 129, 0.12);
+      color: #6ee7b7;
+    }
+    .vision-pill.analyzing {
+      border-color: rgba(56, 189, 248, 0.7);
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+    }
+    .vision-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+    .vision-pill.active .vision-dot {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .vision-pill.analyzing .vision-dot {
+      background: #38bdf8;
+      animation: pulse 0.9s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    .timer-pill {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    /* QUESTION BANNER */
+    .question-banner {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      flex-shrink: 0;
+      z-index: 20;
+      transition: all 0.2s ease;
+    }
+
+    .question-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .tag-num { background: rgba(37, 99, 235, 0.25); color: #93c5fd; border-color: rgba(59,130,246,0.4); }
+    .tag-topic { background: rgba(168, 85, 247, 0.18); color: #d8b4fe; border-color: rgba(168,85,247,0.35); }
+    .tag-diff-warmup { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+    .tag-diff-standard { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+    .tag-diff-challenging { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+
+    .question-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .question-body {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-primary);
+      max-height: 185px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .question-banner.collapsed .question-body {
+      display: none;
+    }
+    .question-title-inline {
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    /* MAIN WORKSPACE */
+    .workspace {
+      position: relative;
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .canvas-stage {
+      position: relative;
+      flex: 1;
+      height: 100%;
+      background: var(--paper-bg);
+      overflow: hidden;
+    }
+
+    #draw-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    /* PAGE TABS TOP-LEFT ON CANVAS */
+    .page-tabs {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 5px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      z-index: 15;
+    }
+
+    .page-tab {
+      border: none;
+      background: transparent;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .page-tab.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    /* FLOATING AI HINT POP-UP */
+    .hint-popup {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: min(410px, calc(100% - 28px));
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+      z-index: 25;
+      color: var(--text-primary);
+      transform: translateY(-16px) scale(0.97);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      max-height: calc(100% - 95px);
+      overflow-y: auto;
+    }
+
+    .hint-popup.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hint-popup.status-minor_error { border-color: rgba(245, 158, 11, 0.7); }
+    .hint-popup.status-stuck { border-color: rgba(168, 85, 247, 0.7); }
+    .hint-popup.status-solved { border-color: rgba(16, 185, 129, 0.75); }
+
+    .hint-popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .hint-status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+    }
+    .status-minor_error .hint-status-badge { background: rgba(245, 158, 11, 0.22); color: #fcd34d; }
+    .status-stuck .hint-status-badge { background: rgba(168, 85, 247, 0.22); color: #e9d5ff; }
+    .status-solved .hint-status-badge { background: rgba(16, 185, 129, 0.22); color: #6ee7b7; }
+
+    .hint-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #f8fafc;
+    }
+
+    .hint-saw {
+      font-size: 12px;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--accent);
+      padding: 6px 9px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+
+    .hint-message {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
+    .hint-question {
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #bae6fd;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 8px 10px;
+      border-radius: 9px;
+      margin-bottom: 10px;
+    }
+
+    .hint-popup-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* FLOATING BOTTOM TOOL DOCK (APPLE PENCIL TOOLBAR) */
+    .tool-dock {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow);
+      z-index: 18;
+      max-width: calc(100% - 20px);
+      overflow-x: auto;
+    }
+
+    .dock-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding-right: 8px;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .dock-group:last-child {
+      padding-right: 0;
+      border-right: none;
+    }
+
+    .tool-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .tool-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    .tool-btn.active {
+      background: rgba(56, 189, 248, 0.24);
+      border-color: rgba(56, 189, 248, 0.7);
+      color: #fff;
+    }
+    .tool-btn-wide {
+      width: auto;
+      padding: 0 10px;
+      font-size: 12px;
+      gap: 5px;
+    }
+
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      transition: transform 0.12s ease;
+      flex-shrink: 0;
+    }
+    .color-dot.active {
+      transform: scale(1.18);
+      border-color: #fff;
+      box-shadow: 0 0 0 2px #38bdf8;
+    }
+
+    .size-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .size-btn.active {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+    .size-circle {
+      border-radius: 50%;
+      background: #e2e8f0;
+    }
+
+    /* RIGHT CHAT / TUTOR DRAWER */
+    .chat-drawer {
+      width: 380px;
+      max-width: 100%;
+      height: 100%;
+      background: var(--bg-panel);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 26;
+      transition: width 0.2s ease;
+    }
+    .chat-drawer.hidden {
+      display: none;
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg {
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      max-width: 94%;
+    }
+    .msg-ai {
+      align-self: flex-start;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    .msg-user {
+      align-self: flex-end;
+      background: #1d4ed8;
+      color: #fff;
+    }
+    .msg-meta {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .quick-prompts {
+      display: flex;
+      gap: 6px;
+      padding: 8px 12px 4px;
+      overflow-x: auto;
+      border-top: 1px solid var(--border);
+    }
+    .chip {
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .chip:hover { color: #fff; border-color: var(--accent); }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--bg-panel);
+    }
+    .chat-input {
+      flex: 1;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: #fff;
+      font-size: 13.5px;
+      outline: none;
+    }
+    .chat-input:focus { border-color: var(--accent); }
+
+    /* LEFT PROBLEM BROWSER SIDEBAR (OVERLAY) */
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 40;
+      display: none;
+    }
+    .sidebar-backdrop.open { display: block; }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(400px, 90vw);
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform 0.24s ease;
+      display: flex;
+      flex-direction: column;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+    }
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-filters {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .input-field, .select-field {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 10px;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .question-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .q-item {
+      padding: 10px 11px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      margin-bottom: 5px;
+      transition: background 0.12s ease;
+    }
+    .q-item:hover { background: var(--bg-elevated); }
+    .q-item.active {
+      background: rgba(37, 99, 235, 0.22);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .q-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
+    .q-item-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* MODALS (SETTINGS & OFFICIAL SOLUTION) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 60;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal-card {
+      width: min(680px, 100%);
+      max-height: 86dvh;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .modal-body {
+      padding: 16px 18px;
+      overflow-y: auto;
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .form-help {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 4px 0;
+      margin: 0.45em 0 !important;
+    }
+
+    @media (max-width: 900px) {
+      .brand-title span.hide-sm { display: none; }
+      .chat-drawer {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: min(380px, 94vw);
+        z-index: 45;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- TOP BAR -->
+    <header class="topbar no-select">
+      <div class="topbar-left">
+        <button class="btn" id="btn-open-browser" title="Browse all 85 questions">
+          ☰ <span class="hide-sm">Problems</span> <span class="brand-badge" id="progress-badge">1 / 85</span>
+        </button>
+        <div class="brand-title">
+          🎓 <span class="hide-sm">Oxbridge AI Interviewer</span>
+        </div>
+      </div>
+
+      <div class="topbar-center">
+        <button class="btn btn-icon" id="btn-prev" title="Previous problem">◀</button>
+        <button class="btn btn-icon" id="btn-next" title="Next problem">▶</button>
+        <button class="vision-pill active" id="btn-auto-vision" title="Toggle automatic Gemini Vision canvas watching">
+          <span class="vision-dot"></span>
+          <span id="vision-status-text">👁️ Auto-See: ON</span>
+        </button>
+      </div>
+
+      <div class="topbar-right">
+        <div class="timer-pill" id="btn-timer" title="Tap to start/pause interview timer (Double-tap to reset)">
+          ⏱️ <span id="timer-display">00:00</span>
+        </div>
+        <button class="btn" id="btn-toggle-chat" title="Open AI Interviewer Chat">💬 Tutor Chat</button>
+        <button class="btn btn-icon" id="btn-settings" title="Gemini API & iPad Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- QUESTION BANNER -->
+    <section class="question-banner" id="question-banner">
+      <div class="question-header-row">
+        <div class="question-meta" id="question-meta"></div>
+        <div class="question-actions no-select">
+          <button class="btn btn-primary" id="btn-analyze-now">✨ Check My Working</button>
+          <button class="btn btn-gold" id="btn-next-hint">💡 Hint (<span id="hint-counter">0/3</span>)</button>
+          <button class="btn" id="btn-solution">📖 Solution</button>
+          <button class="btn" id="btn-mark-solved">✓ Mark Solved</button>
+          <button class="btn btn-icon" id="btn-collapse-q" title="Collapse/Expand question">▾</button>
+        </div>
+      </div>
+      <div class="question-body" id="question-body"></div>
+    </section>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="workspace">
+      <!-- IPAD HANDWRITING CANVAS -->
+      <div class="canvas-stage no-select" id="canvas-stage">
+        <canvas id="draw-canvas"></canvas>
+
+        <!-- Multi-page scratchpad tabs -->
+        <div class="page-tabs" id="page-tabs"></div>
+
+        <!-- Floating Automatic Gemini Vision Hint Pop-up -->
+        <div class="hint-popup" id="hint-popup" role="dialog" aria-live="polite">
+          <div class="hint-popup-header">
+            <span class="hint-status-badge" id="popup-badge">AI Tutor Hint</span>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-icon" id="btn-popup-speak" style="padding:3px 8px; font-size:12px;" title="Read aloud">🔊</button>
+              <button class="btn btn-icon" id="btn-popup-close" style="padding:3px 8px; font-size:12px;" title="Dismiss">✕</button>
+            </div>
+          </div>
+          <div class="hint-title" id="popup-title"></div>
+          <div class="hint-saw" id="popup-saw" style="display:none;"></div>
+          <div class="hint-message" id="popup-message"></div>
+          <div class="hint-question" id="popup-question" style="display:none;"></div>
+          <div class="hint-popup-actions">
+            <button class="btn btn-primary" id="btn-popup-reply" style="font-size:12px; padding:5px 10px;">💬 Ask Tutor</button>
+            <button class="btn btn-gold" id="btn-popup-more" style="font-size:12px; padding:5px 10px;">💡 Next Hint</button>
+            <button class="btn" id="btn-popup-connect" style="font-size:12px; padding:5px 10px; display:none;">🔑 Set Gemini Key</button>
+          </div>
+        </div>
+
+        <!-- Bottom Floating iPad Tool Dock -->
+        <div class="tool-dock" id="tool-dock">
+          <div class="dock-group">
+            <button class="tool-btn active" data-tool="pen" title="Pen">✏️</button>
+            <button class="tool-btn" data-tool="highlighter" title="Highlighter">🖍️</button>
+            <button class="tool-btn" data-tool="eraser" title="Eraser (removes stroke)">🧹</button>
+          </div>
+
+          <div class="dock-group" id="color-picker">
+            <div class="color-dot active" data-color="#0f172a" style="background:#0f172a;" title="Ink Black"></div>
+            <div class="color-dot" data-color="#1d4ed8" style="background:#1d4ed8;" title="Oxford Blue"></div>
+            <div class="color-dot" data-color="#dc2626" style="background:#dc2626;" title="Crimson"></div>
+            <div class="color-dot" data-color="#059669" style="background:#059669;" title="Emerald"></div>
+            <div class="color-dot" data-color="#7c3aed" style="background:#7c3aed;" title="Purple"></div>
+          </div>
+
+          <div class="dock-group" id="size-picker">
+            <button class="size-btn" data-size="2" title="Fine"><div class="size-circle" style="width:4px;height:4px;"></div></button>
+            <button class="size-btn active" data-size="3.5" title="Medium"><div class="size-circle" style="width:7px;height:7px;"></div></button>
+            <button class="size-btn" data-size="6.5" title="Bold"><div class="size-circle" style="width:11px;height:11px;"></div></button>
+          </div>
+
+          <div class="dock-group">
+            <button class="tool-btn" id="btn-undo" title="Undo">↩️</button>
+            <button class="tool-btn" id="btn-redo" title="Redo">↪️</button>
+            <button class="tool-btn" id="btn-clear" title="Clear current page">🗑️</button>
+          </div>
+
+          <div class="dock-group">
+            <button class="tool-btn tool-btn-wide" id="btn-paper" title="Cycle paper background">⊞ Grid</button>
+            <button class="tool-btn tool-btn-wide" id="btn-axes" title="Toggle x-y coordinate axes for curve sketching">📈 Axes</button>
+            <button class="tool-btn tool-btn-wide" id="btn-pencil-only" title="Palm Rejection: Only Apple Pencil draws when ON">✏️ Pencil Only: OFF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SLIDE-IN AI TUTOR CHAT DRAWER -->
+      <aside class="chat-drawer hidden" id="chat-drawer">
+        <div class="drawer-header">
+          <span>🎓 Oxbridge AI Interviewer</span>
+          <button class="btn btn-icon" id="btn-close-chat">✕</button>
+        </div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="quick-prompts no-select">
+          <button class="chip" data-prompt="Look at my iPad working right now. Am I on the right track?">Am I on track?</button>
+          <button class="chip" data-prompt="Check my algebra and signs carefully on my canvas.">Check my algebra</button>
+          <button class="chip" data-prompt="I'm stuck — give me a small Socratic nudge without spoiling the answer.">Small nudge</button>
+          <button class="chip" data-prompt="Ask me a harder Oxbridge follow-up question based on this problem.">Follow-up Q</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Ask tutor (auto-sends your canvas)..." />
+          <button class="btn btn-primary" id="btn-send-chat">Send</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- QUESTION BROWSER SIDEBAR -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="drawer-header">
+      <span>📚 Oxbridge Archive (85 Problems)</span>
+      <button class="btn btn-icon" id="btn-close-sidebar">✕</button>
+    </div>
+    <div class="sidebar-filters">
+      <input type="search" class="input-field" id="search-input" placeholder="Search topic, college, equation..." />
+      <div style="display:flex; gap:6px;">
+        <select class="select-field" id="filter-section"></select>
+        <select class="select-field" id="filter-topic"></select>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <select class="select-field" id="filter-status">
+          <option value="all">All Statuses</option>
+          <option value="unsolved">Unsolved Only</option>
+          <option value="solved">Solved Only</option>
+          <option value="sketch">Graph Sketching Only</option>
+        </select>
+      </div>
+    </div>
+    <div class="question-list" id="question-list"></div>
+  </aside>
+
+  <!-- OFFICIAL SOLUTION MODAL -->
+  <div class="modal-backdrop" id="solution-modal">
+    <div class="modal-card">
+      <div class="drawer-header">
+        <span id="solution-modal-title">📖 Official Worked Solution</span>
+        <button class="btn btn-icon" id="btn-close-solution">✕</button>
+      </div>
+      <div class="modal-body" id="solution-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal-card" style="width:min(520px, 100%);">
+      <div class="drawer-header">
+        <span>⚙️ Gemini Vision & iPad Settings</span>
+        <button class="btn btn-icon" id="btn-close-settings">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="input-api-key">Google Gemini API Key</label>
+          <input type="password" class="input-field" id="input-api-key" placeholder="AIzaSy..." autocomplete="off" />
+          <div class="form-help">
+            Stored only on your iPad/browser (<code>localStorage</code>). Get a free key at Google AI Studio (<code>aistudio.google.com</code>).
+            Without a key, the app uses built-in 3-stage Socratic hints.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-model">Gemini Vision Model</label>
+          <select class="select-field" id="select-model">
+            <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended — Fastest live vision)</option>
+            <option value="gemini-2.5-pro">gemini-2.5-pro (Deepest mathematical rigor)</option>
+            <option value="gemini-2.0-flash">gemini-2.0-flash (Fallback fast vision)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-delay">Auto-See Pause Delay (after you stop writing)</label>
+          <select class="select-field" id="select-delay">
+            <option value="2000">2.0 seconds (Very responsive)</option>
+            <option value="3500">3.5 seconds (Balanced — Default)</option>
+            <option value="5000">5.0 seconds (Relaxed)</option>
+            <option value="8000">8.0 seconds (Deep thinking mode)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-elevated); padding:10px 12px; border-radius:10px;">
+          <div>
+            <div style="font-size:13px; font-weight:700;">🔊 Auto-Speak Hints Aloud</div>
+            <div style="font-size:11.5px; color:var(--text-secondary);">Uses iPad voice synthesis when a new hint pops up</div>
+          </div>
+          <input type="checkbox" id="check-tts" style="width:20px; height:20px; accent-color:#38bdf8;" />
+        </div>
+
+        <div class="form-group" style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-elevated); padding:10px 12px; border-radius:10px;">
+          <div>
+            <div style="font-size:13px; font-weight:700;">✏️ Apple Pencil Only (Palm Rejection)</div>
+            <div style="font-size:11.5px; color:var(--text-secondary);">Ignores finger/palm touches on the canvas so only Apple Pencil draws</div>
+          </div>
+          <input type="checkbox" id="check-pencil-only" style="width:20px; height:20px; accent-color:#38bdf8;" />
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+          <button class="btn" id="btn-test-gemini">🧪 Test Gemini Connection</button>
+          <button class="btn btn-primary" id="btn-save-settings">Save Settings</button>
+        </div>
+        <div id="settings-feedback" style="margin-top:10px; font-size:12.5px; color:var(--accent);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Questions Database -->
+  <script src="questions.js"></script>
+
+  <script>
+    (function () {
+      const QUESTIONS = window.OXBRIDGE_QUESTIONS || [];
+      const STORAGE_PREFIX = "oxbridge_ai_v1_";
+
+      // ---------- Persistent App State ----------
+      const state = {
+        currentIdx: Number(localStorage.getItem(STORAGE_PREFIX + "currentIdx") || 0),
+        solvedMap: JSON.parse(localStorage.getItem(STORAGE_PREFIX + "solvedMap") || "{}"),
+        apiKey: localStorage.getItem(STORAGE_PREFIX + "apiKey") || "",
+        model: localStorage.getItem(STORAGE_PREFIX + "model") || "gemini-2.5-flash",
+        autoWatch: localStorage.getItem(STORAGE_PREFIX + "autoWatch") !== "false",
+        autoDelayMs: Number(localStorage.getItem(STORAGE_PREFIX + "autoDelayMs") || 3500),
+        autoSpeak: localStorage.getItem(STORAGE_PREFIX + "autoSpeak") === "true",
+        pencilOnly: localStorage.getItem(STORAGE_PREFIX + "pencilOnly") === "true",
+        paperStyle: localStorage.getItem(STORAGE_PREFIX + "paperStyle") || "grid", // grid | dots | lined | blank
+        showAxes: false,
+
+        // Canvas state per current problem
+        pages: [[]], // array of stroke arrays: stroke = { tool, color, size, alpha, points: [{x,y,p}] }
+        redoStack: [[]],
+        activePage: 0,
+        tool: "pen",
+        color: "#0f172a",
+        size: 3.5,
+
+        // Interviewer / Hints state
+        hintLevelShown: 0,
+        givenHintsHistory: [],
+        chatHistory: [],
+        lastAnalyzedStrokeHash: "",
+        isAnalyzing: false,
+        autoTimerId: null,
+
+        // Timer
+        timerSec: 0,
+        timerRunning: false,
+        timerInterval: null,
+      };
+
+      if (state.currentIdx < 0 || state.currentIdx >= QUESTIONS.length) state.currentIdx = 0;
+
+      // ---------- DOM Elements ----------
+      const $ = (id) => document.getElementById(id);
+      const canvas = $("draw-canvas");
+      const ctx = canvas.getContext("2d");
+      const stage = $("canvas-stage");
+
+      let dpr = window.devicePixelRatio || 1;
+      let canvasW = 0;
+      let canvasH = 0;
+      let activePointerId = null;
+      let currentStroke = null;
+      let strokesSinceLastAnalyze = 0;
+
+      // ---------- Utility: Format & Render KaTeX Safely ----------
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function renderRichMath(targetEl, rawText) {
+        if (!targetEl) return;
+        // Preserve math blocks while formatting basic markdown (**bold**, *italic*, line breaks)
+        const mathSegments = [];
+        let protectedText = String(rawText || "").replace(
+          /(\$\$[\s\S]*?\$\$|\$[^$\n]+?\$)/g,
+          (match) => {
+            const idx = mathSegments.length;
+            mathSegments.push(match);
+            return `@@MATH_${idx}@@`;
+          }
+        );
+
+        let html = escapeHtml(protectedText)
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\*(.+?)\*/g, "<em>$1</em>")
+          .replace(/`([^`]+)`/g, "<code>$1</code>")
+          .replace(/\n- /g, "<br>• ")
+          .replace(/\n/g, "<br>");
+
+        html = html.replace(/@@MATH_(\d+)@@/g, (_, idx) => escapeHtml(mathSegments[Number(idx)]));
+        targetEl.innerHTML = html;
+
+        if (typeof window.renderMathInElement === "function") {
+          try {
+            window.renderMathInElement(targetEl, {
+              delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true },
+              ],
+              throwOnError: false,
+              strict: false,
+            });
+          } catch (_) {}
+        }
+      }
+
+      // ---------- Storage Helpers for Per-Problem Canvas & Chat ----------
+      function getCurrentQ() {
+        return QUESTIONS[state.currentIdx];
+      }
+
+      function saveCurrentInk() {
+        const q = getCurrentQ();
+        if (!q) return;
+        try {
+          localStorage.setItem(
+            STORAGE_PREFIX + "ink_" + q.id,
+            JSON.stringify({ pages: state.pages, activePage: state.activePage })
+          );
+        } catch (e) {
+          // If localStorage quota is tight, fail silently
+        }
+      }
+
+      function loadCurrentInk() {
+        const q = getCurrentQ();
+        state.pages = [[]];
+        state.redoStack = [[]];
+        state.activePage = 0;
+        if (!q) return;
+        try {
+          const raw = localStorage.getItem(STORAGE_PREFIX + "ink_" + q.id);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed.pages) && parsed.pages.length > 0) {
+              state.pages = parsed.pages;
+              state.redoStack = parsed.pages.map(() => []);
+              state.activePage = Math.min(parsed.activePage || 0, state.pages.length - 1);
+            }
+          }
+        } catch (_) {}
+      }
+
+      function getStrokeSignature() {
+        const page = state.pages[state.activePage] || [];
+        return `${getCurrentQ().id}_p${state.activePage}_n${page.length}_${page.reduce((acc, s) => acc + s.points.length, 0)}`;
+      }
+
+      // ---------- Canvas Sizing & Rendering ----------
+      function resizeCanvas() {
+        const rect = stage.getBoundingClientRect();
+        dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+        canvasW = Math.max(1, Math.floor(rect.width));
+        canvasH = Math.max(1, Math.floor(rect.height));
+        canvas.width = Math.floor(canvasW * dpr);
+        canvas.height = Math.floor(canvasH * dpr);
+        redrawAll();
+      }
+
+      function drawPaperBackground(targetCtx, w, h) {
+        targetCtx.fillStyle = "#fcfcfa";
+        targetCtx.fillRect(0, 0, w, h);
+
+        const step = 28;
+        if (state.paperStyle === "grid") {
+          targetCtx.strokeStyle = "rgba(148, 163, 184, 0.22)";
+          targetCtx.lineWidth = 1;
+          targetCtx.beginPath();
+          for (let x = step; x < w; x += step) {
+            targetCtx.moveTo(x, 0);
+            targetCtx.lineTo(x, h);
+          }
+          for (let y = step; y < h; y += step) {
+            targetCtx.moveTo(0, y);
+            targetCtx.lineTo(w, y);
+          }
+          targetCtx.stroke();
+        } else if (state.paperStyle === "dots") {
+          targetCtx.fillStyle = "rgba(100, 116, 139, 0.35)";
+          for (let x = step; x < w; x += step) {
+            for (let y = step; y < h; y += step) {
+              targetCtx.fillRect(x - 1, y - 1, 2, 2);
+            }
+          }
+        } else if (state.paperStyle === "lined") {
+          targetCtx.strokeStyle = "rgba(56, 189, 248, 0.22)";
+          targetCtx.lineWidth = 1;
+          targetCtx.beginPath();
+          for (let y = 44; y < h; y += 34) {
+            targetCtx.moveTo(0, y);
+            targetCtx.lineTo(w, y);
+          }
+          targetCtx.stroke();
+          targetCtx.strokeStyle = "rgba(239, 68, 68, 0.22)";
+          targetCtx.beginPath();
+          targetCtx.moveTo(64, 0);
+          targetCtx.lineTo(64, h);
+          targetCtx.stroke();
+        }
+
+        if (state.showAxes) {
+          const cx = w / 2;
+          const cy = h / 2;
+          targetCtx.save();
+          targetCtx.strokeStyle = "rgba(30, 41, 59, 0.55)";
+          targetCtx.lineWidth = 1.8;
+          targetCtx.beginPath();
+          // X axis
+          targetCtx.moveTo(24, cy);
+          targetCtx.lineTo(w - 24, cy);
+          // Y axis
+          targetCtx.moveTo(cx, 24);
+          targetCtx.lineTo(cx, h - 24);
+          targetCtx.stroke();
+
+          // Arrows
+          targetCtx.fillStyle = "rgba(30, 41, 59, 0.7)";
+          targetCtx.font = "italic 600 15px Georgia, serif";
+          targetCtx.fillText("x", w - 34, cy - 10);
+          targetCtx.fillText("y", cx + 10, 34);
+          targetCtx.fillText("O", cx - 18, cy + 18);
+          targetCtx.restore();
+        }
+      }
+
+      function drawStroke(targetCtx, stroke, scaleX = 1, scaleY = 1) {
+        const pts = stroke.points;
+        if (!pts || pts.length === 0) return;
+
+        targetCtx.save();
+        targetCtx.lineCap = "round";
+        targetCtx.lineJoin = "round";
+
+        if (stroke.tool === "highlighter") {
+          targetCtx.globalAlpha = 0.28;
+          targetCtx.strokeStyle = stroke.color;
+          targetCtx.lineWidth = stroke.size * 4.5 * scaleX;
+        } else {
+          targetCtx.globalAlpha = 1;
+          targetCtx.strokeStyle = stroke.color;
+          targetCtx.lineWidth = stroke.size * scaleX;
+        }
+
+        if (pts.length === 1) {
+          targetCtx.fillStyle = stroke.color;
+          targetCtx.beginPath();
+          targetCtx.arc(pts[0].x * scaleX, pts[0].y * scaleY, (targetCtx.lineWidth / 2), 0, Math.PI * 2);
+          targetCtx.fill();
+          targetCtx.restore();
+          return;
+        }
+
+        targetCtx.beginPath();
+        targetCtx.moveTo(pts[0].x * scaleX, pts[0].y * scaleY);
+        for (let i = 1; i < pts.length - 1; i++) {
+          const midX = ((pts[i].x + pts[i + 1].x) / 2) * scaleX;
+          const midY = ((pts[i].y + pts[i + 1].y) / 2) * scaleY;
+          targetCtx.quadraticCurveTo(pts[i].x * scaleX, pts[i].y * scaleY, midX, midY);
+        }
+        const last = pts[pts.length - 1];
+        targetCtx.lineTo(last.x * scaleX, last.y * scaleY);
+        targetCtx.stroke();
+        targetCtx.restore();
+      }
+
+      function redrawAll() {
+        ctx.save();
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        drawPaperBackground(ctx, canvasW, canvasH);
+        const strokes = state.pages[state.activePage] || [];
+        for (const s of strokes) {
+          drawStroke(ctx, s);
+        }
+        ctx.restore();
+      }
+
+      // Export crisp composite PNG for Gemini Vision
+      function exportCanvasBase64() {
+        const maxDim = 1280;
+        const scale = Math.min(1, maxDim / Math.max(canvasW, canvasH));
+        const outW = Math.max(1, Math.round(canvasW * scale));
+        const outH = Math.max(1, Math.round(canvasH * scale));
+        const off = document.createElement("canvas");
+        off.width = outW;
+        off.height = outH;
+        const octx = off.getContext("2d");
+        drawPaperBackground(octx, outW, outH);
+        const strokes = state.pages[state.activePage] || [];
+        for (const s of strokes) {
+          drawStroke(octx, s, scale, scale);
+        }
+        const dataUrl = off.toDataURL("image/png");
+        return dataUrl.split(",")[1];
+      }
+
+      // ---------- Pointer / Apple Pencil Input Handling ----------
+      function getCanvasPoint(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+          p: typeof e.pressure === "number" && e.pressure > 0 ? e.pressure : 0.5,
+        };
+      }
+
+      function eraseNearPoint(pt) {
+        const strokes = state.pages[state.activePage];
+        const radius = 18;
+        const r2 = radius * radius;
+        let removed = false;
+        for (let i = strokes.length - 1; i >= 0; i--) {
+          const pts = strokes[i].points;
+          for (let j = 0; j < pts.length; j++) {
+            const dx = pts[j].x - pt.x;
+            const dy = pts[j].y - pt.y;
+            if (dx * dx + dy * dy <= r2) {
+              strokes.splice(i, 1);
+              removed = true;
+              break;
+            }
+          }
+        }
+        if (removed) {
+          redrawAll();
+          saveCurrentInk();
+        }
+      }
+
+      canvas.addEventListener("pointerdown", (e) => {
+        if (state.pencilOnly && e.pointerType === "touch") {
+          return; // Palm rejection! Only Apple Pencil (or mouse) allowed
+        }
+        e.preventDefault();
+        canvas.setPointerCapture(e.pointerId);
+        activePointerId = e.pointerId;
+        const pt = getCanvasPoint(e);
+
+        // Cancel pending auto-watch timer while actively writing
+        clearAutoWatchTimer();
+
+        if (state.tool === "eraser") {
+          eraseNearPoint(pt);
+          return;
+        }
+
+        const pressureMult = e.pointerType === "pen" ? (0.7 + pt.p * 0.65) : 1;
+        currentStroke = {
+          tool: state.tool,
+          color: state.color,
+          size: state.size * pressureMult,
+          points: [pt],
+        };
+        state.pages[state.activePage].push(currentStroke);
+        state.redoStack[state.activePage] = [];
+        redrawAll();
+      });
+
+      canvas.addEventListener("pointermove", (e) => {
+        if (activePointerId !== e.pointerId) return;
+        if (state.pencilOnly && e.pointerType === "touch") return;
+        e.preventDefault();
+        const pt = getCanvasPoint(e);
+
+        if (state.tool === "eraser") {
+          eraseNearPoint(pt);
+          return;
+        }
+
+        if (!currentStroke) return;
+        const last = currentStroke.points[currentStroke.points.length - 1];
+        const dx = pt.x - last.x;
+        const dy = pt.y - last.y;
+        if (dx * dx + dy * dy < 2.2) return; // filter micro-jitter
+        currentStroke.points.push(pt);
+        redrawAll();
+      });
+
+      function finishPointer(e) {
+        if (activePointerId !== e.pointerId) return;
+        activePointerId = null;
+        if (currentStroke) {
+          currentStroke = null;
+          strokesSinceLastAnalyze++;
+          saveCurrentInk();
+          scheduleAutoVisionAnalysis();
+        }
+      }
+
+      canvas.addEventListener("pointerup", finishPointer);
+      canvas.addEventListener("pointercancel", finishPointer);
+
+      // ---------- Auto-See Canvas Watcher ----------
+      function clearAutoWatchTimer() {
+        if (state.autoTimerId) {
+          clearTimeout(state.autoTimerId);
+          state.autoTimerId = null;
+        }
+      }
+
+      function updateVisionPill(statusLabel, mode = "active") {
+        const pill = $("btn-auto-vision");
+        const txt = $("vision-status-text");
+        pill.classList.remove("active", "analyzing");
+        if (!state.autoWatch) {
+          txt.textContent = "👁️ Auto-See: OFF";
+          return;
+        }
+        pill.classList.add(mode);
+        txt.textContent = statusLabel;
+      }
+
+      function scheduleAutoVisionAnalysis() {
+        if (!state.autoWatch) return;
+        const page = state.pages[state.activePage] || [];
+        if (page.length === 0) return;
+        const sig = getStrokeSignature();
+        if (sig === state.lastAnalyzedStrokeHash) return;
+
+        clearAutoWatchTimer();
+        const secs = (state.autoDelayMs / 1000).toFixed(1).replace(/\.0$/, "");
+        updateVisionPill(`✍️ Watching (${secs}s)...`, "active");
+
+        state.autoTimerId = setTimeout(() => {
+          runVisionAnalysis(false);
+        }, state.autoDelayMs);
+      }
+
+      // ---------- Gemini Multimodal Vision Integration ----------
+      async function callGeminiWithCanvas(promptText, base64Png, expectJson = false) {
+        if (!state.apiKey) {
+          throw new Error("NO_API_KEY");
+        }
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+          state.model
+        )}:generateContent?key=${encodeURIComponent(state.apiKey)}`;
+
+        const parts = [{ text: promptText }];
+        if (base64Png) {
+          parts.push({
+            inlineData: {
+              mimeType: "image/png",
+              data: base64Png,
+            },
+          });
+        }
+
+        const body = {
+          contents: [{ role: "user", parts }],
+          generationConfig: {
+            temperature: 0.35,
+          },
+        };
+        if (expectJson) {
+          body.generationConfig.responseMimeType = "application/json";
+        }
+
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        if (!resp.ok) {
+          const errText = await resp.text();
+          throw new Error(`Gemini API Error (${resp.status}): ${errText.slice(0, 220)}`);
+        }
+
+        const data = await resp.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        return text;
+      }
+
+      function buildTutorSystemContext(q) {
+        return `You are a sharp, encouraging Oxford/Cambridge Mathematics Admissions Tutor conducting a live 1-on-1 mock interview via an iPad whiteboard.
+
+ACTIVE PROBLEM (${q.college} — ${q.title}):
+${q.statement}
+
+CONFIDENTIAL OFFICIAL SOLUTION (DO NOT reveal the whole solution unless the student has already solved it or explicitly asks for the full answer):
+${q.solution}
+
+HINTS ALREADY GIVEN SO FAR:
+${state.givenHintsHistory.length ? state.givenHintsHistory.map((h, i) => `${i + 1}. ${h}`).join("\n") : "None yet."}`;
+      }
+
+      async function runVisionAnalysis(isManual = false) {
+        const q = getCurrentQ();
+        const page = state.pages[state.activePage] || [];
+        if (page.length === 0) {
+          if (isManual) {
+            showHintPopup({
+              status: "stuck",
+              title: "Your Pad Is Blank!",
+              saw: "",
+              message: "Try jotting down a first step, diagram, or special case on the iPad canvas — or tap **Hint** for an opening nudge.",
+              question: q.hints[0] || "",
+            });
+          }
+          return;
+        }
+
+        if (state.isAnalyzing) return;
+        const sig = getStrokeSignature();
+        if (!isManual && sig === state.lastAnalyzedStrokeHash) return;
+
+        // If no Gemini API key yet, fallback cleanly on manual click or after >=3 strokes
+        if (!state.apiKey) {
+          if (isManual || strokesSinceLastAnalyze >= 3) {
+            strokesSinceLastAnalyze = 0;
+            state.lastAnalyzedStrokeHash = sig;
+            showNextLocalHint(
+              !state.apiKey
+                ? "Running in built-in Hint Mode (add your free Gemini API key in ⚙️ Settings for live handwriting recognition!)."
+                : ""
+            );
+          }
+          return;
+        }
+
+        state.isAnalyzing = true;
+        updateVisionPill("🔍 Gemini reading pad...", "analyzing");
+
+        try {
+          const pngB64 = exportCanvasBase64();
+          const prompt = `${buildTutorSystemContext(q)}
+
+Look closely at the attached image of the student's live iPad handwriting canvas.
+1. Read and transcribe what mathematical equations, cases, numbers, or graph sketches the student has written.
+2. Assess their progress against the problem.
+3. Decide whether to pop up a hint right now (\`shouldPopUpHint\`).
+   - ${isManual ? "The student EXPLICITLY tapped 'Check My Working', so ALWAYS set shouldPopUpHint to true and give direct, helpful Socratic feedback on what is on the board." : "Auto-watch triggered: set shouldPopUpHint to true if you notice an algebraic/logical mistake, they seem stuck/incomplete, they hit a key milestone, or a timely Socratic question will guide their next step. If they are cleanly mid-calculation and doing great without needing interruption, you may set shouldPopUpHint to false (or true with status 'on_track' if a brief encouragement + next check helps)."}
+4. Respond strictly as valid JSON with these exact keys:
+{
+  "transcription": "concise LaTeX/text summary of what is written on the iPad",
+  "status": "on_track" | "minor_error" | "stuck" | "completed_step" | "solved",
+  "shouldPopUpHint": true or false,
+  "hintTitle": "short 3-6 word headline",
+  "hintMessage": "concise 1-3 sentence Socratic feedback referencing their exact handwritten work (use $...$ for math)",
+  "socraticQuestion": "one sharp Oxbridge interview follow-up question to prompt their next line (use $...$ for math)"
+}`;
+
+          const rawReply = await callGeminiWithCanvas(prompt, pngB64, true);
+          state.lastAnalyzedStrokeHash = sig;
+          strokesSinceLastAnalyze = 0;
+
+          let parsed;
+          try {
+            const cleaned = rawReply.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
+            parsed = JSON.parse(cleaned);
+          } catch (_) {
+            parsed = {
+              transcription: "",
+              status: "on_track",
+              shouldPopUpHint: true,
+              hintTitle: "Tutor Feedback",
+              hintMessage: rawReply,
+              socraticQuestion: "",
+            };
+          }
+
+          if (parsed.shouldPopUpHint || isManual) {
+            showHintPopup({
+              status: parsed.status || "on_track",
+              title: parsed.hintTitle || "Tutor Observation",
+              saw: parsed.transcription || "",
+              message: parsed.hintMessage || "",
+              question: parsed.socraticQuestion || "",
+            });
+            if (parsed.hintMessage) {
+              state.givenHintsHistory.push(parsed.hintMessage);
+            }
+            addChatMessage(
+              "ai",
+              `**[Live Canvas Check — ${parsed.hintTitle || "Feedback"}]**\n${
+                parsed.transcription ? `*Saw on pad:* ${parsed.transcription}\n\n` : ""
+              }${parsed.hintMessage || ""}${parsed.socraticQuestion ? `\n\n**Question:** ${parsed.socraticQuestion}` : ""}`
+            );
+            updateVisionPill("💡 Hint Ready", "active");
+          } else {
+            updateVisionPill("✓ Looks on track", "active");
+          }
+        } catch (err) {
+          console.error(err);
+          updateVisionPill("⚠️ Vision Error", "active");
+          if (isManual) {
+            showHintPopup({
+              status: "minor_error",
+              title: "Could Not Reach Gemini",
+              saw: "",
+              message: err.message === "NO_API_KEY"
+                ? "Please add your Gemini API key in Settings (⚙️) to enable live handwriting analysis."
+                : `API call failed: ${err.message}`,
+              question: "",
+              showConnectButton: true,
+            });
+          }
+        } finally {
+          state.isAnalyzing = false;
+        }
+      }
+
+      // ---------- Hint Popup UI ----------
+      function showHintPopup({ status, title, saw, message, question, showConnectButton = false }) {
+        const popup = $("hint-popup");
+        popup.className = `hint-popup visible status-${status || "on_track"}`;
+
+        const labels = {
+          on_track: "✓ On Track",
+          minor_error: "⚠️ Check This Step",
+          stuck: "💡 Socratic Nudge",
+          completed_step: "✨ Good Step",
+          solved: "🏆 Solution Verified!",
+        };
+        $("popup-badge").textContent = labels[status] || "💡 AI Tutor Hint";
+        $("popup-title").textContent = title || "Oxbridge Tutor Hint";
+
+        if (saw) {
+          $("popup-saw").style.display = "block";
+          renderRichMath($("popup-saw"), `**Saw on iPad:** ${saw}`);
+        } else {
+          $("popup-saw").style.display = "none";
+        }
+
+        renderRichMath($("popup-message"), message || "");
+
+        if (question) {
+          $("popup-question").style.display = "block";
+          renderRichMath($("popup-question"), `**Tutor asks:** ${question}`);
+        } else {
+          $("popup-question").style.display = "none";
+        }
+
+        $("btn-popup-connect").style.display = (!state.apiKey || showConnectButton) ? "inline-flex" : "none";
+
+        if (state.autoSpeak && (message || question)) {
+          speakText(`${title}. ${message} ${question}`);
+        }
+      }
+
+      function hideHintPopup() {
+        $("hint-popup").classList.remove("visible");
+      }
+
+      function showNextLocalHint(extraNote = "") {
+        const q = getCurrentQ();
+        const hints = q.hints || [];
+        if (hints.length === 0) return;
+        const idx = Math.min(state.hintLevelShown, hints.length - 1);
+        const hintText = hints[idx];
+        if (state.hintLevelShown < hints.length) {
+          state.hintLevelShown++;
+        }
+        $("hint-counter").textContent = `${state.hintLevelShown}/${hints.length}`;
+        state.givenHintsHistory.push(hintText);
+
+        showHintPopup({
+          status: "stuck",
+          title: `Hint ${idx + 1} of ${hints.length}`,
+          saw: extraNote,
+          message: hintText,
+          question: idx === hints.length - 1 ? "Can you complete the rest of the proof on your pad?" : "",
+          showConnectButton: !state.apiKey,
+        });
+      }
+
+      function speakText(text) {
+        if (!("speechSynthesis" in window)) return;
+        try {
+          window.speechSynthesis.cancel();
+          const clean = String(text)
+            .replace(/\$\$?/g, "")
+            .replace(/\\[a-zA-Z]+/g, " ")
+            .replace(/[*_`{}]/g, "");
+          const utter = new SpeechSynthesisUtterance(clean);
+          utter.rate = 1.02;
+          window.speechSynthesis.speak(utter);
+        } catch (_) {}
+      }
+
+      // ---------- Chat Drawer ----------
+      function addChatMessage(role, text) {
+        state.chatHistory.push({ role, text });
+        const container = $("chat-messages");
+        const div = document.createElement("div");
+        div.className = `msg ${role === "user" ? "msg-user" : "msg-ai"}`;
+        const meta = document.createElement("div");
+        meta.className = "msg-meta";
+        meta.textContent = role === "user" ? "You (with iPad canvas)" : "Oxbridge Tutor";
+        const body = document.createElement("div");
+        renderRichMath(body, text);
+        div.appendChild(meta);
+        div.appendChild(body);
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      async function sendChatMessage(userText) {
+        const msg = (userText || "").trim();
+        if (!msg) return;
+        $("chat-drawer").classList.remove("hidden");
+        addChatMessage("user", msg);
+        $("chat-input").value = "";
+
+        if (!state.apiKey) {
+          addChatMessage(
+            "ai",
+            "Please add your **Google Gemini API Key** in ⚙️ Settings so I can read your live iPad handwriting and respond interactively! In the meantime, use **💡 Hint** for progressive Socratic hints."
+          );
+          return;
+        }
+
+        const thinkingId = "thinking-" + Date.now();
+        const container = $("chat-messages");
+        const loadingDiv = document.createElement("div");
+        loadingDiv.className = "msg msg-ai";
+        loadingDiv.id = thinkingId;
+        loadingDiv.textContent = "🔍 Looking at your iPad working...";
+        container.appendChild(loadingDiv);
+        container.scrollTop = container.scrollHeight;
+
+        try {
+          const q = getCurrentQ();
+          const pngB64 = exportCanvasBase64();
+          const recentChat = state.chatHistory
+            .slice(-6)
+            .map((m) => `${m.role === "user" ? "Student" : "Tutor"}: ${m.text}`)
+            .join("\n\n");
+
+          const prompt = `${buildTutorSystemContext(q)}
+
+RECENT INTERVIEW CONVERSATION:
+${recentChat}
+
+The student just sent the message: "${msg}"
+Also attached is a live snapshot of their current iPad whiteboard page.
+Respond as an Oxford/Cambridge maths interviewer: reference what you see written on their pad, keep responses clear and concise, use $...$ and $$...$$ for math, and guide them Socratically rather than dumping the final answer unless asked.`;
+
+          const reply = await callGeminiWithCanvas(prompt, pngB64, false);
+          const el = $(thinkingId);
+          if (el) el.remove();
+          addChatMessage("ai", reply);
+        } catch (err) {
+          const el = $(thinkingId);
+          if (el) el.remove();
+          addChatMessage("ai", `⚠️ Error: ${err.message}`);
+        }
+      }
+
+      // ---------- Problem Loading & Navigation ----------
+      function loadQuestion(index) {
+        if (index < 0) index = 0;
+        if (index >= QUESTIONS.length) index = QUESTIONS.length - 1;
+        clearAutoWatchTimer();
+        hideHintPopup();
+
+        state.currentIdx = index;
+        localStorage.setItem(STORAGE_PREFIX + "currentIdx", String(index));
+
+        const q = getCurrentQ();
+        state.hintLevelShown = 0;
+        state.givenHintsHistory = [];
+        state.chatHistory = [];
+        state.lastAnalyzedStrokeHash = "";
+        strokesSinceLastAnalyze = 0;
+        state.showAxes = Boolean(q.isSketch);
+        updateAxesButton();
+
+        // Update header & metadata
+        $("progress-badge").textContent = `${q.number} / ${QUESTIONS.length}`;
+        $("hint-counter").textContent = `0/${(q.hints || []).length}`;
+        const isSolved = Boolean(state.solvedMap[q.id]);
+        $("btn-mark-solved").className = isSolved ? "btn btn-green" : "btn";
+        $("btn-mark-solved").textContent = isSolved ? "✓ Solved" : "✓ Mark Solved";
+
+        const diffClass =
+          q.difficulty === "Warm-up"
+            ? "tag-diff-warmup"
+            : q.difficulty === "Challenging"
+            ? "tag-diff-challenging"
+            : "tag-diff-standard";
+
+        $("question-meta").innerHTML = `
+          <span class="tag tag-num">Q${q.number}</span>
+          <span class="tag">${escapeHtml(q.subset)}</span>
+          <span class="tag tag-topic">${escapeHtml(q.topic)}</span>
+          <span class="tag ${diffClass}">${escapeHtml(q.difficulty)}</span>
+        `;
+
+        const qBody = $("question-body");
+        qBody.innerHTML = `<div class="question-title-inline">${escapeHtml(q.title)}</div><div id="q-statement-math"></div>`;
+        renderRichMath($("q-statement-math"), q.statement);
+
+        // Reset chat greeting
+        $("chat-messages").innerHTML = "";
+        addChatMessage(
+          "ai",
+          `Welcome to **Q${q.number}: ${q.title}** (${q.college}). Start writing your ideas on the iPad whiteboard — I'm watching live and will pop up Socratic hints whenever helpful!`
+        );
+
+        loadCurrentInk();
+        renderPageTabs();
+        redrawAll();
+        renderQuestionBrowserList();
+      }
+
+      function renderPageTabs() {
+        const container = $("page-tabs");
+        container.innerHTML = "";
+        state.pages.forEach((_, idx) => {
+          const btn = document.createElement("button");
+          btn.className = `page-tab ${idx === state.activePage ? "active" : ""}`;
+          btn.textContent = `Page ${idx + 1}`;
+          btn.onclick = () => {
+            state.activePage = idx;
+            saveCurrentInk();
+            renderPageTabs();
+            redrawAll();
+          };
+          container.appendChild(btn);
+        });
+        const addBtn = document.createElement("button");
+        addBtn.className = "page-tab";
+        addBtn.textContent = "+ Page";
+        addBtn.onclick = () => {
+          state.pages.push([]);
+          state.redoStack.push([]);
+          state.activePage = state.pages.length - 1;
+          saveCurrentInk();
+          renderPageTabs();
+          redrawAll();
+        };
+        container.appendChild(addBtn);
+      }
+
+      // ---------- Sidebar Question Browser ----------
+      function initSidebarFilters() {
+        const sections = [...new Set(QUESTIONS.map((q) => q.section))];
+        const topics = [...new Set(QUESTIONS.map((q) => q.topic))];
+
+        const secSel = $("filter-section");
+        secSel.innerHTML = `<option value="all">All 6 Sections</option>` +
+          sections.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+
+        const topSel = $("filter-topic");
+        topSel.innerHTML = `<option value="all">All Topics</option>` +
+          topics.map((t) => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+      }
+
+      function renderQuestionBrowserList() {
+        const search = ($("search-input").value || "").toLowerCase().trim();
+        const sec = $("filter-section").value;
+        const topic = $("filter-topic").value;
+        const statusFilter = $("filter-status").value;
+        const listEl = $("question-list");
+        listEl.innerHTML = "";
+
+        const filtered = QUESTIONS.filter((q) => {
+          if (sec !== "all" && q.section !== sec) return false;
+          if (topic !== "all" && q.topic !== topic) return false;
+          const solved = Boolean(state.solvedMap[q.id]);
+          if (statusFilter === "solved" && !solved) return false;
+          if (statusFilter === "unsolved" && solved) return false;
+          if (statusFilter === "sketch" && !q.isSketch) return false;
+          if (search) {
+            const hay = `${q.number} ${q.title} ${q.subset} ${q.college} ${q.topic} ${q.statement}`.toLowerCase();
+            if (!hay.includes(search)) return false;
+          }
+          return true;
+        });
+
+        filtered.forEach((q) => {
+          const idx = q.number - 1;
+          const solved = Boolean(state.solvedMap[q.id]);
+          const hasInk = Boolean(localStorage.getItem(STORAGE_PREFIX + "ink_" + q.id));
+          const item = document.createElement("div");
+          item.className = `q-item ${idx === state.currentIdx ? "active" : ""}`;
+          item.innerHTML = `
+            <div class="q-item-top">
+              <span>Q${q.number} • ${escapeHtml(q.topic)} • ${escapeHtml(q.difficulty)}</span>
+              <span>${hasInk ? "✏️ " : ""}${solved ? "✅" : ""}</span>
+            </div>
+            <div class="q-item-title">${escapeHtml(q.title)}</div>
+          `;
+          item.onclick = () => {
+            loadQuestion(idx);
+            closeSidebar();
+          };
+          listEl.appendChild(item);
+        });
+      }
+
+      function openSidebar() {
+        renderQuestionBrowserList();
+        $("sidebar").classList.add("open");
+        $("sidebar-backdrop").classList.add("open");
+      }
+      function closeSidebar() {
+        $("sidebar").classList.remove("open");
+        $("sidebar-backdrop").classList.remove("open");
+      }
+
+      // ---------- Toolbar & Settings Wiring ----------
+      function updateAxesButton() {
+        const btn = $("btn-axes");
+        btn.classList.toggle("active", state.showAxes);
+      }
+
+      function updatePaperButton() {
+        const names = { grid: "⊞ Grid", dots: "⠿ Dots", lined: "☰ Lined", blank: "⬜ Blank" };
+        $("btn-paper").textContent = names[state.paperStyle] || "⊞ Grid";
+      }
+
+      function updatePencilOnlyButton() {
+        const btn = $("btn-pencil-only");
+        btn.classList.toggle("active", state.pencilOnly);
+        btn.textContent = state.pencilOnly ? "✏️ Pencil Only: ON" : "✏️ Pencil Only: OFF";
+      }
+
+      function openSettingsModal() {
+        $("input-api-key").value = state.apiKey;
+        $("select-model").value = state.model;
+        $("select-delay").value = String(state.autoDelayMs);
+        $("check-tts").checked = state.autoSpeak;
+        $("check-pencil-only").checked = state.pencilOnly;
+        $("settings-feedback").textContent = "";
+        $("settings-modal").classList.add("open");
+      }
+
+      function saveSettingsFromModal() {
+        state.apiKey = $("input-api-key").value.trim();
+        state.model = $("select-model").value;
+        state.autoDelayMs = Number($("select-delay").value);
+        state.autoSpeak = $("check-tts").checked;
+        state.pencilOnly = $("check-pencil-only").checked;
+
+        localStorage.setItem(STORAGE_PREFIX + "apiKey", state.apiKey);
+        localStorage.setItem(STORAGE_PREFIX + "model", state.model);
+        localStorage.setItem(STORAGE_PREFIX + "autoDelayMs", String(state.autoDelayMs));
+        localStorage.setItem(STORAGE_PREFIX + "autoSpeak", String(state.autoSpeak));
+        localStorage.setItem(STORAGE_PREFIX + "pencilOnly", String(state.pencilOnly));
+        updatePencilOnlyButton();
+        $("settings-modal").classList.remove("open");
+      }
+
+      // ---------- Timer ----------
+      function formatTime(sec) {
+        const m = String(Math.floor(sec / 60)).padStart(2, "0");
+        const s = String(sec % 60).padStart(2, "0");
+        return `${m}:${s}`;
+      }
+      function toggleTimer() {
+        if (state.timerRunning) {
+          clearInterval(state.timerInterval);
+          state.timerRunning = false;
+        } else {
+          state.timerRunning = true;
+          state.timerInterval = setInterval(() => {
+            state.timerSec++;
+            $("timer-display").textContent = formatTime(state.timerSec);
+          }, 1000);
+        }
+      }
+
+      // ---------- Wire Events ----------
+      $("btn-open-browser").onclick = openSidebar;
+      $("btn-close-sidebar").onclick = closeSidebar;
+      $("sidebar-backdrop").onclick = closeSidebar;
+      $("search-input").oninput = renderQuestionBrowserList;
+      $("filter-section").onchange = renderQuestionBrowserList;
+      $("filter-topic").onchange = renderQuestionBrowserList;
+      $("filter-status").onchange = renderQuestionBrowserList;
+
+      $("btn-prev").onclick = () => loadQuestion(state.currentIdx - 1);
+      $("btn-next").onclick = () => loadQuestion(state.currentIdx + 1);
+
+      $("btn-collapse-q").onclick = () => {
+        const banner = $("question-banner");
+        const collapsed = banner.classList.toggle("collapsed");
+        $("btn-collapse-q").textContent = collapsed ? "▸" : "▾";
+        setTimeout(resizeCanvas, 50);
+      };
+
+      $("btn-auto-vision").onclick = () => {
+        state.autoWatch = !state.autoWatch;
+        localStorage.setItem(STORAGE_PREFIX + "autoWatch", String(state.autoWatch));
+        if (!state.autoWatch) clearAutoWatchTimer();
+        updateVisionPill(state.autoWatch ? "👁️ Auto-See: ON" : "👁️ Auto-See: OFF", "active");
+      };
+
+      $("btn-analyze-now").onclick = () => runVisionAnalysis(true);
+      $("btn-next-hint").onclick = () => showNextLocalHint();
+
+      $("btn-solution").onclick = () => {
+        const q = getCurrentQ();
+        $("solution-modal-title").textContent = `📖 Worked Solution — Q${q.number}: ${q.title}`;
+        renderRichMath($("solution-modal-body"), q.solution);
+        $("solution-modal").classList.add("open");
+      };
+      $("btn-close-solution").onclick = () => $("solution-modal").classList.remove("open");
+      $("solution-modal").onclick = (e) => {
+        if (e.target === $("solution-modal")) $("solution-modal").classList.remove("open");
+      };
+
+      $("btn-mark-solved").onclick = () => {
+        const q = getCurrentQ();
+        state.solvedMap[q.id] = !state.solvedMap[q.id];
+        localStorage.setItem(STORAGE_PREFIX + "solvedMap", JSON.stringify(state.solvedMap));
+        const isSolved = Boolean(state.solvedMap[q.id]);
+        $("btn-mark-solved").className = isSolved ? "btn btn-green" : "btn";
+        $("btn-mark-solved").textContent = isSolved ? "✓ Solved" : "✓ Mark Solved";
+        renderQuestionBrowserList();
+      };
+
+      // Hint popup controls
+      $("btn-popup-close").onclick = hideHintPopup;
+      $("btn-popup-speak").onclick = () => {
+        speakText(`${$("popup-title").textContent}. ${$("popup-message").textContent} ${$("popup-question").textContent}`);
+      };
+      $("btn-popup-reply").onclick = () => {
+        $("chat-drawer").classList.remove("hidden");
+        $("chat-input").focus();
+      };
+      $("btn-popup-more").onclick = () => showNextLocalHint();
+      $("btn-popup-connect").onclick = openSettingsModal;
+
+      // Chat controls
+      $("btn-toggle-chat").onclick = () => {
+        $("chat-drawer").classList.toggle("hidden");
+        setTimeout(resizeCanvas, 50);
+      };
+      $("btn-close-chat").onclick = () => {
+        $("chat-drawer").classList.add("hidden");
+        setTimeout(resizeCanvas, 50);
+      };
+      $("btn-send-chat").onclick = () => sendChatMessage($("chat-input").value);
+      $("chat-input").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendChatMessage($("chat-input").value);
+      });
+      document.querySelectorAll(".chip[data-prompt]").forEach((chip) => {
+        chip.onclick = () => sendChatMessage(chip.dataset.prompt);
+      });
+
+      // Dock tool buttons
+      document.querySelectorAll("[data-tool]").forEach((btn) => {
+        btn.onclick = () => {
+          state.tool = btn.dataset.tool;
+          document.querySelectorAll("[data-tool]").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        };
+      });
+      document.querySelectorAll(".color-dot").forEach((dot) => {
+        dot.onclick = () => {
+          state.color = dot.dataset.color;
+          document.querySelectorAll(".color-dot").forEach((d) => d.classList.remove("active"));
+          dot.classList.add("active");
+          if (state.tool === "eraser") {
+            state.tool = "pen";
+            document.querySelectorAll("[data-tool]").forEach((b) =>
+              b.classList.toggle("active", b.dataset.tool === "pen")
+            );
+          }
+        };
+      });
+      document.querySelectorAll(".size-btn").forEach((btn) => {
+        btn.onclick = () => {
+          state.size = Number(btn.dataset.size);
+          document.querySelectorAll(".size-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        };
+      });
+
+      $("btn-undo").onclick = () => {
+        const page = state.pages[state.activePage];
+        if (page && page.length > 0) {
+          state.redoStack[state.activePage].push(page.pop());
+          redrawAll();
+          saveCurrentInk();
+        }
+      };
+      $("btn-redo").onclick = () => {
+        const redo = state.redoStack[state.activePage];
+        if (redo && redo.length > 0) {
+          state.pages[state.activePage].push(redo.pop());
+          redrawAll();
+          saveCurrentInk();
+        }
+      };
+      $("btn-clear").onclick = () => {
+        state.pages[state.activePage] = [];
+        state.redoStack[state.activePage] = [];
+        state.lastAnalyzedStrokeHash = "";
+        redrawAll();
+        saveCurrentInk();
+      };
+      $("btn-paper").onclick = () => {
+        const order = ["grid", "dots", "lined", "blank"];
+        state.paperStyle = order[(order.indexOf(state.paperStyle) + 1) % order.length];
+        localStorage.setItem(STORAGE_PREFIX + "paperStyle", state.paperStyle);
+        updatePaperButton();
+        redrawAll();
+      };
+      $("btn-axes").onclick = () => {
+        state.showAxes = !state.showAxes;
+        updateAxesButton();
+        redrawAll();
+      };
+      $("btn-pencil-only").onclick = () => {
+        state.pencilOnly = !state.pencilOnly;
+        localStorage.setItem(STORAGE_PREFIX + "pencilOnly", String(state.pencilOnly));
+        updatePencilOnlyButton();
+      };
+
+      // Settings modal
+      $("btn-settings").onclick = openSettingsModal;
+      $("btn-close-settings").onclick = () => $("settings-modal").classList.remove("open");
+      $("btn-save-settings").onclick = saveSettingsFromModal;
+      $("btn-test-gemini").onclick = async () => {
+        const key = $("input-api-key").value.trim();
+        const model = $("select-model").value;
+        if (!key) {
+          $("settings-feedback").textContent = "Please enter an API key first.";
+          return;
+        }
+        $("settings-feedback").textContent = "Testing connection...";
+        const prevKey = state.apiKey;
+        const prevModel = state.model;
+        state.apiKey = key;
+        state.model = model;
+        try {
+          const out = await callGeminiWithCanvas("Reply with only: Connected to Oxbridge Gemini Tutor!", null, false);
+          $("settings-feedback").textContent = `✓ Success: ${out}`;
+        } catch (err) {
+          $("settings-feedback").textContent = `✗ Failed: ${err.message}`;
+          state.apiKey = prevKey;
+          state.model = prevModel;
+        }
+      };
+
+      // Timer
+      $("btn-timer").onclick = toggleTimer;
+      $("btn-timer").ondblclick = () => {
+        clearInterval(state.timerInterval);
+        state.timerRunning = false;
+        state.timerSec = 0;
+        $("timer-display").textContent = "00:00";
+      };
+
+      // Resize observer for iPad orientation / split-screen changes
+      window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("load", () => {
+        // Re-render current question KaTeX once defer script finishes loading
+        loadQuestion(state.currentIdx);
+        resizeCanvas();
+      });
+
+      // Initialize immediately
+      initSidebarFilters();
+      updatePaperButton();
+      updatePencilOnlyButton();
+      updateVisionPill(state.autoWatch ? "👁️ Auto-See: ON" : "👁️ Auto-See: OFF", "active");
+      loadQuestion(state.currentIdx);
+      resizeCanvas();
+    })();
+  </script>
+</body>
+</html>

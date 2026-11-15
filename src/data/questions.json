@@ -1,0 +1,1598 @@
+[
+  {
+    "id": "1.1.1-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 1",
+    "title": "Odd Squares & Highest Common Factor",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that the product of two odd numbers is odd. What is the highest common factor of the difference of two odd numbers squared (i.e., $a^2 - b^2$ for odd integers $a$ and $b$)?",
+    "hints": [
+      "Write two general odd integers algebraically as $a = 2k + 1$ and $b = 2m + 1$ for $k, m \\in \\mathbb{Z}$.",
+      "Expand $a^2 - b^2 = (2k+1)^2 - (2m+1)^2$ and factor out $4$. What can you say about the parity of $k(k+1)$?",
+      "You've shown $8$ always divides $a^2 - b^2$. Can you pick a simple pair of odd integers $(a, b)$ to show no larger factor divides all such differences?"
+    ],
+    "solution": "Let $a = 2k + 1$ and $b = 2m + 1$ for $k, m \\in \\mathbb{Z}$.\nTheir product is:\n$$ab = (2k+1)(2m+1) = 4km + 2k + 2m + 1 = 2(2km + k + m) + 1$$\nSince $2km + k + m$ is an integer, $ab$ is odd.\n\nNow consider the difference of their squares:\n$$a^2 - b^2 = (2k+1)^2 - (2m+1)^2 = (4k^2 + 4k + 1) - (4m^2 + 4m + 1) = 4[k(k+1) - m(m+1)]$$\nFor any integer $k$, one of $k$ or $k+1$ is even, so $k(k+1)$ is always even; similarly $m(m+1)$ is even. Hence $k(k+1) - m(m+1) = 2J$ for some integer $J$, giving:\n$$a^2 - b^2 = 4 \\times 2J = 8J$$\nThus $8$ always divides $a^2 - b^2$. Taking $a = 3, b = 1$ gives $3^2 - 1^2 = 8$, so the highest common factor across all odd pairs is **8**.",
+    "number": 1
+  },
+  {
+    "id": "1.1.1-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 1",
+    "title": "First Integer Satisfying $\\sin x \\le \\frac{\\sqrt{2}}{2}$",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "What is the first positive integer $x$ which satisfies the inequality\n$$\\sin x \\le \\frac{\\sqrt{2}}{2},$$\nwhere $x$ is measured in radians?",
+    "hints": [
+      "Identify the angles $\\theta \\in [0, 2\\pi)$ where $\\sin\\theta \\le \\frac{\\sqrt{2}}{2}$. Where is $\\sin\\theta > \\frac{\\sqrt{2}}{2}$?",
+      "Recall $\\pi \\approx 3.1416$. Estimate $\\frac{\\pi}{4}$ and $\\frac{3\\pi}{4}$ numerically.",
+      "Check where the integers $x = 1, 2, 3$ fall relative to $\\frac{\\pi}{4} \\approx 0.785$ and $\\frac{3\\pi}{4} \\approx 2.356$ and $\\frac{9\\pi}{4}$."
+    ],
+    "solution": "Recall that $\\sin\\theta > \\frac{\\sqrt{2}}{2}$ for $\\theta \\in \\left(\\frac{\\pi}{4}, \\frac{3\\pi}{4}\\right)$ modulo $2\\pi$. Numerically:\n$$\\frac{\\pi}{4} \\approx 0.7854, \\qquad \\frac{3\\pi}{4} \\approx 2.3562, \\qquad \\pi \\approx 3.1416.$$\nTesting consecutive positive integers:\n- $x = 1$: $0.7854 < 1 < 2.3562$, so $1 \\in (\\pi/4, 3\\pi/4)$ and $\\sin 1 > \\frac{\\sqrt{2}}{2}$ ($\\sin 1 \\approx 0.8415$).\n- $x = 2$: $0.7854 < 2 < 2.3562$, so $2 \\in (\\pi/4, 3\\pi/4)$ and $\\sin 2 > \\frac{\\sqrt{2}}{2}$ ($\\sin 2 \\approx 0.9093$).\n- $x = 3$: $3 > \\frac{3\\pi}{4}$ and $3 < \\pi < \\frac{9\\pi}{4}$, so $3 \\in [3\\pi/4, 9\\pi/4]$ and $\\sin 3 \\le \\frac{\\sqrt{2}}{2}$ ($\\sin 3 \\approx 0.1411$).\n\nThus, the first positive integer satisfying the inequality is **$x = 3$**.",
+    "number": 2
+  },
+  {
+    "id": "1.1.1-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 1",
+    "title": "Infinite Bouncing Ball Duration",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Mechanics",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "If you drop a ball from height $h$, and it loses half of its energy every time it bounces, how long does it bounce for?",
+    "hints": [
+      "Relate the mechanical energy at the peak of each bounce ($E = mgh_n$) to the rebound height $h_n$.",
+      "Find the time $t_0$ for the initial drop using $h = \\frac{1}{2}gt_0^2$. How does the duration of the $n$-th bounce (up AND down!) relate to $t_0$?",
+      "Sum the infinite geometric series $T = t_0 + \\sum_{n=1}^{\\infty} t_n$ with common ratio $r = \\frac{1}{\\sqrt{2}}$."
+    ],
+    "solution": "Initial potential energy is $E_0 = mgh$, and the initial drop time from rest is:\n$$t_0 = \\sqrt{\\frac{2h}{g}}.$$\nAfter $n$ bounces, energy is $E_n = \\frac{1}{2^n} E_0$, so the rebound height is $h_n = \\frac{h}{2^n}$. Each bounce consists of both an ascent and descent, taking time:\n$$t_n = 2\\sqrt{\\frac{2h_n}{g}} = 2\\sqrt{\\frac{2h}{g \\cdot 2^n}} = 2t_0 \\left(\\frac{1}{\\sqrt{2}}\\right)^n.$$\nTotal bouncing time:\n$$T = t_0 + \\sum_{n=1}^{\\infty} t_n = t_0 + 2t_0 \\sum_{n=1}^{\\infty} \\left(\\frac{1}{\\sqrt{2}}\\right)^n.$$\nSince $\\sum_{n=1}^{\\infty} r^n = \\frac{r}{1-r}$ for $|r|<1$:\n$$\\sum_{n=1}^{\\infty} \\left(\\frac{1}{\\sqrt{2}}\\right)^n = \\frac{1/\\sqrt{2}}{1 - 1/\\sqrt{2}} = \\frac{1}{\\sqrt{2}-1} = \\sqrt{2} + 1.$$\nTherefore:\n$$T = t_0 + 2t_0(\\sqrt{2} + 1) = (3 + 2\\sqrt{2})t_0 = (3 + 2\\sqrt{2})\\sqrt{\\frac{2h}{g}}.$$",
+    "number": 3
+  },
+  {
+    "id": "1.1.1-p4",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 1",
+    "title": "Fermat Numbers Product Identity",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "The Fermat numbers are defined by $F_n = 2^{2^n} + 1$. Use proof by induction to show that\n$$F_0 F_1 \\dots F_{n-1} = F_n - 2 \\quad \\text{for all } n \\ge 1.$$",
+    "hints": [
+      "Verify the base case $n = 1$: check $F_0$ against $F_1 - 2$.",
+      "In the inductive step, replace $\\prod_{i=0}^{k-1} F_i$ with $F_k - 2$, so the new product becomes $(F_k - 2)F_k$.",
+      "Substitute $F_k = 2^{2^k} + 1$ into $(F_k - 2)F_k$ and recognize a difference of two squares: $(x - 1)(x + 1) = x^2 - 1$."
+    ],
+    "solution": "**Base case ($n=1$):** LHS $= F_0 = 2^{2^0} + 1 = 3$. RHS $= F_1 - 2 = (2^{2^1} + 1) - 2 = 5 - 2 = 3$. Holds.\n\n**Inductive step:** Assume $\\prod_{i=0}^{k-1} F_i = F_k - 2$ for some $k \\ge 1$. Then for $k+1$:\n$$\\prod_{i=0}^{k} F_i = \\left(\\prod_{i=0}^{k-1} F_i\\right) F_k = (F_k - 2)F_k.$$\nSubstituting $F_k = 2^{2^k} + 1$:\n$$(F_k - 2)F_k = \\left(2^{2^k} - 1\\right)\\left(2^{2^k} + 1\\right) = \\left(2^{2^k}\\right)^2 - 1 = 2^{2 \\cdot 2^k} - 1 = 2^{2^{k+1}} - 1 = F_{k+1} - 2.$$\nBy induction, the identity holds for all $n \\ge 1$. *(Note: This immediately shows any two distinct Fermat numbers are coprime, yielding an alternative proof that there are infinitely many primes.)*",
+    "number": 4
+  },
+  {
+    "id": "1.1.2-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 2",
+    "title": "Fair vs Biased Die Game",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Probability",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Person A has a fair die and Person B has a biased die, where the probability that Person B rolls a $6$ is $p$. They take turns rolling until someone rolls a $6$, and that person wins. If Person A starts first:\n(a) What is the probability that Person A wins?\n(b) What would $p$ have to be for the game to be fair?\n(c) Does this value of $p$ make sense? Justify your answer.",
+    "hints": [
+      "Write out the probability that A wins on round 1, round 2, round 3, or use a self-similar reset equation after two failed rolls.",
+      "Using a geometric series: $a = \\frac{1}{6}$ and common ratio $r = \\frac{5}{6}(1-p)$. What is $\\frac{a}{1-r}$?",
+      "Set $P(\\text{A wins}) = \\frac{1}{2}$ to solve for $p$, and compare $p$ to $\\frac{1}{6}$ considering A goes first."
+    ],
+    "solution": "**(a)** $P(\\text{A rolls } 6) = \\frac{1}{6}$, $P(\\text{A fails}) = \\frac{5}{6}$, $P(\\text{B rolls } 6) = p$, $P(\\text{B fails}) = 1-p$.\n$$P(\\text{A wins}) = \\frac{1}{6} + \\left(\\frac{5}{6}(1-p)\\right)\\frac{1}{6} + \\left(\\frac{5}{6}(1-p)\\right)^2\\frac{1}{6} + \\dots = \\frac{1/6}{1 - \\frac{5}{6}(1-p)} = \\frac{1}{6 - 5(1-p)} = \\frac{1}{1 + 5p}.$$\n*(Alternatively, $P(A) = \\frac{1}{6} + \\frac{5}{6}(1-p)P(A)$, giving the same result.)*\n\n**(b)** For a fair game, $P(\\text{A wins}) = \\frac{1}{2}$:\n$$\\frac{1}{1 + 5p} = \\frac{1}{2} \\implies 1 + 5p = 2 \\implies p = \\frac{1}{5}.$$\n\n**(c)** Yes! Since Person A has the first-mover advantage (an immediate $1/6$ chance to end the game before B even rolls), Person B needs a higher chance of rolling a $6$ ($p = 0.20 > 1/6 \\approx 0.1667$) to compensate.",
+    "number": 5
+  },
+  {
+    "id": "1.1.2-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 2",
+    "title": "Counting 5-Digit Numbers & Ascending Digits",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "(a) How many 5-digit numbers are there?\n(b) How many of these have 5 unique digits?\n(c) How many have 5 unique digits in strictly ascending order?",
+    "hints": [
+      "For (a) and (b), remember the leading digit cannot be $0$ (choices $1\\text{–}9$).",
+      "For (c), can the digit $0$ appear anywhere in a 5-digit number with digits in strictly ascending order $d_1 < d_2 < d_3 < d_4 < d_5$?",
+      "Once you choose 5 distinct digits from $\\{1, 2, \\dots, 9\\}$, how many ways can you order them from smallest to largest?"
+    ],
+    "solution": "**(a)** The first digit has $9$ choices ($1\\text{–}9$) and each of the remaining four digits has $10$ choices ($0\\text{–}9$):\n$$9 \\times 10^4 = 90{,}000.$$\n\n**(b)** Without repetition: $9$ choices for the 1st digit, $9$ remaining for the 2nd (including $0$), then $8, 7, 6$:\n$$9 \\times 9 \\times 8 \\times 7 \\times 6 = 27{,}216.$$\n\n**(c)** If $0$ appeared, since $d_1 < d_2 < d_3 < d_4 < d_5$, $0$ would have to be $d_1$, making it a 4-digit number. Thus all $5$ digits come from $\\{1,2,3,4,5,6,7,8,9\\}$. Any selection of $5$ distinct digits has a **unique** strictly ascending arrangement:\n$$\\binom{9}{5} = \\frac{9 \\times 8 \\times 7 \\times 6}{4 \\times 3 \\times 2 \\times 1} = 126.$$",
+    "number": 6
+  },
+  {
+    "id": "1.1.2-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.1 Interview Set 1 — Interview 2",
+    "title": "Sun, Planet, and Moon Epicyclic Orbit",
+    "college": "Oxbridge Archive",
+    "year": "Set 1",
+    "topic": "Geometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "There is a Sun with a planet orbiting it in a circle of radius $R$. A moon orbits the planet in a circle of radius $r$.\n(a) Find an equation for the position of the moon relative to the Sun.\n(b) Suppose $\\theta(t)$ is the angle of the planet around the Sun and $\\gamma(t)$ is the angle of the moon around the planet. If $\\theta = 12\\gamma$, what can you say about the movement of the moon around the Sun?",
+    "hints": [
+      "Place the Sun at the origin $(0,0)$. Write the vector $\\mathbf{r}_{\\text{planet}}$ in terms of $R$ and $\\theta$, and $\\mathbf{r}_{\\text{moon/planet}}$ in terms of $r$ and $\\gamma$.",
+      "Add the position vectors: $\\mathbf{r}_{\\text{moon}} = \\mathbf{r}_{\\text{planet}} + \\mathbf{r}_{\\text{moon/planet}}$.",
+      "If $\\theta = 12\\gamma$, compare the angular speeds: which object revolves faster—the planet around the Sun, or the moon around the planet? Contrast with the Earth-Moon-Sun system!"
+    ],
+    "solution": "**(a)** Placing the Sun at $(0,0)$:\n$$\\mathbf{r}_{\\text{planet}} = (R\\cos\\theta,\\, R\\sin\\theta), \\qquad \\mathbf{r}_{\\text{moon/planet}} = (r\\cos\\gamma,\\, r\\sin\\gamma).$$\nBy vector addition, the moon's position relative to the Sun is:\n$$\\mathbf{r}_{\\text{moon}} = \\bigl(R\\cos\\theta + r\\cos\\gamma,\\; R\\sin\\theta + r\\sin\\gamma\\bigr).$$\n\n**(b)** If $\\theta = 12\\gamma$, then $\\gamma = \\frac{\\theta}{12}$: the planet completes **12 full revolutions** around the Sun in the time it takes the moon to complete just **1 revolution** around the planet (the reverse of Earth's Moon, which has $\\gamma \\approx 12\\theta$). The path is an epitrochoid/epicyclic curve looking like a large circle with $12$ inward/outward wave oscillations per lunar cycle.",
+    "number": 7
+  },
+  {
+    "id": "1.2-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.2 Interview Set 2",
+    "title": "Four Balls in Two Boxes",
+    "college": "Oxbridge Archive",
+    "year": "Set 2",
+    "topic": "Probability",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Four balls are dropped into two boxes, with an equal chance of each ball falling into either box. What is the probability that there are two balls in each box?",
+    "hints": [
+      "Treat the $4$ balls as distinct/independent trials, each choosing Box 1 or Box 2 with probability $1/2$.",
+      "How many total equally likely outcomes are there for $4$ balls into $2$ boxes?",
+      "Count how many of those outcomes put exactly $2$ balls into Box 1 using $\\binom{4}{2}$."
+    ],
+    "solution": "Each ball independently enters Box 1 or Box 2 with probability $1/2$, giving $2^4 = 16$ equally likely configurations. The number of ways to select $2$ of the $4$ balls to go into Box 1 is $\\binom{4}{2} = 6$. Thus:\n$$P(2\\text{ in each box}) = \\frac{\\binom{4}{2}}{2^4} = \\frac{6}{16} = \\frac{3}{8} = 0.375.$$",
+    "number": 8
+  },
+  {
+    "id": "1.2-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.2 Interview Set 2",
+    "title": "Iterated Function Composition with $\\pi$",
+    "college": "Oxbridge Archive",
+    "year": "Set 2",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Let $f(x) = \\sqrt{x+1}$ and $g(x) = x^2 + 1$. Find\n$$f\\bigl(g(f(g(f(g(\\pi)))))\\bigr).$$",
+    "hints": [
+      "Instead of plugging $\\pi$ in immediately, compute the single composite operation $h(x) = f(g(x))$ first!",
+      "Simplify $f(g(x)) = \\sqrt{(x^2 + 1) + 1}$.",
+      "Now apply $h(x) = \\sqrt{x^2 + 2}$ three times starting from $u_0 = \\pi$."
+    ],
+    "solution": "Compute the composite block $h(x) = f(g(x))$:\n$$f(g(x)) = \\sqrt{(x^2+1)+1} = \\sqrt{x^2+2}.$$\nIterating starting with $u_0 = \\pi$:\n$$u_1 = f(g(\\pi)) = \\sqrt{\\pi^2 + 2},$$\n$$u_2 = f(g(u_1)) = \\sqrt{(\\pi^2 + 2) + 2} = \\sqrt{\\pi^2 + 4},$$\n$$u_3 = f(g(u_2)) = \\sqrt{(\\pi^2 + 4) + 2} = \\sqrt{\\pi^2 + 6}.$$\nThus, $f(g(f(g(f(g(\\pi)))))) = \\mathbf{\\sqrt{\\pi^2 + 6}}$.",
+    "number": 9
+  },
+  {
+    "id": "1.2-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.2 Interview Set 2",
+    "title": "Euclidean Algorithm for Large Integers",
+    "college": "Oxbridge Archive",
+    "year": "Set 2",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Find the highest common factor of $36838$ and $38972$.",
+    "hints": [
+      "Use the Euclidean algorithm: $\\gcd(a, b) = \\gcd(b, a \\bmod b)$.",
+      "First step: $38972 - 36838 = 2134$. Now divide $36838$ by $2134$.",
+      "Continue dividing remainders carefully ($36838 = 17 \\times 2134 + 560$, etc.) until the remainder is $0$."
+    ],
+    "solution": "Apply the Euclidean algorithm:\n$$\\begin{aligned}\n38972 &= 1 \\times 36838 + 2134 \\\\\n36838 &= 17 \\times 2134 + 560 \\quad (17 \\times 2134 = 36278) \\\\\n2134 &= 3 \\times 560 + 454 \\\\\n560 &= 1 \\times 454 + 106 \\\\\n454 &= 4 \\times 106 + 30 \\\\\n106 &= 3 \\times 30 + 16 \\\\\n30 &= 1 \\times 16 + 14 \\\\\n16 &= 1 \\times 14 + 2 \\\\\n14 &= 7 \\times 2 + 0.\n\\end{aligned}$$\nThe last non-zero remainder is **$2$**, so $\\gcd(36838, 38972) = 2$.",
+    "number": 10
+  },
+  {
+    "id": "1.2-p4",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.2 Interview Set 2",
+    "title": "Vertical Projection with Air Resistance",
+    "college": "Oxbridge Archive",
+    "year": "Set 2",
+    "topic": "Mechanics",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Two particles, A and B, of the same size and mass are projected vertically upward from the same point. Both reach the same maximum height, but B experiences air resistance while A does not.\n(a) Which particle reaches its maximum height first?\n(b) How does the presence of resistance affect the initial speed required to reach the same height?",
+    "hints": [
+      "Start with (b) using energy conservation: at the top both have $E = mgh$ and $v = 0$. What happens to mechanical energy on the way up for B?",
+      "For (a), think backwards from the top ($v=0$ at height $h$), or compare the downward deceleration magnitude $|a_B(v)|$ vs $|a_A| = g$ during ascent.",
+      "Be careful: B starts faster, AND decelerates faster, yet covers the exact same distance $h$ to reach $v=0$. Compare $v_A(y)$ and $v_B(y)$ at every height $y \\in [0, h)$!"
+    ],
+    "solution": "**(a) Particle B reaches its maximum height first.**\nDuring ascent ($v > 0$), gravity and drag both act downward on B:\n$$a_B = -g - \\frac{F_{\\text{drag}}(v)}{m} < -g = a_A.$$\nAt any given height $y < h$, particle B still has to dissipate future drag work on the remaining climb $(h - y)$ in addition to gaining $mg(h-y)$ potential energy, so its upward speed $v_B(y)$ is strictly greater than $v_A(y)$ at every height $y \\in [0, h)$. Since $t = \\int_0^h \\frac{dy}{v(y)}$, B takes strictly less time to reach height $h$.\n\n**(b) Air resistance requires a strictly higher initial speed ($v_{0,B} > v_{0,A}$).**\nBy work-energy:\n$$\\frac{1}{2}mv_{0,B}^2 = mgh + W_{\\text{drag}} > mgh = \\frac{1}{2}mv_{0,A}^2 \\implies v_{0,B} > v_{0,A}.$$",
+    "number": 11
+  },
+  {
+    "id": "1.2-p5",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.2 Interview Set 2",
+    "title": "Financial Times $p$-Beauty Contest Game",
+    "college": "Oxbridge Archive",
+    "year": "Set 2",
+    "topic": "Logic & Game Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "A competition in the *Financial Times* asked entrants to submit an integer between $1$ and $100$. The person closest to $\\frac{2}{3}$ of the average of all submitted numbers won £5000. What number would you submit?",
+    "hints": [
+      "Start from a naive baseline: if everyone guessed uniformly between $1$ and $100$, the average would be $\\sim 50$. What is $\\frac{2}{3}$ of $50$?",
+      "What happens if other rational players also think one step ahead? Why is any number above $67$ strictly dominated?",
+      "Iterate this elimination of strictly dominated strategies to find the unique Nash equilibrium—and also consider behavioral psychology for real human entrants!"
+    ],
+    "solution": "This is the classic **$p$-beauty contest game** ($p = 2/3$):\n- **Level 0 (random):** Mean $\\approx 50 \\implies \\frac{2}{3} \\times 50 \\approx 33$.\n- **Level 1:** Anticipating random players, submit $33$.\n- **Level 2:** Anticipating Level-1 players, submit $\\frac{2}{3} \\times 33 = 22$.\n- **Iterated Elimination of Dominated Strategies:** Because no average can exceed $100$, no winning target exceeds $66.\\overline{6}$, so numbers $>67$ are strictly dominated. Iterating $x_k = \\left(\\frac{2}{3}\\right)^k \\times 100 \\to 1$ shows that **1** is the unique Nash equilibrium under common knowledge of rationality.\n\n*Interview commentary:* In real-world newspaper experiments (including the actual *FT* contest), most entrants stop at 1–3 levels of reasoning, making winning submissions typically around **19–22** (or lower in mathematically sophisticated cohorts). Discussing both the theoretical Nash equilibrium (**1**) and the behavioral level-$k$ adjustment is ideal.",
+    "number": 12
+  },
+  {
+    "id": "1.3.1-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Interview 1",
+    "title": "Fermat Curves $x^n + y^n = 1$ & Rational Points",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Graph Sketching",
+    "difficulty": "Standard",
+    "isSketch": true,
+    "statement": "Focusing on the first quadrant:\n(a) Sketch the curves $x^2 + y^2 = 1$, $x^3 + y^3 = 1$, $x^4 + y^4 = 1$, and $x^5 + y^5 = 1$. Is $x^3 + y^3 = 1$ inside or outside $x^2 + y^2 = 1$?\n(b) Is there a maximum number of such curves that can be drawn within the unit square $0 \\le x \\le 1, 0 \\le y \\le 1$?\n(c) Use Fermat's Last Theorem to discuss whether rational points can lie on curves of the form $x^n + y^n = 1$, $n \\ge 3$.",
+    "hints": [
+      "For $0 < x < 1$, compare $x^3$ and $x^2$. Which is smaller? What does that imply for $y = (1 - x^n)^{1/n}$?",
+      "Check the intersection of each curve with the diagonal $y = x$: solve $2x^n = 1$. What happens as $n \\to \\infty$?",
+      "For (c), write a hypothetical rational point as $(A/C, B/C)$ with common denominator $C > 0$ and clear denominators."
+    ],
+    "solution": "**(a)** For $0 < x < 1$, increasing $n$ makes $x^n$ smaller ($x^n < x^2$), so $y^n = 1 - x^n$ is larger, and taking the $n$-th root makes $y$ strictly larger than for $n=2$. All curves pass through $(1,0)$ and $(0,1)$. On the symmetry line $y=x$:\n$$2x^n = 1 \\implies x = \\left(\\frac{1}{2}\\right)^{1/n},$$\nwhich increases strictly from $2^{-1/2} \\approx 0.707$ to $2^{-1/3} \\approx 0.794$, $2^{-1/4} \\approx 0.841 \\to 1$. Thus $x^3+y^3=1$ lies **strictly outside** $x^2+y^2=1$ in the first quadrant, bulging outward toward the unit square boundary as $n \\to \\infty$.\n\n**(b)** **No** maximum number—there is an infinite family of distinct curves $x^n + y^n = 1$ for every $n \\ge 1$, all contained in $[0,1]^2$.\n\n**(c)** If $(x, y) = (A/C, B/C)$ were a rational point on $x^n + y^n = 1$ ($n \\ge 3$), then $A^n + B^n = C^n$. By Fermat's Last Theorem, there are no integer solutions with $ABC \\ne 0$. Hence the only rational points on $x^n + y^n = 1$ ($n \\ge 3$) are the trivial axis intercepts: $(1,0), (0,1)$ (and $(-1,0), (0,-1)$ when $n$ is even).",
+    "number": 13
+  },
+  {
+    "id": "1.3.1-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Interview 1",
+    "title": "Infinite Trigonometric Geometric Series",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many solutions does the equation\n$$2 = \\sin x + \\sin^2 x + \\sin^3 x + \\sin^4 x + \\dots$$\nhave (for $x \\in [0, 2\\pi)$)?",
+    "hints": [
+      "Recognize the right-hand side as an infinite geometric series with first term $s = \\sin x$ and common ratio $s = \\sin x$.",
+      "When does this infinite geometric series converge? What is its sum $\\frac{s}{1-s}$?",
+      "Solve $\\frac{s}{1-s} = 2$, verify $|s| < 1$, and count solutions to $\\sin x = s$ in $[0, 2\\pi)$ (noting there are infinitely many across $\\mathbb{R}$)."
+    ],
+    "solution": "Let $s = \\sin x$. The geometric series converges iff $|s| < 1$, to sum $\\frac{s}{1-s}$. Setting this equal to $2$:\n$$\\frac{s}{1-s} = 2 \\implies s = 2 - 2s \\implies 3s = 2 \\implies s = \\frac{2}{3}.$$\nSince $|2/3| < 1$, the series validly converges. On the fundamental domain $x \\in [0, 2\\pi)$, $\\sin x = \\frac{2}{3}$ has **2** solutions: $x = \\arcsin(2/3)$ and $x = \\pi - \\arcsin(2/3)$. (Across all $x \\in \\mathbb{R}$, there are infinitely many solutions $2k\\pi + \\arcsin(2/3)$ and $(2k+1)\\pi - \\arcsin(2/3)$.)",
+    "number": 14
+  },
+  {
+    "id": "1.3.2-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Interview 2",
+    "title": "Sketch $y = x^2 \\sin(1/x)$",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Graph Sketching",
+    "difficulty": "Standard",
+    "isSketch": true,
+    "statement": "Sketch the curve\n$$y = x^2 \\sin\\!\\left(\\frac{1}{x}\\right).$$",
+    "hints": [
+      "Check parity (odd/even) and find an upper and lower bounding envelope using $-1 \\le \\sin(1/x) \\le 1$.",
+      "What happens as $x \\to 0$? Is the function continuous and differentiable at $x = 0$ if we define $f(0) = 0$?",
+      "What happens for very large $|x|$? Use the small-angle approximation $\\sin u \\approx u$ for $u = 1/x \\to 0$."
+    ],
+    "solution": "Key features to include on your sketch:\n1. **Domain & Symmetry:** Defined for $x \\ne 0$. Since $(-x)^2\\sin(-1/x) = -x^2\\sin(1/x)$, it is an **odd** function.\n2. **Parabolic Envelope:** Since $-1 \\le \\sin(1/x) \\le 1$, the curve is trapped between $y = -x^2$ and $y = x^2$, touching them whenever $\\frac{1}{x} = \\frac{\\pi}{2} + k\\pi$.\n3. **Behavior near $x=0$:** By the Squeeze Theorem, $\\lim_{x\\to 0} x^2\\sin(1/x) = 0$. Furthermore, $f'(0) = \\lim_{h\\to 0} \\frac{h^2\\sin(1/h)}{h} = \\lim_{h\\to 0} h\\sin(1/h) = 0$, so it approaches $(0,0)$ with infinitely rapid oscillations compressed between $\\pm x^2$ and a horizontal tangent at the origin.\n4. **Large $|x|$ asymptote:** For $|x| \\gg 1$, $\\sin(1/x) \\approx \\frac{1}{x}$, so $y \\approx x^2 \\cdot \\frac{1}{x} = x$. Wait—more accurately, $y - x = x^2\\sin(1/x) - x \\sim -\\frac{1}{6x} \\to 0$, so the line **$y = x$** is an oblique asymptote as $x \\to \\pm\\infty$!",
+    "number": 15
+  },
+  {
+    "id": "1.3.2-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Interview 2",
+    "title": "Selecting 51 Numbers from $1$ to $1000$",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Suppose $51$ numbers are selected from the integers $1$ to $1000$. Can one choose such a collection containing no:\n(i) even numbers?\n(ii) prime numbers?\n(iii) coprime pairs?\n(iv) square numbers?\n(v) numbers which are the sum of a square and a cube?",
+    "hints": [
+      "For each part, count how many integers in $\\{1, \\dots, 1000\\}$ are *allowed* (avoid the forbidden property). If at least 51 allowed numbers exist, you can construct such a set!",
+      "For (iii), 'no coprime pairs' means EVERY pair shares a factor $>1$. What is the easiest way to guarantee all 51 numbers share a common factor?",
+      "For (v), how many positive squares $\\le 1000$ and positive cubes $\\le 1000$ are there? Bound the total number of sums $a^2 + b^3 \\le 1000$."
+    ],
+    "solution": "**(i) No even numbers: Yes.** There are $500$ odd numbers in $\\{1,\\dots,1000\\}$; pick $\\{1, 3, \\dots, 101\\}$.\n**(ii) No prime numbers: Yes.** There are $168$ primes $\\le 1000$, leaving $832$ non-primes (composites and $1$), easily $\\ge 51$.\n**(iii) No coprime pairs: Yes.** Choose $51$ multiples of $2$: $\\{2, 4, 6, \\dots, 102\\}$. Every pair shares factor $2$, so no two are coprime.\n**(iv) No square numbers: Yes.** Only $\\lfloor \\sqrt{1000} \\rfloor = 31$ squares exist up to $1000$, leaving $969$ non-squares.\n**(v) No sum of a square and a cube: Yes.** There are $31$ positive squares and $10$ positive cubes $\\le 1000$ ($31 \\times 10 = 310$ sums max; even allowing $0^2$ or $0^3$ adds at most $41$ more, well below $949$). At least $690$ numbers remain from which $51$ can be chosen.",
+    "number": 16
+  },
+  {
+    "id": "1.3.2-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Interview 2",
+    "title": "Infinite 2D Grid Neighbor Average (Discrete Maximum Principle)",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Logic & Game Theory",
+    "difficulty": "Challenging",
+    "isSketch": false,
+    "statement": "In an infinite two-dimensional grid, the number in each box is greater than or equal to the average of the numbers in its four neighbouring boxes. Show that all the numbers in the grid are the same (assuming the values are bounded or attain a maximum).",
+    "hints": [
+      "Let $M$ be the maximum value in the grid, attained at some cell $(i_0, j_0)$.",
+      "Write down the inequality for $(i_0, j_0)$: $M \\ge \\frac{1}{4}(u_{\\text{N}} + u_{\\text{S}} + u_{\\text{E}} + u_{\\text{W}})$, knowing each neighbour is $\\le M$.",
+      "Can any of the four neighbours be strictly less than $M$? Now propagate this argument across the entire grid by induction!"
+    ],
+    "solution": "Let $u(i,j)$ be the value at $(i,j)$. Suppose $u$ attains a global maximum $M$ at some cell $(i_0, j_0)$. By hypothesis:\n$$M = u(i_0, j_0) \\ge \\frac{u(i_0+1, j_0) + u(i_0-1, j_0) + u(i_0, j_0+1) + u(i_0, j_0-1)}{4}.$$\nSince every neighbour satisfies $u(x,y) \\le M$, if any single neighbour were strictly less than $M$, their average would be strictly less than $M$, a contradiction. Therefore, all four neighbours must equal $M$.\nBy induction on Manhattan distance from $(i_0, j_0)$, every cell in the infinite connected grid equals $M$. (This is the discrete Maximum Principle for subharmonic functions; note that if values are only bounded above and not assumed to attain a maximum, on $\\mathbb{Z}^2$ a bounded subharmonic function is still constant, though the interview prompt explicitly simplifies by assuming a maximum is attained or boundedness.)",
+    "number": 17
+  },
+  {
+    "id": "1.3.3-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Further Questions",
+    "title": "Roots & Turning Points of $(x-a)^3 + (x-b)^3 = 0$",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Let $a \\ne b$ and $a, b > 0$. How many real solutions are there to $(x-a)^3 + (x-b)^3 = 0$? Find the solution, prove uniqueness, and find any turning points.",
+    "hints": [
+      "Rearrange as $(x-a)^3 = (b-x)^3$ and take the real cube root of both sides.",
+      "To check turning points and prove uniqueness via calculus, differentiate $g(x) = (x-a)^3 + (x-b)^3$.",
+      "Analyze the sign of $g'(x) = 3(x-a)^2 + 3(x-b)^2$ when $a \\ne b$. Can it ever be zero or negative?"
+    ],
+    "solution": "Rearrange the equation:\n$$(x-a)^3 = -(x-b)^3 = (b-x)^3.$$\nSince $t \\mapsto t^3$ is strictly increasing and bijective on $\\mathbb{R}$, taking the unique real cube root gives:\n$$x - a = b - x \\implies x = \\frac{a+b}{2}.$$\nLet $g(x) = (x-a)^3 + (x-b)^3$. Differentiating:\n$$g'(x) = 3(x-a)^2 + 3(x-b)^2.$$\nBecause $a \\ne b$, $(x-a)^2$ and $(x-b)^2$ cannot both be zero simultaneously, so $g'(x) > 0$ for all $x \\in \\mathbb{R}$. Hence $g$ is strictly increasing (confirming the root $x = \\frac{a+b}{2}$ is unique) and has **no turning points**. It has a point of inflection at $g''(x) = 6(x-a)+6(x-b) = 0 \\implies x = \\frac{a+b}{2}$.",
+    "number": 18
+  },
+  {
+    "id": "1.3.3-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Further Questions",
+    "title": "Infinite Continued Fraction (Golden Ratio)",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Find $x$ if\n$$x = 1 + \\cfrac{1}{1 + \\cfrac{1}{1 + \\cfrac{1}{1 + \\dots}}}$$",
+    "hints": [
+      "Notice the self-similar structure inside the denominator of the first fraction.",
+      "Write a single algebraic equation relating $x$ to itself: $x = 1 + \\frac{1}{x}$.",
+      "Solve the resulting quadratic $x^2 - x - 1 = 0$, and explain why one root is discarded."
+    ],
+    "solution": "Observing the self-similarity, $x$ satisfies:\n$$x = 1 + \\frac{1}{x}.$$\nMultiplying by $x$ gives $x^2 - x - 1 = 0$, with roots $x = \\frac{1 \\pm \\sqrt{5}}{2}$. Since all terms in the continued fraction are positive, $x > 0$, so we discard the negative root, obtaining the Golden Ratio:\n$$x = \\frac{1 + \\sqrt{5}}{2} = \\phi \\approx 1.618.$$",
+    "number": 19
+  },
+  {
+    "id": "1.3.3-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Further Questions",
+    "title": "Defining $e^x$ and Sketching $\\frac{e^x}{x}$ and $\\frac{e^x - x - 1}{x^3 + x^2}$",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Graph Sketching",
+    "difficulty": "Challenging",
+    "isSketch": true,
+    "statement": "Define $e^x$. Sketch $y = \\dfrac{e^x}{x}$ and $y = \\dfrac{e^x - x - 1}{x^3 + x^2}$.",
+    "hints": [
+      "Give a clean analytical definition of $e^x$ (e.g., unique solution to $f'(x)=f(x)$ with $f(0)=1$, or $\\sum_{k=0}^\\infty \\frac{x^k}{k!}$).",
+      "For $y = \\frac{e^x}{x}$, find the asymptotes ($x=0$, $x\\to-\\infty$, $x\\to+\\infty$) and differentiate to find the stationary point at $x=1$.",
+      "For $y = \\frac{e^x - x - 1}{x^2(x+1)}$, expand $e^x$ near $x=0$! Is $x=0$ a vertical asymptote or a removable discontinuity?"
+    ],
+    "solution": "**Definition of $e^x$:** The unique differentiable function satisfying $\\frac{d}{dx}(e^x) = e^x$ with $e^0 = 1$ (equivalently $\\sum_{k=0}^\\infty \\frac{x^k}{k!}$ or $\\lim_{n\\to\\infty}(1+x/n)^n$).\n\n**Sketch of $y = \\frac{e^x}{x}$:**\n- Vertical asymptote at $x=0$: $y \\to +\\infty$ as $x\\to 0^+$, $y \\to -\\infty$ as $x \\to 0^-$.\n- As $x\\to +\\infty$, $y \\to +\\infty$ exponentially; as $x\\to -\\infty$, $y \\to 0^-$.\n- Derivative: $y' = \\frac{e^x(x-1)}{x^2}$, giving a local minimum at $(1, e)$. Always decreasing on $(-\\infty, 0)$.\n\n**Sketch of $y = \\frac{e^x - x - 1}{x^2(x+1)}$:**\n- Near $x=0$: $e^x - x - 1 = \\frac{x^2}{2} + \\frac{x^3}{6} + O(x^4)$, so\n$$\\lim_{x\\to 0} \\frac{e^x - x - 1}{x^2(x+1)} = \\frac{1}{2}.$$\nThus $x=0$ is a **removable discontinuity (hole at $(0, 1/2)$)**, NOT an asymptote!\n- At $x = -1$: numerator is $e^{-1} > 0$, simple zero in denominator $\\implies$ vertical asymptote ($y \\to +\\infty$ as $x \\to -1^+$, $y \\to -\\infty$ as $x \\to -1^-$).\n- As $x \\to +\\infty$, $y \\to +\\infty$; as $x \\to -\\infty$, $y \\approx \\frac{-x}{x^3} = -\\frac{1}{x^2} \\to 0^-$. (Note: $y > 0$ for all $x > -1$ since $e^x > 1 + x$.)",
+    "number": 20
+  },
+  {
+    "id": "1.3.3-p4",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.3 Interview Set 3 — Further Questions",
+    "title": "Binary Guessing Cards Trick",
+    "college": "Oxbridge Archive",
+    "year": "Set 3",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Explain the binary guessing trick (Christmas cracker cards), where you ask someone which cards contain their secret number and immediately deduce the number.",
+    "hints": [
+      "Write any positive integer $N < 2^k$ in base 2 (binary): $N = \\sum_{i=0}^{k-1} b_i 2^i$ with $b_i \\in \\{0, 1\\}$.",
+      "How should you decide which numbers are printed on Card $i$?",
+      "What is the smallest (top-left) number on Card $i$, and how do you reconstruct $N$ from the cards the person selects?"
+    ],
+    "solution": "Every integer $1 \\le N \\le 2^k - 1$ has a unique binary representation:\n$$N = b_0 2^0 + b_1 2^1 + b_2 2^2 + \\dots + b_{k-1} 2^{k-1}, \\quad b_i \\in \\{0,1\\}.$$\nWe create $k$ cards: **Card $i$** lists all integers whose $i$-th binary bit is $b_i = 1$.\nWhen the person points out all cards containing their secret number $N$, they are revealing precisely which bits $b_i$ equal $1$. Since the smallest number on Card $i$ is $2^i$ (binary $100\\dots 0_2$), summing the **top-left (smallest) numbers** of the selected cards computes $\\sum_{b_i=1} 2^i = N$.",
+    "number": 21
+  },
+  {
+    "id": "1.4-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.4 Interview Set 4",
+    "title": "Bus M and Bus Z Arrival Paradox",
+    "college": "Oxbridge Archive",
+    "year": "Set 4",
+    "topic": "Probability",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Two buses, M and Z, arrive at fixed minutes past each hour, with one of each bus every hour. You arrive at a uniformly distributed random time and observe that you are much more likely to catch bus M than bus Z. Given that bus Z arrives during the first half of the hour ($0 < z \\le 30$), what can you deduce about arrival times $m$ and $z$?",
+    "hints": [
+      "Draw the 60-minute hour as a circle (clock face) and mark $z$ and $m$ on it.",
+      "Which interval of arrival times leads to catching bus M (the next bus to arrive after you reach the stop)?",
+      "If you are much more likely to catch M, the window before M (and after Z) must be much larger than $30$ minutes. With $0 < z \\le 30$, where must $z$ and $m$ lie?"
+    ],
+    "solution": "Let $z, m \\in [0, 60)$ be the minutes past the hour when buses Z and M arrive. On the 60-minute cycle, you catch bus M if you arrive after Z and before M.\nFor this window to be much larger than $30$ minutes (since $z \\le 30$):\n- If $m < z$, the gap from Z (wrapping past 60) to M would be $(60 - z) + m$. Wait: if $z=29$ and $m=28$, $(60-29)+28 = 59$! Hold on—check both cases!\nLet's examine carefully:\n- **Case 1 ($z < m$):** Window for M is $(z, m]$ of length $m - z$. For $m - z \\gg 30$ with $z > 0$, we need $z$ near $0$ (just after the hour) and $m$ near $60$ (just before the end of the hour), e.g., $z=1, m=59 \\implies P(M) = 58/60$.\n- **Case 2 ($m < z$):** Window for M wraps past the hour: $(z, 60] \\cup [0, m]$, of length $(60 - z) + m = 60 - (z - m)$. Since $z \\le 30$, if $m$ is *just before* $z$ (e.g. $z = 20, m = 19$), the window for M is $59$ minutes!\nIn general, the waiting window preceding M around the 60-minute clock is $(m - z) \\bmod 60 \\gg 30$, meaning **bus M arrives shortly before bus Z** (so Z follows closely behind M in the cyclic schedule, either $z$ near $0$ and $m$ near $60$, or $m$ slightly less than $z$).",
+    "number": 22
+  },
+  {
+    "id": "1.5.1-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.5 Interview Set 5 — Interview 1",
+    "title": "Infinitude of Prime Numbers (Euclid's Proof)",
+    "college": "Oxbridge Archive",
+    "year": "Set 5",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that the set of prime numbers is infinite.",
+    "hints": [
+      "Assume for contradiction that there are only finitely many primes: $p_1, p_2, \\dots, p_k$.",
+      "Construct a new integer $N = p_1 p_2 \\cdots p_k + 1$.",
+      "Does $N$ have to be prime itself? What does the Fundamental Theorem of Arithmetic guarantee about $N$?"
+    ],
+    "solution": "Assume for contradiction that there are finitely many primes $\\{p_1, p_2, \\dots, p_k\\}$. Consider:\n$$N = p_1 p_2 \\cdots p_k + 1.$$\nSince $N > 1$, $N$ has at least one prime divisor $q$. Because our list contains all primes, $q = p_i$ for some $i$, so $q \\mid p_1 p_2 \\cdots p_k$.\nSince $q \\mid N$ and $q \\mid p_1 \\cdots p_k$, $q$ must divide their difference $N - p_1 \\cdots p_k = 1$, which is impossible since $q \\ge 2$. Thus there are infinitely many primes.",
+    "number": 23
+  },
+  {
+    "id": "1.5.1-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.5 Interview Set 5 — Interview 1",
+    "title": "Infinitely Many Primes of Form $6m + 5$",
+    "college": "Oxbridge Archive",
+    "year": "Set 5",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Prove that there are infinitely many prime numbers of the form $6m + 5$ ($m \\in \\mathbb{Z}$).",
+    "hints": [
+      "Note that every prime $>3$ is congruent to either $1$ or $5 \\equiv -1 \\pmod 6$.",
+      "What is the product of numbers that are all $\\equiv 1 \\pmod 6$? What does that tell you about any integer $\\equiv 5 \\pmod 6$?",
+      "Suppose finitely many primes $q_1, \\dots, q_k \\equiv 5 \\pmod 6$ exist. Construct $N = 6q_1 q_2 \\cdots q_k - 1$ (avoiding $q_i = 2, 3$!)."
+    ],
+    "solution": "Every integer coprime to $6$ is $\\equiv 1$ or $5 \\pmod 6$. Observe that $(6a+1)(6b+1) = 6(6ab+a+b)+1 \\equiv 1 \\pmod 6$, so any product of primes congruent to $1 \\pmod 6$ is also $\\equiv 1 \\pmod 6$.\nConsequently, any positive integer $N \\equiv 5 \\pmod 6$ must have at least one prime factor congruent to $5 \\pmod 6$.\n\nAssume for contradiction there are finitely many primes of the form $6m+5$, say $\\{q_1, \\dots, q_k\\}$. Construct:\n$$N = 6q_1 q_2 \\cdots q_k - 1 = 6(q_1\\cdots q_k - 1) + 5 \\equiv 5 \\pmod 6.$$\nSince $N$ is coprime to $2$ and $3$, it must have a prime factor $p \\equiv 5 \\pmod 6$, so $p = q_i$ for some $i$. Then $p \\mid 6q_1\\cdots q_k$ and $p \\mid N$, so $p \\mid (6q_1\\cdots q_k - N) = 1$, contradiction.",
+    "number": 24
+  },
+  {
+    "id": "1.5.2-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.5 Interview Set 5 — Interview 2",
+    "title": "Equal Subset Sums (Pigeonhole Principle)",
+    "college": "Oxbridge Archive",
+    "year": "Set 5",
+    "topic": "Combinatorics",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Consider a set of ten positive integers $S = \\{x_1, x_2, \\dots, x_{10}\\}$ with $0 < x_i < 100$. Prove that there exist two distinct subsets of $S$ that have the exact same sum. What affects the likelihood: the range or the number of elements?",
+    "hints": [
+      "Count how many non-empty subsets $S$ has: $2^{10} - 1$.",
+      "Bound the minimum and maximum possible sum of any non-empty subset of $S$ (recall $x_i \\le 99$).",
+      "Compare the number of subsets (pigeons) to the number of possible sums (pigeonholes). Which parameter grows exponentially vs linearly?"
+    ],
+    "solution": "There are $2^{10} - 1 = 1023$ non-empty subsets of $S$.\nSince $1 \\le x_i \\le 99$, the sum of any non-empty subset lies between $1$ and $90 + 91 + \\dots + 99 = 945$ (and certainly $< 10 \\times 99 = 990$).\nBecause there are $1023$ non-empty subsets (pigeons) and at most $945$ (or $990$) possible sum values (pigeonholes), by the **Pigeonhole Principle** at least two distinct subsets $A, B \\subseteq S$ must have the same sum. *(Removing $A \\cap B$ gives two disjoint subsets with equal sum.)*\n\n**Range vs. Number of Elements:** The number of subsets grows exponentially ($2^n$), while the maximum sum grows only linearly ($\\approx nR$). Thus **the number of elements $n$** dominates far more strongly than the range $R$.",
+    "number": 25
+  },
+  {
+    "id": "1.5.2-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.5 Interview Set 5 — Interview 2",
+    "title": "Sketch $y = \\frac{1}{(x+1)(x+2)}$",
+    "college": "Oxbridge Archive",
+    "year": "Set 5",
+    "topic": "Graph Sketching",
+    "difficulty": "Warm-up",
+    "isSketch": true,
+    "statement": "Sketch the graph of\n$$y = \\frac{1}{(x+1)(x+2)}.$$",
+    "hints": [
+      "Find the vertical asymptotes (where the denominator is $0$) and horizontal asymptote as $x \\to \\pm\\infty$.",
+      "Analyze the sign of $y$ in the three intervals: $x < -2$, $-2 < x < -1$, and $x > -1$.",
+      "Where is the local maximum in the middle interval $(-2, -1)$? Evaluate $y$ at the midpoint $x = -1.5$ and at $x = 0$."
+    ],
+    "solution": "- **Vertical Asymptotes:** $x = -1$ and $x = -2$.\n- **Horizontal Asymptote:** $y \\to 0^+$ as $x \\to \\pm\\infty$.\n- **Region $x > -1$:** Both factors positive $\\implies y > 0$; $y \\to +\\infty$ as $x \\to -1^+$, $y(0) = \\frac{1}{2}$, strictly decreasing to $0$.\n- **Region $-2 < x < -1$:** $(x+1)<0$ and $(x+2)>0 \\implies y < 0$; $y \\to -\\infty$ near both asymptotes. By symmetry around $x = -1.5$, there is a local maximum at $(-1.5, -4)$ since $\\frac{1}{(-0.5)(0.5)} = -4$.\n- **Region $x < -2$:** Both factors negative $\\implies y > 0$; $y \\to +\\infty$ as $x \\to -2^-$, decreasing toward $0^+$ as $x \\to -\\infty$.",
+    "number": 26
+  },
+  {
+    "id": "1.6.1-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 1",
+    "title": "Improper Integral $\\int_0^1 \\frac{1}{x^n}\\,dx$ & Sketching",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": true,
+    "statement": "Sketch $y = \\dfrac{1}{x}$ and $y = \\dfrac{1}{\\sqrt{x}}$ on $(0, 1)$. For what values of $n$ does\n$$\\int_0^1 \\frac{1}{x^n}\\,dx$$\nhave a finite value?",
+    "hints": [
+      "On $(0,1)$, is $x < \\sqrt{x}$ or $x > \\sqrt{x}$? Take reciprocals to see which curve sits higher!",
+      "Write the improper integral as $\\lim_{\\epsilon \\to 0^+} \\int_\\epsilon^1 x^{-n}\\,dx$, treating $n = 1$ separately.",
+      "For $n \\ne 1$, determine when $\\lim_{\\epsilon \\to 0^+} \\epsilon^{1-n}$ is finite."
+    ],
+    "solution": "On $(0,1)$, $0 < x < \\sqrt{x} < 1$, so taking reciprocals gives $\\frac{1}{x} > \\frac{1}{\\sqrt{x}}$; both equal $1$ at $x=1$ and tend to $+\\infty$ as $x \\to 0^+$, with $1/x$ strictly steeper and lying above $1/\\sqrt{x}$.\n\nEvaluating the integral:\n- For $n \\ne 1$:\n$$\\int_0^1 x^{-n}\\,dx = \\lim_{\\epsilon \\to 0^+} \\left[\\frac{x^{1-n}}{1-n}\\right]_\\epsilon^1 = \\frac{1}{1-n} - \\lim_{\\epsilon \\to 0^+} \\frac{\\epsilon^{1-n}}{1-n},$$\nwhich is finite iff $1 - n > 0 \\iff n < 1$ (giving value $\\frac{1}{1-n}$).\n- For $n = 1$: $\\lim_{\\epsilon \\to 0^+} [-\\ln\\epsilon] = +\\infty$ (divergent).\nThus the integral converges to a finite value iff **$n < 1$**.",
+    "number": 27
+  },
+  {
+    "id": "1.6.1-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 1",
+    "title": "Graph Colouring & Chromatic Polynomials",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Combinatorics",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "(a) For a star graph $K_{1,3}$ (one center vertex joined to $3$ leaves), in how many ways can it be coloured using $k$ colours such that no adjacent vertices share a colour?\n(b) What if a new vertex is added and joined to all existing vertices of a graph $G$?",
+    "hints": [
+      "Colour the central vertex of $K_{1,3}$ first. How many colour choices remain for each of the $3$ outer leaves?",
+      "Notice the leaves do not connect to each other—only to the center!",
+      "For (b), if $V_{\\text{new}}$ connects to *every* vertex in $G$, can any vertex in $G$ reuse the colour chosen for $V_{\\text{new}}$?"
+    ],
+    "solution": "**(a)** Choose a colour for the center vertex in $k$ ways. Each of the $3$ leaves is adjacent *only* to the center, so each independently has $k - 1$ choices:\n$$P(K_{1,3}, k) = k(k-1)^3.$$\n(For $K_{1,m}$ in general, $P(K_{1,m}, k) = k(k-1)^m$.)\n\n**(b)** Adding a universal vertex $V_{\\text{new}}$ adjacent to every vertex of $G$ gives $k$ colour choices for $V_{\\text{new}}$, leaving $k - 1$ valid colours to properly colour $G$:\n$$P(G + v, k) = k \\cdot P(G, k - 1).$$",
+    "number": 28
+  },
+  {
+    "id": "1.6.1-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 1",
+    "title": "Quadratic and Exponential Inequalities",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Solve the inequalities:\n(a) $x^2 - 3x + 2 \\ge 0$\n(b) $x^2 - 5x + 6 \\ge 0$\n(c) $25^x + 25 \\cdot 5^{x-1} + 6 \\ge 0$",
+    "hints": [
+      "Factorise the quadratics in (a) and (b) to find their roots.",
+      "In (c), rewrite $25^x = (5^x)^2$ and $25 \\cdot 5^{x-1} = 5 \\cdot 5^x$.",
+      "Wait—pay attention to the signs! Let $u = 5^x$. What is the sign of $u$ for all real $x$?"
+    ],
+    "solution": "**(a)** $(x-1)(x-2) \\ge 0 \\implies x \\in (-\\infty, 1] \\cup [2, \\infty)$.\n**(b)** $(x-2)(x-3) \\ge 0 \\implies x \\in (-\\infty, 2] \\cup [3, \\infty)$.\n**(c)** Let $u = 5^x > 0$. Since $25^x = u^2$ and $25\\cdot 5^{x-1} = 5u$, the inequality is:\n$$u^2 + 5u + 6 = (u+2)(u+3) \\ge 0.$$\nBecause $u = 5^x > 0$ for all $x \\in \\mathbb{R}$, both $u+2 > 0$ and $u+3 > 0$, so their product is strictly positive everywhere. Hence **$x \\in \\mathbb{R}$** (all real numbers).",
+    "number": 29
+  },
+  {
+    "id": "1.6.2-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 2",
+    "title": "Fibonacci Partial Sums Identity",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Write the first ten Fibonacci numbers ($F_1=1, F_2=1$) and first six partial sums $S_n = \\sum_{k=1}^n F_k$. Prove that\n$$S_n = F_{n+2} - 1.$$",
+    "hints": [
+      "List $1, 1, 2, 3, 5, 8, 13, 21, 34, 55$ and compute $S_1, S_2, \\dots, S_6$.",
+      "Use induction on $n$: assume $S_k = F_{k+2} - 1$.",
+      "Add $F_{k+1}$ to both sides and apply the Fibonacci recurrence $F_{k+2} + F_{k+1} = F_{k+3}$."
+    ],
+    "solution": "First ten Fibonacci numbers: $1, 1, 2, 3, 5, 8, 13, 21, 34, 55$.\nFirst six partial sums: $S_1=1, S_2=2, S_3=4, S_4=7, S_5=12, S_6=20$ (matching $F_3-1, F_4-1, \\dots, F_8-1$).\n\n**Proof by induction:**\n- Base case $n=1$: $S_1 = 1 = 2 - 1 = F_3 - 1$.\n- Inductive step: Assume $S_k = F_{k+2} - 1$. Then:\n$$S_{k+1} = S_k + F_{k+1} = (F_{k+2} - 1) + F_{k+1} = (F_{k+2} + F_{k+1}) - 1 = F_{k+3} - 1.$$\nThus $S_n = F_{n+2} - 1$ for all $n \\ge 1$.",
+    "number": 30
+  },
+  {
+    "id": "1.6.2-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 2",
+    "title": "Zeckendorf's Theorem & Representation of 50",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Express $50$ as a sum of distinct Fibonacci numbers. Can this be done for any positive integer?",
+    "hints": [
+      "Try a greedy approach: subtract the largest Fibonacci number $\\le 50$, then repeat on the remainder.",
+      "To prove it works for *any* positive integer $N$ (and even avoids consecutive Fibonacci numbers!), use strong induction.",
+      "If $F_k \\le N < F_{k+1}$, show that $N - F_k < F_{k-1}$ so the greedy algorithm terminates strictly and never uses consecutive terms."
+    ],
+    "solution": "Using the greedy algorithm:\n1. Largest Fibonacci $\\le 50$ is $34$ (remainder $16$).\n2. Largest Fibonacci $\\le 16$ is $13$ (remainder $3$).\n3. $3$ is a Fibonacci number.\nThus: $50 = 34 + 13 + 3 = F_9 + F_7 + F_4$.\n\n**Yes, for every positive integer $N$** (Zeckendorf's Theorem, uniquely if using non-consecutive Fibonacci numbers): Let $F_k$ be the largest Fibonacci number $\\le N$, so $F_k \\le N < F_{k+1} = F_k + F_{k-1}$. Then $0 \\le N - F_k < F_{k-1} < F_k$. By strong induction, $N - F_k$ is a sum of distinct (non-consecutive) Fibonacci numbers strictly smaller than $F_{k-1}$, so adding $F_k$ gives a valid sum of distinct Fibonacci numbers for $N$.",
+    "number": 31
+  },
+  {
+    "id": "1.6.2-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.6 Interview Set 6 — Interview 2",
+    "title": "Parametric Curves & Logarithmic Spiral",
+    "college": "Oxbridge Archive",
+    "year": "Set 6",
+    "topic": "Graph Sketching",
+    "difficulty": "Standard",
+    "isSketch": true,
+    "statement": "Sketch the parametric curves:\n(a) $x(t) = t,\\; y(t) = t^2$\n(b) $x(t) = \\sin t,\\; y(t) = \\cos t$\n(c) $x(t) = e^{-2t} \\sin t,\\; y(t) = e^{-2t} \\cos t$",
+    "hints": [
+      "In (a) and (b), eliminate $t$. For (b), check the starting point at $t=0$ and direction of travel!",
+      "In (c), compute $r(t) = \\sqrt{x(t)^2 + y(t)^2}$ to convert to polar coordinates.",
+      "What happens to $r(t)$ and the angle as $t$ goes from $0$ to $+\\infty$, and as $t \\to -\\infty$?"
+    ],
+    "solution": "**(a)** $y = x^2$: standard upward parabola with vertex $(0,0)$, traced left-to-right as $t$ increases.\n**(b)** $x^2 + y^2 = 1$: unit circle centered at $(0,0)$, starting at $(0,1)$ at $t=0$ and traversed **clockwise**.\n**(c)** Notice $r(t) = \\sqrt{x^2 + y^2} = e^{-2t}$, and polar angle is $\\theta(t) = \\frac{\\pi}{2} - t$. This is a **logarithmic spiral**: starting at $(0,1)$ for $t=0$, as $t \\to +\\infty$ it spirals **clockwise** inward toward the origin with exponentially decaying radius; as $t \\to -\\infty$ it spirals outward infinitely.",
+    "number": 32
+  },
+  {
+    "id": "1.7-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.7 Interview Set 7",
+    "title": "Minimum & Expected Maximum of $n$ Die Rolls",
+    "college": "Oxbridge Archive",
+    "year": "Set 7",
+    "topic": "Probability",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "A fair six-sided die is rolled $n$ times.\n(a) What is the probability that the smallest number rolled is exactly $3$?\n(b) What is the expected value of the highest score obtained after $n$ rolls?",
+    "hints": [
+      "For (a), think about events $\\{M \\ge 3\\}$ vs $\\{M \\ge 4\\}$. How does $\\{M = 3\\}$ relate to them?",
+      "For (b), write the CDF $P(X \\le k) = (k/6)^n$ for the maximum score $X \\in \\{1,\\dots,6\\}$.",
+      "Use the discrete tail-sum formula $\\mathbb{E}[X] = \\sum_{k=0}^{5} P(X > k)$ or $\\sum_{k=1}^6 k [P(X\\le k)-P(X\\le k-1)]$."
+    ],
+    "solution": "**(a)** Let $M$ be the minimum roll. $\\{M \\ge 3\\}$ means all $n$ rolls are in $\\{3,4,5,6\\}$, probability $(4/6)^n = (2/3)^n$. $\\{M \\ge 4\\}$ means all rolls are in $\\{4,5,6\\}$, probability $(3/6)^n = (1/2)^n$.\n$$P(M = 3) = P(M \\ge 3) - P(M \\ge 4) = \\left(\\frac{2}{3}\\right)^n - \\left(\\frac{1}{2}\\right)^n.$$\n\n**(b)** Let $X$ be the maximum roll, so $P(X \\le k) = (k/6)^n$ for $k=0,\\dots,6$. By the tail probability identity:\n$$\\mathbb{E}[X] = \\sum_{k=0}^{5} P(X > k) = \\sum_{k=0}^{5} \\left[1 - \\left(\\frac{k}{6}\\right)^n\\right] = 6 - \\sum_{k=1}^{5} \\left(\\frac{k}{6}\\right)^n.$$",
+    "number": 33
+  },
+  {
+    "id": "1.7-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.7 Interview Set 7",
+    "title": "Definite Integrals of $\\cos^4\\theta$ and $\\cos^5\\theta$",
+    "college": "Oxbridge Archive",
+    "year": "Set 7",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Calculate $\\displaystyle\\int_0^\\pi \\cos^4\\theta\\,d\\theta$ and $\\displaystyle\\int_0^\\pi \\cos^5\\theta\\,d\\theta$.",
+    "hints": [
+      "For $\\cos^5\\theta$, test the symmetry substitution $u = \\pi - \\theta$ around $\\theta = \\pi/2$!",
+      "For $\\cos^4\\theta$, either use double-angle identities $\\cos^2\\theta = \\frac{1+\\cos 2\\theta}{2}$, or write $\\cos\\theta = \\frac{e^{i\\theta}+e^{-i\\theta}}{2}$ and expand with the binomial theorem.",
+      "Notice all non-constant $\\cos(m\\theta)$ terms integrate to $0$ over $[0, \\pi]$ for even $m$!"
+    ],
+    "solution": "**1. $\\int_0^\\pi \\cos^5\\theta\\,d\\theta$:**\nUsing $\\theta = \\pi - u$, $\\cos(\\pi - u) = -\\cos u$, so $\\cos^5(\\pi - u) = -\\cos^5 u$. By antisymmetry about $\\pi/2$:\n$$\\int_0^\\pi \\cos^5\\theta\\,d\\theta = 0.$$\n\n**2. $\\int_0^\\pi \\cos^4\\theta\\,d\\theta$:**\nUsing $\\cos\\theta = \\frac{e^{i\\theta}+e^{-i\\theta}}{2}$:\n$$\\cos^4\\theta = \\frac{1}{16}\\left(e^{4i\\theta} + 4e^{2i\\theta} + 6 + 4e^{-2i\\theta} + e^{-4i\\theta}\\right) = \\frac{1}{8}\\cos(4\\theta) + \\frac{1}{2}\\cos(2\\theta) + \\frac{3}{8}.$$\nIntegrating from $0$ to $\\pi$, the cosine terms vanish, leaving:\n$$\\int_0^\\pi \\cos^4\\theta\\,d\\theta = \\frac{3\\pi}{8}.$$",
+    "number": 34
+  },
+  {
+    "id": "1.7-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.7 Interview Set 7",
+    "title": "Anagrams of GAUSS and RAMANUJAN",
+    "college": "Oxbridge Archive",
+    "year": "Set 7",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many anagrams of **GAUSS** and **RAMANUJAN** are there?",
+    "hints": [
+      "Count the total number of letters $n$ and the multiplicity $n_i$ of each repeated letter.",
+      "Use the multinomial formula $\\frac{n!}{n_1! n_2! \\cdots}$.",
+      "For RAMANUJAN, carefully check every letter frequency (how many A's? how many N's?). Wait—check RAMANUJAN carefully: R(1), A(3), M(1), N(2)!! Wait: R-A-M-A-N-U-J-A-N has TWO N's!"
+    ],
+    "solution": "- **GAUSS:** $5$ letters with letter frequencies G:1, A:1, U:1, S:2.\n$$\\frac{5!}{2!} = \\frac{120}{2} = \\mathbf{60}.$$\n- **RAMANUJAN:** $9$ letters: R:1, A:3, M:1, N:2, U:1, J:1 (note: carefully count both **N**'s—there are 3 A's and 2 N's!).\n$$\\frac{9!}{3!\\,2!} = \\frac{362{,}880}{6 \\times 2} = \\mathbf{30{,}240}.$$\n*(Note: The archive PDF solution only divided by $3! = 6$ to get $60{,}480$ overlooking the two N's; in an interview, catching both A's ($3!$) and N's ($2!$) gives the exact count $30{,}240$!)*",
+    "number": 35
+  },
+  {
+    "id": "1.7-p4",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.7 Interview Set 7",
+    "title": "Two Projectiles Intersecting on the Ground",
+    "college": "Oxbridge Archive",
+    "year": "Set 7",
+    "topic": "Mechanics",
+    "difficulty": "Challenging",
+    "isSketch": false,
+    "statement": "A projectile is fired at angle $\\pi/4$ with speed $v$. Later, a second projectile is fired from the same point at speed $2v$. What is the latest time $\\Delta t$ at which the second projectile can be fired so that the two projectiles intersect on the ground?",
+    "hints": [
+      "Find the horizontal range $R_1$ and flight time $T_1$ of Projectile 1 ($V_1 = v, \\theta_1 = \\pi/4$).",
+      "Equate the range of Projectile 2 ($R_2 = \\frac{(2v)^2 \\sin(2\\theta_2)}{g}$) to $R_1$ to find $\\sin(2\\theta_2)$.",
+      "There are two valid launch angles $\\theta_2$ giving the same range! Which angle gives the *minimum* flight time $T_2$ so the delay $\\Delta t = T_1 - T_2$ is maximized?"
+    ],
+    "solution": "For Projectile 1 ($\\theta_1 = \\pi/4, V_1 = v$):\n$$T_1 = \\frac{2v\\sin(\\pi/4)}{g} = \\frac{\\sqrt{2}\\,v}{g}, \\qquad R_1 = \\frac{v^2\\sin(\\pi/2)}{g} = \\frac{v^2}{g}.$$\nFor Projectile 2 ($V_2 = 2v$) to land at the same point $R_2 = R_1$:\n$$\\frac{4v^2\\sin(2\\theta_2)}{g} = \\frac{v^2}{g} \\implies \\sin(2\\theta_2) = \\frac{1}{4}.$$\nTo maximize the launch delay $\\Delta t = T_1 - T_2$, we minimize $T_2 = \\frac{4v\\sin\\theta_2}{g}$ by choosing the **lower** trajectory angle: $2\\theta_2 = \\arcsin(1/4)$ ($\\theta_2 \\approx 7.24^\\circ$).\nUsing $\\cos(2\\theta_2) = \\frac{\\sqrt{15}}{4}$ and the half-angle identity:\n$$\\sin\\theta_2 = \\sqrt{\\frac{1 - \\cos(2\\theta_2)}{2}} = \\sqrt{\\frac{1 - \\frac{\\sqrt{15}}{4}}{2}} = \\frac{\\sqrt{4 - \\sqrt{15}}}{2\\sqrt{2}}.$$\nThus $T_2 = \\frac{\\sqrt{2(4-\\sqrt{15})}\\,v}{g}$, and the latest launch delay is:\n$$\\Delta t = T_1 - T_2 = \\frac{v}{g}\\left(\\sqrt{2} - \\sqrt{2(4 - \\sqrt{15})}\\right) = \\frac{v}{g}\\left(\\sqrt{2} - (\\sqrt{5}-\\sqrt{3})\\right) \\approx 0.900\\frac{v}{g}.$$",
+    "number": 36
+  },
+  {
+    "id": "1.8-p1",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.8 Interview Set 8",
+    "title": "Intersecting Circles, Oxford-Cambridge & 3D Earth-Sun",
+    "college": "Oxbridge Archive",
+    "year": "Set 8",
+    "topic": "Geometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Solve $x^2 + y^2 = b$ and $(x-a)^2 + y^2 = b$ geometrically. Relate this to:\n- Points equidistant from Oxford and Cambridge (80 miles apart) at distance 10, 40, or 50 miles.\n- Points in 3D equidistant from the Earth and Sun at distance 50 million miles (if they are 80 million miles apart).",
+    "hints": [
+      "Interpret each equation as a circle of radius $\\sqrt{b}$ centered at $(0,0)$ and $(a,0)$.",
+      "Subtract the two equations to find $x = a/2$, and discuss the three cases $b < a^2/4$, $b = a^2/4$, and $b > a^2/4$.",
+      "In 3D, what is the intersection of two equal spheres of radius $50$ whose centers are $80$ apart?"
+    ],
+    "solution": "Geometrically, these are two circles of radius $\\sqrt{b}$ centered at $(0,0)$ and $(a,0)$. Subtracting gives $x = a/2$, and $y = \\pm\\sqrt{b - a^2/4}$:\n- $b < a^2/4$: no intersection ($0$ solutions).\n- $b = a^2/4$: tangent at $(a/2, 0)$ ($1$ solution).\n- $b > a^2/4$: $2$ intersections at $(a/2, \\pm\\sqrt{b - a^2/4})$.\n\n**Oxford & Cambridge ($d = 80$ mi, $a/2 = 40$ mi):**\n- $10$ miles: Impossible ($10+10 < 80$).\n- $40$ miles: Unique midpoint ($40$ miles from both).\n- $50$ miles: Two points along the perpendicular bisector at distance $\\sqrt{50^2 - 40^2} = 30$ miles.\n\n**3D Earth & Sun:** Two spheres of radius $50$ million miles separated by $80$ million miles intersect in a **circle** of radius $30$ million miles lying in the perpendicular bisecting plane.",
+    "number": 37
+  },
+  {
+    "id": "1.8-p2",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.8 Interview Set 8",
+    "title": "Envelope of the Gaussian Family $y = m e^{-m^2 x^2}$",
+    "college": "Oxbridge Archive",
+    "year": "Set 8",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Challenging",
+    "isSketch": true,
+    "statement": "Sketch $y = m e^{-m^2 x^2}$ for $m > 0$. Find the envelope bounding all these curves.",
+    "hints": [
+      "Describe how the curve changes as $m$ increases: what happens to the peak height $y(0) = m$ and the width of the Gaussian bell?",
+      "To find the upper envelope at a fixed $x \\ne 0$, maximize $y(m) = m e^{-m^2 x^2}$ with respect to the parameter $m > 0$.",
+      "Set $\\frac{\\partial y}{\\partial m} = 0$, solve for $m$ in terms of $|x|$, and substitute back into $y$."
+    ],
+    "solution": "For fixed $m > 0$, $y = me^{-m^2 x^2}$ is a bell-shaped Gaussian centered at $x=0$ with peak $(0, m)$ and width $\\propto 1/m$: larger $m$ produces a taller, narrower spike.\nFor any fixed $x \\ne 0$, maximize $y$ with respect to $m$:\n$$\\frac{\\partial y}{\\partial m} = e^{-m^2 x^2} + m(-2mx^2)e^{-m^2 x^2} = (1 - 2m^2 x^2)e^{-m^2 x^2} = 0 \\implies m = \\frac{1}{\\sqrt{2}\\,|x|}.$$\nSubstituting back gives the bounding envelope hyperbola:\n$$y_{\\text{env}}(x) = \\frac{1}{\\sqrt{2}\\,|x|} e^{-1/2} = \\frac{1}{\\sqrt{2e}\\,|x|}.$$",
+    "number": 38
+  },
+  {
+    "id": "1.8-p3",
+    "section": "1. Anonymous Problem Sets",
+    "subset": "1.8 Interview Set 8",
+    "title": "Smallest Integer with 14 Positive Divisors",
+    "college": "Oxbridge Archive",
+    "year": "Set 8",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many positive divisors does $p^n q^m$ have (for distinct primes $p, q$)? Find the smallest positive integer with exactly $14$ positive factors.",
+    "hints": [
+      "Every divisor has the form $p^a q^b$ with $0 \\le a \\le n$ and $0 \\le b \\le m$. How many choices for $(a, b)$?",
+      "Factor $14$ into positive integers (e.g., $14 \\times 1$ or $7 \\times 2$) to see all possible prime-power exponent structures.",
+      "Assign the largest exponent to the smallest prime ($2$) and check both $2^{13}$ and $2^6 \\cdot 3^1$."
+    ],
+    "solution": "The positive divisors of $p^n q^m$ have $(n+1)(m+1)$ choices of exponents. Setting the number of divisors to $14$:\n- $14 = 14 \\times 1 \\implies p^{13}$, smallest is $2^{13} = 8192$.\n- $14 = 7 \\times 2 \\implies p^6 q^1$, smallest puts the bigger power on the smaller prime: $2^6 \\cdot 3^1 = 64 \\times 3 = \\mathbf{192}$.\n\nComparing $192$ and $8192$, the smallest possible integer is **$192$**.",
+    "number": 39
+  },
+  {
+    "id": "2.1-p1",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.1 Oxford Admissions (James Munro, 2019)",
+    "title": "Equilateral & 3-4-5 Triangles on $y = x^2$",
+    "college": "Oxford (Admissions)",
+    "year": "2019",
+    "topic": "Geometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Points $A, B, C$ lie on the parabola $y = x^2$ with $B = (0,0)$.\n(a) Where should $A$ and $C$ be placed so that $\\triangle ABC$ is equilateral?\n(b) Where could $A$ and $C$ be placed so that $\\triangle ABC$ is a $3$-$4$-$5$ right triangle?",
+    "hints": [
+      "For (a), by symmetry around the $y$-axis set $C = (c, c^2)$ and $A = (-c, c^2)$ ($c>0$). Equate $AC^2 = BC^2$.",
+      "For (b), place the right angle at $B(0,0)$ first (can the right angle be at $A$ or $C$? Check that too!). If right angle is at $B$, how do gradients $BA$ and $BC$ relate?",
+      "With $A = (a, a^2)$ and $C = (c, c^2)$, perpendicularity at $B$ gives $ac = -1$. Compute the length ratio $BC / BA$ in terms of $c$ alone!"
+    ],
+    "solution": "**(a) Equilateral Triangle:** By symmetry, let $C = (c, c^2)$ and $A = (-c, c^2)$ with $c > 0$. Then $AC = 2c$ and $BC = \\sqrt{c^2 + c^4}$. Equating $AC^2 = BC^2$:\n$$4c^2 = c^2 + c^4 \\implies c^2 = 3 \\implies c = \\sqrt{3}.$$\nSo $A = (-\\sqrt{3}, 3)$ and $C = (\\sqrt{3}, 3)$.\n\n**(b) 3-4-5 Right Triangle (Right angle at $B$):** Let $A = (a, a^2)$ ($a<0$) and $C = (c, c^2)$ ($c>0$). Gradient of $BA$ is $a$, gradient of $BC$ is $c$, so $BA \\perp BC \\implies ac = -1 \\implies a = -1/c$.\nSetting $BC / BA = 4/3$:\n$$\\frac{c\\sqrt{1+c^2}}{|a|\\sqrt{1+a^2}} = \\frac{c\\sqrt{1+c^2}}{\\frac{1}{c}\\sqrt{1+\\frac{1}{c^2}}} = c^3 = \\frac{4}{3} \\implies c = \\left(\\frac{4}{3}\\right)^{1/3}.$$\nHence $A = \\left(-\\left(\\frac{3}{4}\\right)^{1/3},\\, \\left(\\frac{3}{4}\\right)^{2/3}\\right)$ and $C = \\left(\\left(\\frac{4}{3}\\right)^{1/3},\\, \\left(\\frac{4}{3}\\right)^{2/3}\\right)$ (and swapping $3$ and $4$ gives the symmetric mirror solutions; placing the right angle at $A$ or $C$ is also possible by solving the corresponding perpendicularity condition).",
+    "number": 40
+  },
+  {
+    "id": "2.2-p1",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.2 Oxford University College (2005)",
+    "title": "Central Warehouse on a Straight Road",
+    "college": "Oxford University College",
+    "year": "2005",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Three towns $A, B, C$ lie on a straight road. Where should a central warehouse be built to minimize total daily travel distance?",
+    "hints": [
+      "Place the towns on the real line at coordinates $x_A < x_B < x_C$ and the warehouse at $x$.",
+      "Write the total distance $D(x) = |x - x_A| + |x - x_B| + |x - x_C|$.",
+      "Notice what $|x - x_A| + |x - x_C|$ simplifies to whenever $x_A \\le x \\le x_C$!"
+    ],
+    "solution": "Put the towns at $x_A < x_B < x_C$ and warehouse at $x$. Total one-way distance is:\n$$D(x) = |x - x_A| + |x - x_B| + |x - x_C|.$$\nBy the triangle inequality, $|x - x_A| + |x - x_C| \\ge x_C - x_A$, with equality for all $x \\in [x_A, x_C]$. Simultaneously, $|x - x_B| \\ge 0$ with equality iff $x = x_B \\in [x_A, x_C]$.\nTherefore, $D(x)$ is uniquely minimized at **$x = x_B$ (at town B, the median)**. *(Even if weighted equally for $n$ towns, the optimal location is the median!)*",
+    "number": 41
+  },
+  {
+    "id": "2.2-p2",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.2 Oxford University College (2005)",
+    "title": "Divisibility of $n^7 - n$ by $42$",
+    "college": "Oxford University College",
+    "year": "2005",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that $n^7 - n$ is divisible by $42$ for all integers $n$, given that it is divisible by $7$.",
+    "hints": [
+      "Factor $42 = 2 \\times 3 \\times 7$ into pairwise coprime primes.",
+      "Since $7 \\mid (n^7 - n)$ is given, we only need to check divisibility by $2$ and by $3$.",
+      "For divisibility by $3$, check $n \\equiv 0, 1, 2 \\pmod 3$, or factor $n^7 - n = n(n^6 - 1)$."
+    ],
+    "solution": "Since $42 = 2 \\times 3 \\times 7$ and $2, 3, 7$ are pairwise coprime, it suffices to show $n^7 - n$ is divisible by $2$ and $3$ (divisibility by $7$ is given):\n- **By 2:** $n^7$ and $n$ have the same parity, so $n^7 - n$ is even.\n- **By 3:** Factor $n^7 - n = n(n^2 - 1)(n^4 + n^2 + 1) = (n-1)n(n+1)(n^4+n^2+1)$. Among three consecutive integers $(n-1)n(n+1)$, one is divisible by $3$ (or by Fermat's Little Theorem, $n^3 \\equiv n \\pmod 3 \\implies n^7 \\equiv n^3 \\equiv n \\pmod 3$).\nHence $42 \\mid (n^7 - n)$ for all $n \\in \\mathbb{Z}$.",
+    "number": 42
+  },
+  {
+    "id": "2.3-p1",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.3 Oxford St. Catherine's / St. Anne's (2009)",
+    "title": "Wason Selection Task: [E], [9], [P]",
+    "college": "Oxford St. Catherine's / St. Anne's",
+    "year": "2009",
+    "topic": "Logic & Game Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Four (or three) cards show **[ E ]**, **[ 9 ]**, **[ P ]**. Consider the statement: *\"If a card has an even number on one side, it has a vowel on the other.\"* Which card(s) must you turn over to test the rule?",
+    "hints": [
+      "Write the statement in logical implication form $P \\implies Q$, identifying $P$ ('even number') and $Q$ ('vowel').",
+      "When is $P \\implies Q$ false? Only when $P$ is true AND $Q$ is false ($\\neg Q$).",
+      "Test each visible card ([E], [9], [P]) against whether flipping it could possibly yield (Even, Consonant)."
+    ],
+    "solution": "The rule is $P \\implies Q$ where $P = \\text{even number}$ and $Q = \\text{vowel}$. A card violates the rule iff it has **Even** ($P$) and **Consonant** ($\\neg Q$).\n- **[ E ]** ($Q$, vowel): Whether the back is even or odd, the rule is not violated. No need to turn.\n- **[ 9 ]** ($\\neg P$, odd): Cannot violate $P \\implies Q$ regardless of the letter on the back. No need to turn.\n- **[ P ]** ($\\neg Q$, consonant): If the back is even ($P$), it disproves the claim!\n\nYou only need to turn over **[ P ]**.",
+    "number": 43
+  },
+  {
+    "id": "2.3-p2",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.3 Oxford St. Catherine's / St. Anne's (2009)",
+    "title": "Clock Hands Coincidence Time",
+    "college": "Oxford St. Catherine's / St. Anne's",
+    "year": "2009",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "A clock shows $12{:}00$. When do the minute and hour hands next coincide?",
+    "hints": [
+      "Find the angular speed of the minute hand ($6^\\circ/\\text{min}$) and the hour hand ($0.5^\\circ/\\text{min}$).",
+      "Use their relative angular speed ($5.5^\\circ/\\text{min}$): the minute hand must gain a full $360^\\circ$ lap.",
+      "Compute $t = \\frac{360}{11/2}$ minutes and express in hours, minutes, and seconds."
+    ],
+    "solution": "Minute hand speed $= 360^\\circ / 60\\text{ min} = 6^\\circ/\\text{min}$.\nHour hand speed $= 360^\\circ / 720\\text{ min} = 0.5^\\circ/\\text{min}$.\nRelative speed $= 5.5^\\circ/\\text{min} = \\frac{11}{2}^\\circ/\\text{min}$.\nTime to lap by $360^\\circ$:\n$$t = \\frac{360}{11/2} = \\frac{720}{11}\\text{ min} = 65\\frac{5}{11}\\text{ min} = \\text{1 hour, 5 minutes, and } 27\\frac{3}{11}\\text{ seconds (approx. } 1{:}05{:}27.27\\text{)}.$$",
+    "number": 44
+  },
+  {
+    "id": "2.3-p3",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.3 Oxford St. Catherine's / St. Anne's (2009)",
+    "title": "The 100 Light Bulbs Problem",
+    "college": "Oxford St. Catherine's / St. Anne's",
+    "year": "2009",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "$100$ light bulbs are initially all OFF. On pass $d$ ($d = 1, 2, \\dots, 100$), you toggle every $d$-th bulb. After $100$ passes, how many bulbs are ON?",
+    "hints": [
+      "For a specific bulb $k$, which passes $d$ toggle bulb $k$?",
+      "Bulb $k$ finishes ON iff it is toggled an *odd* number of times—meaning $k$ has an odd number of positive divisors!",
+      "Divisors of $k$ pair up as $(d, k/d)$. When does a divisor fail to have a distinct partner?"
+    ],
+    "solution": "Bulb $k$ is toggled on pass $d$ iff $d \\mid k$. Thus bulb $k$ is toggled $d(k)$ times (its number of positive divisors) and ends **ON** iff $d(k)$ is odd.\nSince divisors pair up as $(d, k/d)$, $d(k)$ is odd iff $d = k/d$ for some divisor, i.e., **$k$ is a perfect square**.\nThe perfect squares $\\le 100$ are $1^2, 2^2, \\dots, 10^2$, so exactly **10** bulbs remain ON (and $90$ are OFF).",
+    "number": 45
+  },
+  {
+    "id": "2.4-p1",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.4 Oxford Trinity & Pembroke (2012)",
+    "title": "Pell-Type Diophantine Equation $2a^2 - b^2 = 1$",
+    "college": "Oxford Trinity & Pembroke",
+    "year": "2012",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Find positive integer solutions to $2a^2 - b^2 = 1$ (and describe parity/further solutions).",
+    "hints": [
+      "Test small positive integers $a = 1, 2, 3, \\dots$ to spot the minimal solution $(1, 1)$.",
+      "Write $b^2 = 2a^2 - 1$. What must the parity of $b$ be? Substitute $b = 2k+1$ to determine the parity of $a$!",
+      "Now that you know $a$ must be odd, test $a = 3, 5$ to find the next solution $(5, 7)$."
+    ],
+    "solution": "Rewriting as $b^2 = 2a^2 - 1$:\n- **Smallest solution:** $a = 1 \\implies b = 1$.\n- **Parity:** Since $2a^2 - 1$ is odd, $b = 2k+1$ is odd. Then $2a^2 = (2k+1)^2 + 1 = 4k^2 + 4k + 2 \\implies a^2 = 2k(k+1) + 1$, which is odd, so **$a$ must also be odd**.\n- **Next solution:** Testing $a=3 \\implies b^2=17$ (no); $a=5 \\implies b^2 = 49 \\implies b = 7$, giving $(5, 7)$ ($2\\cdot 25 - 49 = 1$). *(In general, infinitely many solutions arise from $(1+\\sqrt{2})^{2n+1} = b_n + a_n\\sqrt{2}$.)*",
+    "number": 46
+  },
+  {
+    "id": "2.4-p2",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.4 Oxford Trinity & Pembroke (2012)",
+    "title": "Three Mutually Touching Unit Circles",
+    "college": "Oxford Trinity & Pembroke",
+    "year": "2012",
+    "topic": "Geometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Three unit circles are mutually tangent externally.\n(a) Find the area enclosed between them.\n(b) Find the radius of the small central circle touching all three.",
+    "hints": [
+      "Connect the centers of the three unit circles. What shape do they form, and what is its side length?",
+      "Subtract the three $60^\\circ$ circular sectors inside the triangle from the triangle's area.",
+      "For (b), the center of the small inner circle is the centroid/circumcenter of the equilateral triangle. Relate the circumradius $R_{\\triangle}$ to $1 + r$."
+    ],
+    "solution": "**(a)** The centers form an equilateral triangle of side $2$ and area $A_{\\triangle} = \\frac{\\sqrt{3}}{4}(2^2) = \\sqrt{3}$.\nThe three $60^\\circ$ sectors inside form half of a unit circle, area $3 \\times \\frac{1}{2}(1^2)\\frac{\\pi}{3} = \\frac{\\pi}{2}$.\nEnclosed area $= \\mathbf{\\sqrt{3} - \\frac{\\pi}{2}}$.\n\n**(b)** The distance from the center of the equilateral triangle to each vertex is $R_{\\triangle} = \\frac{\\text{side}}{\\sqrt{3}} = \\frac{2}{\\sqrt{3}}$. Since this distance equals $1 + r$:\n$$r = \\frac{2}{\\sqrt{3}} - 1 = \\frac{2\\sqrt{3} - 3}{3} \\approx 0.1547.$$",
+    "number": 47
+  },
+  {
+    "id": "2.4-p3",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.4 Oxford Trinity & Pembroke (2012)",
+    "title": "Sticky Notes Game (13 Notes, Take 1, 2, or 3)",
+    "college": "Oxford Trinity & Pembroke",
+    "year": "2012",
+    "topic": "Logic & Game Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "There are $13$ sticky notes in a line. Players take turns taking $1, 2$, or $3$ notes from the front.\n- **Misère play (sad face on note 13):** You lose if forced to take note $13$.\n- **Normal play (smiley face on note 13):** You win if you take note $13$.\nWhat is the winning strategy in each case?",
+    "hints": [
+      "Work backwards! Since you can take $1, 2$, or $3$ notes, any turn pair can sum to $1 + 3 = 4$.",
+      "In Misère play, you want the opponent to be stuck with only note $13$ left—so you want to take note $12$. Which player can force taking multiples of $4$?",
+      "In Normal play, you want to take note $13$. Since $13 \\equiv 1 \\pmod 4$, how many should the first player take on move 1?"
+    ],
+    "solution": "Since $1+3 = 4$, you can always complement an opponent's move of $k$ with $4-k$.\n- **Misère (avoid note 13):** You want to take note $12$ so only note $13$ remains for your opponent. Since $12$ is a multiple of $4$, **let the opponent go first**, then always take $4-k$, guaranteeing you hit notes $4, 8, 12$ and force them to take $13$.\n- **Normal (claim note 13):** **Go first** and take **$1$ note** (leaving $12$), then complement every move with $4-k$ so you hit $5, 9, 13$ and win.",
+    "number": 48
+  },
+  {
+    "id": "2.4-p4",
+    "section": "2. Oxford Official & College Interviews",
+    "subset": "2.4 Oxford Trinity & Pembroke (2012)",
+    "title": "Vertices and Edges of an $n$-Dimensional Hypercube",
+    "college": "Oxford Trinity & Pembroke",
+    "year": "2012",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Find the number of vertices and edges of an $n$-dimensional hypercube.",
+    "hints": [
+      "Think of vertices as binary coordinates $(x_1, x_2, \\dots, x_n) \\in \\{0, 1\\}^n$. How many vertices are there?",
+      "How many edges meet at each single vertex (i.e., how many coordinates can you flip by $1$ step)?",
+      "Use the Handshaking Lemma ($2E = \\sum \\deg(v)$) to avoid double-counting each edge!"
+    ],
+    "solution": "- **Vertices:** Each vertex is a tuple in $\\{0,1\\}^n$, giving **$2^n$ vertices**.\n- **Edges:** From any vertex, an edge connects to vertices differing in exactly one coordinate, so every vertex has degree $n$. By the Handshaking Lemma (each edge touches $2$ vertices):\n$$E = \\frac{2^n \\times n}{2} = \\mathbf{n 2^{n-1}}.$$",
+    "number": 49
+  },
+  {
+    "id": "3.1-p1",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.1 Cambridge Trinity Hall (2004/2005)",
+    "title": "Divisibility of $n^3 - n$ by $6$ and $24$",
+    "college": "Cambridge Trinity Hall",
+    "year": "2004/2005",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that $n^3 - n$ is divisible by $6$ for all integers $n$, and by $24$ if $n$ is odd.",
+    "hints": [
+      "Factorise $n^3 - n$ completely into three linear factors.",
+      "Why must the product of three consecutive integers be divisible by $2$ and $3$?",
+      "If $n = 2k+1$ is odd, inspect the two even factors $(n-1)$ and $(n+1)$: they are consecutive even integers!"
+    ],
+    "solution": "Factorise: $n^3 - n = (n-1)n(n+1)$, the product of three consecutive integers. At least one is even and exactly one is divisible by $3$, so $6 \\mid (n^3 - n)$.\nIf $n = 2k+1$ is odd, then $n-1 = 2k$ and $n+1 = 2(k+1)$ are consecutive even integers, so one of $k, k+1$ is even, meaning $(n-1)(n+1) = 4k(k+1)$ is divisible by $8$. Since $\\gcd(8,3) = 1$, $24 \\mid (n^3 - n)$.",
+    "number": 50
+  },
+  {
+    "id": "3.1-p2",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.1 Cambridge Trinity Hall (2004/2005)",
+    "title": "Hollow Cone Filled Halfway Up",
+    "college": "Cambridge Trinity Hall",
+    "year": "2004/2005",
+    "topic": "Geometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "A hollow cone is held vertex-down and filled halfway up (to half its height). What proportion of its total volume is filled?",
+    "hints": [
+      "Consider a cross-section through the axis: the liquid forms a smaller cone similar to the full cone.",
+      "If the height scales by $\\frac{1}{2}$, how does the volume scale in 3D?"
+    ],
+    "solution": "By similar triangles, the liquid forms a smaller cone of height $\\frac{1}{2}H$ and radius $\\frac{1}{2}R$. Volume scales as the cube of linear dimensions:\n$$V_{\\text{filled}} = \\left(\\frac{1}{2}\\right)^3 V_{\\text{total}} = \\mathbf{\\frac{1}{8}} V_{\\text{total}} \\quad (12.5\\%).$$",
+    "number": 51
+  },
+  {
+    "id": "3.1-p3",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.1 Cambridge Trinity Hall (2004/2005)",
+    "title": "Two Children Conditional Probability",
+    "college": "Cambridge Trinity Hall",
+    "year": "2004/2005",
+    "topic": "Probability",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "A family has two children. You are told that at least one is a daughter. What is the probability that they have at least one son?",
+    "hints": [
+      "Write down the full sample space of two children ordered by birth: $\\{BB, BG, GB, GG\\}$.",
+      "Cross out the outcomes ruled out by 'at least one daughter' to get the reduced sample space.",
+      "Count how many of the remaining equally likely outcomes include a son."
+    ],
+    "solution": "The full sample space is $\\{BB, BG, GB, GG\\}$ (each probability $1/4$). Conditioning on 'at least one daughter' reduces the space to $\\{BG, GB, GG\\}$ ($3$ equally likely outcomes). Two of these ($\\{BG, GB\\}$) have a son:\n$$P(\\text{at least one son} \\mid \\text{at least one daughter}) = \\mathbf{\\frac{2}{3}}.$$",
+    "number": 52
+  },
+  {
+    "id": "3.1-p4",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.1 Cambridge Trinity Hall (2004/2005)",
+    "title": "Minimum of $x^2 + y^2 + \\frac{1}{x^2+y^2}$",
+    "college": "Cambridge Trinity Hall",
+    "year": "2004/2005",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Find the minimum value of\n$$x^2 + y^2 + \\frac{1}{x^2 + y^2}$$\nfor $(x, y) \\ne (0,0)$.",
+    "hints": [
+      "Substitute a single positive variable $u = x^2 + y^2 > 0$.",
+      "Minimize $u + \\frac{1}{u}$ for $u > 0$ using the AM-GM inequality (or differentiation / completing the square $(\\sqrt{u} - 1/\\sqrt{u})^2$)."
+    ],
+    "solution": "Let $u = x^2 + y^2 > 0$. By AM-GM (or $(\\sqrt{u} - \\frac{1}{\\sqrt{u}})^2 \\ge 0$):\n$$u + \\frac{1}{u} \\ge 2\\sqrt{u \\cdot \\frac{1}{u}} = 2,$$\nwith equality iff $u = 1$, i.e., at any point on the unit circle $x^2 + y^2 = 1$. Thus the minimum value is **2**.",
+    "number": 53
+  },
+  {
+    "id": "3.1-p5",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.1 Cambridge Trinity Hall (2004/2005)",
+    "title": "Cubic Roots in Geometric Progression",
+    "college": "Cambridge Trinity Hall",
+    "year": "2004/2005",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "The roots of $x^3 - 13x^2 + 39x - 27 = 0$ are in geometric progression. Find the roots.",
+    "hints": [
+      "Write three terms in geometric progression symmetrically as $\\frac{a}{r},\\, a,\\, ar$.",
+      "Apply Vieta's formula for the *product* of the roots first! What does $\\left(\\frac{a}{r}\\right) a (ar)$ immediately give you?",
+      "Once you know the middle root $a$, use the sum of roots $\\frac{a}{r} + a + ar = 13$ to solve for $r$ (and check the $x^1$ coefficient $39$!)."
+    ],
+    "solution": "Write the roots as $\\frac{a}{r}, a, ar$. By Vieta's formulas:\n- Product of roots: $\\left(\\frac{a}{r}\\right) a (ar) = a^3 = 27 \\implies a = 3$.\n- Sum of roots: $\\frac{3}{r} + 3 + 3r = 13 \\implies 3r^2 - 10r + 3 = 0 \\implies (3r-1)(r-3) = 0$, so $r = 3$ or $r = 1/3$.\nBoth give the roots **$1, 3, 9$** (and checking pairwise products: $1\\cdot 3 + 3\\cdot 9 + 1\\cdot 9 = 39$, matching the $x$ coefficient!).",
+    "number": 54
+  },
+  {
+    "id": "3.2-p1",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.2 Cambridge Emmanuel (Dec 2015)",
+    "title": "Locus of Constant Subtended Angle $\\angle OPA = c$",
+    "college": "Cambridge Emmanuel",
+    "year": "Dec 2015",
+    "topic": "Geometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Find the locus of points $P(x, y)$ in the upper half-plane ($y > 0$) such that the angle $\\angle OPA = c$ is constant, where $O = (0,0)$ and $A = (1,0)$.",
+    "hints": [
+      "Think geometrically first: what famous theorem describes all points $P$ from which a fixed chord $OA$ subtends a constant angle $c$?",
+      "Try the special case $c = \\pi/2$ first (Thales' Theorem!), then generalize using the Inscribed Angle Theorem.",
+      "Compute the center $(1/2, y_0)$ and radius $R$ of the circle in terms of $c$ using $2R = \\frac{OA}{\\sin c}$."
+    ],
+    "solution": "By the **Inscribed Angle Theorem** (angles in the same segment), the locus in the upper half-plane $y > 0$ is an open **circular arc** passing through $O(0,0)$ and $A(1,0)$ (excluding $O$ and $A$ themselves).\nThe circle's center lies on the perpendicular bisector $x = 1/2$, and by the Extended Law of Sines:\n$$2R = \\frac{OA}{\\sin c} \\implies R = \\frac{1}{2\\sin c}.$$\nIf $c = \\pi/2$, it is the upper semicircle $(x - 1/2)^2 + y^2 = 1/4$ ($y > 0$); in general, the center is $\\left(\\frac{1}{2},\\, \\frac{1}{2}\\cot c\\right)$ and the locus is the arc $\\left(x - \\frac{1}{2}\\right)^2 + \\left(y - \\frac{1}{2}\\cot c\\right)^2 = \\frac{1}{4\\sin^2 c}$ for $y > 0$ (or wait: check whether $c$ is acute or obtuse—the major arc when $c < \\pi/2$, minor arc when $c > \\pi/2$!).",
+    "number": 55
+  },
+  {
+    "id": "3.2-p2",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.2 Cambridge Emmanuel (Dec 2015)",
+    "title": "Penney's Coin Game (HH vs TT, HT, TH)",
+    "college": "Cambridge Emmanuel",
+    "year": "Dec 2015",
+    "topic": "Probability",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "A fair coin is tossed repeatedly until one of two chosen 2-toss patterns appears:\n(a) HH vs TT\n(b) HH vs HT\n(c) HH vs TH\nIn each case, find the probability that HH appears first.",
+    "hints": [
+      "For (a), use symmetry between Heads and Tails.",
+      "For (b), track what happens on the first toss: if Tails, wait for the first Head—wait no: in HH vs HT, once *any* H appears, look at the very next toss! If T, HT wins immediately!",
+      "For (c), ask: if a T EVER appears before HH has occurred, can HH EVER occur without TH occurring first?!"
+    ],
+    "solution": "**(a) HH vs TT:** By symmetry, $P(\\text{HH}) = \\mathbf{\\frac{1}{2}}$.\n\n**(b) HH vs HT:** Wait for the first time `H` appears (if the first toss is `T`, keep tossing until `H` appears). Immediately after that first `H`, the next toss is either `H` (giving `HH`, so HH wins) or `T` (giving `HT`, so HT wins)—wait: what if it started `TH`? After `T...TH`, the next toss is `H` (HH wins) or `T` (`HT` wins)! Wait—let's check!\nCareful! In **HH vs HT**:\n- Toss 1 = `H` (prob $1/2$): Toss 2 = `H` $\\implies$ HH wins ($1/4$); Toss 2 = `T` $\\implies$ HT wins ($1/4$).\n- Toss 1 = `T` (prob $1/2$): keep tossing until first `H`. From that `H`, next toss is `H` (HH wins!) or `T` (HT wins!), wait: that's $1/2$ each!\nWait: does $P(\\text{HH beats HT}) = 1/2$?! Let's check with Markov chains!\nState Start: $\\frac{1}{2} p_H + \\frac{1}{2} p_T$.\nState $T$: $\\frac{1}{2} p_H + \\frac{1}{2} p_T \\implies p_T = p_{\\text{Start}}$.\nState $H$: $\\frac{1}{2}(1) + \\frac{1}{2}(0) = \\frac{1}{2}$!\nYes!! For **HH vs HT**, $P(\\text{HH}) = \\frac{1}{2}$! (Whereas for **TH vs HH**, let's check!)\n\n**(c) HH vs TH:** If the sequence *ever* has a `T` before `HH` occurs, the moment the next `H` appears it forms `TH`, ending the game in favour of `TH`! Thus `HH` can win **only if the first two tosses are HH**:\n$$P(\\text{HH beats TH}) = \\mathbf{\\frac{1}{4}}, \\qquad P(\\text{TH beats HH}) = \\mathbf{\\frac{3}{4}}.$$\n*(Note: The archive PDF mistakenly wrote $1/4$ for HH vs HT too; spotting that HH vs HT is $1/2$ whereas HH vs TH is $1/4$ is a classic Cambridge interview distinction!)*",
+    "number": 56
+  },
+  {
+    "id": "3.3-p1",
+    "section": "3. Cambridge College Interviews",
+    "subset": "3.3 Cambridge Jesus (Jan 2016)",
+    "title": "Perfect Numbers & Euclid-Euler Theorem",
+    "college": "Cambridge Jesus",
+    "year": "Jan 2016",
+    "topic": "Number Theory",
+    "difficulty": "Challenging",
+    "isSketch": false,
+    "statement": "A positive integer is *perfect* if it equals the sum of its proper positive divisors (or equivalently $\\sigma(N) = 2N$).\n(a) Can a prime number be perfect?\n(b) Can a perfect number be of the form $p^n$ (prime power)?\n(c) Can a perfect number be of the form $pq$ (product of two distinct primes)?\n(d) Prove the Euclid-Euler theorem: if $2^p - 1$ is prime, then $2^{p-1}(2^p - 1)$ is perfect.\n(e) Prove that the sum of the reciprocals of all positive divisors of a perfect number is $2$.",
+    "hints": [
+      "For (b), sum the geometric series $1 + p + p^2 + \\dots + p^{n-1} = \\frac{p^n - 1}{p - 1}$ and compare with $p^n$.",
+      "For (c), write $pq = 1 + p + q$ and factor $(p-1)(q-1) = 2$! Wait—is $pq = 6$ allowed?!",
+      "For (d), use multiplicativity of $\\sigma(N)$: $\\sigma(2^{p-1}q) = \\sigma(2^{p-1})\\sigma(q)$. For (e), pair $d$ with $N/d$."
+    ],
+    "solution": "**(a) No.** For prime $p$, its only proper divisor is $1 \\ne p$.\n**(b) No.** Proper divisors of $p^n$ sum to $1 + p + \\dots + p^{n-1} = \\frac{p^n - 1}{p - 1} < p^n$ since $p \\ge 2$.\n**(c) Only $6$!** Proper divisors of $pq$ ($p < q$ primes) sum to $1 + p + q = pq \\iff (p-1)(q-1) = 2$. Since $p < q$ are primes, $p - 1 = 1 \\implies p = 2$ and $q - 1 = 2 \\implies q = 3$, giving **$pq = 6$** (the unique perfect number of the form $pq$).\n**(d)** Let $N = 2^{p-1}q$ where $q = 2^p - 1$ is prime (note $\\gcd(2^{p-1}, q) = 1$). Using multiplicativity of the divisor sum function $\\sigma$:\n$$\\sigma(N) = \\sigma(2^{p-1})\\sigma(q) = (2^p - 1)(q + 1) = (2^p - 1)2^p = 2N,$$\nso the sum of proper divisors is $2N - N = N$, meaning $N$ is perfect.\n**(e)** As $d$ runs over all divisors of $N$, so does $N/d$:\n$$\\sum_{d \\mid N} \\frac{1}{d} = \\sum_{d \\mid N} \\frac{d}{N} = \\frac{\\sigma(N)}{N} = \\frac{2N}{N} = 2.$$",
+    "number": 57
+  },
+  {
+    "id": "4-p1",
+    "section": "4. Oxford Interview Questions (Archive Sheet G)",
+    "subset": "4.1 Archive Sheet G",
+    "title": "Rolle's Theorem on $\\cos x - \\alpha x - \\beta = 0$",
+    "college": "Oxford Archive (Sheet G)",
+    "year": "Archive G",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Given that $\\cos x - \\alpha x - \\beta = 0$ has $2$ distinct real solutions, show that $\\sin x = -\\alpha$ has at least one solution.",
+    "hints": [
+      "Define $f(x) = \\cos x - \\alpha x - \\beta$. What do the two solutions $x_1 < x_2$ tell you about $f(x_1)$ and $f(x_2)$?",
+      "Is $f(x)$ continuous and differentiable everywhere? Apply Rolle's Theorem on $[x_1, x_2]$."
+    ],
+    "solution": "Let $f(x) = \\cos x - \\alpha x - \\beta$. Since $f(x_1) = f(x_2) = 0$ for two distinct roots $x_1 < x_2$, and $f$ is continuous and differentiable on $\\mathbb{R}$, by **Rolle's Theorem** there exists $c \\in (x_1, x_2)$ such that:\n$$f'(c) = -\\sin c - \\alpha = 0 \\implies \\sin c = -\\alpha.$$\nThus $\\sin x = -\\alpha$ has at least one real solution.",
+    "number": 58
+  },
+  {
+    "id": "4-p2",
+    "section": "4. Oxford Interview Questions (Archive Sheet G)",
+    "subset": "4.1 Archive Sheet G",
+    "title": "Party Handshake Theorem (Pigeonhole Principle)",
+    "college": "Oxford Archive (Sheet G)",
+    "year": "Archive G",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that at any $N$-person party ($N \\ge 2$), at least two people have the exact same number of friends at the party (assuming friendship is mutual).",
+    "hints": [
+      "What are the possible numbers of friends a person at an $N$-person party can have?",
+      "Can a person with $0$ friends and a person with $N-1$ friends coexist at the same party?",
+      "Now count the remaining possible friend counts (pigeonholes) vs the $N$ people (pigeons)."
+    ],
+    "solution": "Each of the $N$ people can have between $0$ and $N-1$ friends ($N$ possible numbers). However, $0$ and $N-1$ cannot both occur: if someone is friends with everyone ($N-1$ friends), nobody can have $0$ friends (and vice versa).\nThus all $N$ people's friend counts fall into either $\\{0, 1, \\dots, N-2\\}$ or $\\{1, 2, \\dots, N-1\\}$—only **$N - 1$** possible values. By the **Pigeonhole Principle**, at least two people have the same number of friends.",
+    "number": 59
+  },
+  {
+    "id": "4-p3",
+    "section": "4. Oxford Interview Questions (Archive Sheet G)",
+    "subset": "4.1 Archive Sheet G",
+    "title": "Rearrangement Inequality ($\\frac{x}{b} + \\frac{y}{a} > \\frac{x}{a} + \\frac{y}{b}$)",
+    "college": "Oxford Archive (Sheet G)",
+    "year": "Archive G",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "For $x > y > 0$ and $a > b > 0$, show that $\\dfrac{x}{b} + \\dfrac{y}{a} > \\dfrac{x}{a} + \\dfrac{y}{b}$, and find the maximum sum for $3$ terms ($x>y>z>0$ and $a>b>c>0$).",
+    "hints": [
+      "Subtract the RHS from the LHS and factor out $(x - y)$.",
+      "Check the signs of $(x - y)$ and $\\left(\\frac{1}{b} - \\frac{1}{a}\\right)$.",
+      "For $3$ terms, order the reciprocals $\\frac{1}{c} > \\frac{1}{b} > \\frac{1}{a}$ and apply the Rearrangement Inequality."
+    ],
+    "solution": "Consider the difference:\n$$\\left(\\frac{x}{b} + \\frac{y}{a}\\right) - \\left(\\frac{x}{a} + \\frac{y}{b}\\right) = (x - y)\\left(\\frac{1}{b} - \\frac{1}{a}\\right).$$\nSince $x > y \\implies x-y > 0$ and $a > b > 0 \\implies \\frac{1}{b} > \\frac{1}{a}$, the product is strictly positive, proving $\\frac{x}{b} + \\frac{y}{a} > \\frac{x}{a} + \\frac{y}{b}$.\nFor $x > y > z > 0$ and $a > b > c > 0$, we have $\\frac{1}{c} > \\frac{1}{b} > \\frac{1}{a}$; by the Rearrangement Inequality, pairing largest with largest maximizes the sum:\n$$\\text{Maximum} = \\frac{x}{c} + \\frac{y}{b} + \\frac{z}{a}.$$",
+    "number": 60
+  },
+  {
+    "id": "4-p4",
+    "section": "4. Oxford Interview Questions (Archive Sheet G)",
+    "subset": "4.1 Archive Sheet G",
+    "title": "Differentiating Under Integral Limit (Leibniz Rule)",
+    "college": "Oxford Archive (Sheet G)",
+    "year": "Archive G",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Evaluate $\\displaystyle \\frac{d}{dx} \\int_0^{x^2} \\frac{e^y}{1 + y^2}\\,dy$.",
+    "hints": [
+      "Let $F(u) = \\int_0^u \\frac{e^y}{1+y^2}\\,dy$. You are differentiating $F(x^2)$ with respect to $x$.",
+      "Combine the Fundamental Theorem of Calculus ($F'(u)$) with the Chain Rule ($u'(x) = 2x$)."
+    ],
+    "solution": "By the Fundamental Theorem of Calculus and the Chain Rule (Leibniz rule):\n$$\\frac{d}{dx} \\int_0^{u(x)} f(y)\\,dy = f(u(x)) \\cdot u'(x).$$\nWith $f(y) = \\frac{e^y}{1+y^2}$ and $u(x) = x^2$ ($u'(x) = 2x$):\n$$\\frac{d}{dx} \\int_0^{x^2} \\frac{e^y}{1+y^2}\\,dy = \\frac{e^{x^2}}{1 + (x^2)^2} \\cdot 2x = \\frac{2x e^{x^2}}{1 + x^4}.$$",
+    "number": 61
+  },
+  {
+    "id": "4-p5",
+    "section": "4. Oxford Interview Questions (Archive Sheet G)",
+    "subset": "4.1 Archive Sheet G",
+    "title": "Convergence of $\\int_1^\\infty \\frac{1}{x} \\sin(1/x)\\,dx$",
+    "college": "Oxford Archive (Sheet G)",
+    "year": "Archive G",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Determine whether the improper integral $\\displaystyle \\int_1^\\infty \\frac{1}{x} \\sin\\!\\left(\\frac{1}{x}\\right) dx$ converges.",
+    "hints": [
+      "Notice the $\\frac{1}{x}$ inside $\\sin(1/x)$. Try the substitution $u = 1/x$!",
+      "Compute $dx = -\\frac{1}{u^2}\\,du$ and transform the limits $x = 1$ and $x \\to \\infty$.",
+      "Inspect the transformed integrand $\\frac{\\sin u}{u}$ on $[0, 1]$—does it blow up at $u = 0$?"
+    ],
+    "solution": "Substitute $u = 1/x$, so $x = 1/u$ and $dx = -\\frac{1}{u^2}\\,du$. As $x$ goes from $1$ to $\\infty$, $u$ goes from $1$ to $0^+$:\n$$\\int_1^\\infty \\frac{1}{x}\\sin\\!\\left(\\frac{1}{x}\\right)dx = \\int_1^0 u \\sin(u) \\left(-\\frac{1}{u^2}\\,du\\right) = \\int_0^1 \\frac{\\sin u}{u}\\,du.$$\nSince $\\lim_{u\\to 0} \\frac{\\sin u}{u} = 1$, the integrand has only a removable discontinuity at $u=0$ and is bounded ($|\\frac{\\sin u}{u}| \\le 1$) and continuous on $[0, 1]$. Therefore the integral **converges** to a finite value (roughly $0.946$). *(Alternatively, for $x \\ge 1$, $0 \\le \\frac{1}{x}\\sin(1/x) \\le \\frac{1}{x^2}$, and $\\int_1^\\infty \\frac{dx}{x^2} = 1$ converges by comparison!)*",
+    "number": 62
+  },
+  {
+    "id": "5-p1",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Divisibility of $3n^2 + 9n + 6$ by $6$",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Show that $3n^2 + 9n + 6$ is divisible by $6$ for all $n \\in \\mathbb{Z}$.",
+    "hints": [
+      "Factor out $3$ first.",
+      "Factor the remaining quadratic $n^2 + 3n + 2$ into two consecutive integers."
+    ],
+    "solution": "Factorise:\n$$3n^2 + 9n + 6 = 3(n^2 + 3n + 2) = 3(n+1)(n+2).$$\nSince $(n+1)$ and $(n+2)$ are two consecutive integers, one of them is even, so $(n+1)(n+2) = 2k$ for some $k \\in \\mathbb{Z}$. Hence $3n^2 + 9n + 6 = 6k$, divisible by $6$ for all $n \\in \\mathbb{Z}$.",
+    "number": 63
+  },
+  {
+    "id": "5-p2",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Irrationality of $\\sqrt{2}$",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that $\\sqrt{2}$ is irrational.",
+    "hints": [
+      "Assume for contradiction $\\sqrt{2} = \\frac{a}{b}$ in lowest terms ($\\gcd(a,b) = 1$).",
+      "Square both sides to get $a^2 = 2b^2$. What does that force about the parity of $a$, and then of $b$?"
+    ],
+    "solution": "Assume $\\sqrt{2} = \\frac{a}{b}$ with $a,b \\in \\mathbb{Z}^+$ and $\\gcd(a,b) = 1$. Squaring gives $a^2 = 2b^2$, so $a^2$ is even $\\implies a = 2k$ is even. Substituting gives $4k^2 = 2b^2 \\implies b^2 = 2k^2$, so $b$ is also even. This contradicts $\\gcd(a,b) = 1$. Hence $\\sqrt{2}$ is irrational.",
+    "number": 64
+  },
+  {
+    "id": "5-p3",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Trailing Zeros of $25!$",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many zeros are at the end of $25!$?",
+    "hints": [
+      "Each trailing zero comes from a factor of $10 = 2 \\times 5$. Since factors of $2$ are plentiful, count the factors of $5$ in $25!$.",
+      "Remember that $25 = 5^2$ contributes TWO factors of $5$! Apply Legendre's formula $\\lfloor 25/5 \\rfloor + \\lfloor 25/25 \\rfloor$."
+    ],
+    "solution": "By Legendre's formula, the exponent of $5$ in $25!$ (with plenty of $2$'s available) is:\n$$E_5(25!) = \\left\\lfloor \\frac{25}{5} \\right\\rfloor + \\left\\lfloor \\frac{25}{25} \\right\\rfloor = 5 + 1 = \\mathbf{6}.$$\nThus $25!$ ends in **6** zeros.",
+    "number": 65
+  },
+  {
+    "id": "5-p4",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Fraction of Married Adults in a Town",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "In a town, $\\frac{2}{3}$ of adult men are married to $\\frac{3}{5}$ of adult women (monogamous pairwise marriages within the town). What fraction of adults in the town are married?",
+    "hints": [
+      "Let $M$ be the number of men and $W$ the number of women. Equate the number of married men to the number of married women.",
+      "Express $M$ in terms of $W$, then compute $\\frac{\\text{married men} + \\text{married women}}{M + W}$."
+    ],
+    "solution": "Since each marriage pairs one man with one woman:\n$$\\frac{2}{3}M = \\frac{3}{5}W \\implies M = \\frac{9}{10}W.$$\nTotal adults $= M + W = \\frac{19}{10}W$. Total married adults $= 2 \\times \\frac{3}{5}W = \\frac{12}{10}W$.\nFraction married $= \\frac{\\frac{12}{10}W}{\\frac{19}{10}W} = \\mathbf{\\frac{12}{19}}$. *(Tip: Choosing $6$ married couples immediately gives $9$ men and $10$ women $\\implies 12/19$!)*",
+    "number": 66
+  },
+  {
+    "id": "5-p5",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Two Men in a Railway Tunnel",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Mechanics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Two men stand in a railway tunnel of length $L$, at a distance $\\frac{2}{5}L$ from the entrance (and $\\frac{3}{5}L$ from the exit). A train is approaching the entrance. They run in opposite directions at $v = 15\\text{ mph}$: Man 1 reaches the entrance just as the train enters it, and Man 2 reaches the exit just as the train exits it. What is the train's speed $V$?",
+    "hints": [
+      "Wait—there is a super clean shortcut! When Man 1 reaches the entrance (having run $\\frac{2}{5}L$), how far has Man 2 run toward the exit?",
+      "Man 2 has also run $\\frac{2}{5}L$! How much of the tunnel does Man 2 still have left to cover while the train travels the ENTIRE tunnel length $L$?",
+      "Set up the ratio of distances covered in that remaining time interval!"
+    ],
+    "solution": "**Clean Interview Shortcut:** When Man 1 runs $\\frac{2}{5}L$ to reach the entrance (just meeting the train!), Man 2 has also run $\\frac{2}{5}L$ toward the exit, placing him at $\\frac{2}{5}L + \\frac{2}{5}L = \\frac{4}{5}L$ from the entrance—so Man 2 has only $\\frac{1}{5}L$ left to run!\nIn the remaining time it takes Man 2 to cover that $\\frac{1}{5}L$, the train covers the entire tunnel length $L$. Thus the train is $5$ times faster than the men:\n$$V = 5v = 5 \\times 15 = \\mathbf{75\\text{ mph}}.$$",
+    "number": 67
+  },
+  {
+    "id": "5-p6",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Hofstadter's MX (MU) Formal Grammar Puzzle",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Logic & Game Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Starting from the string **MX**, you may apply two rules repeatedly (where $\\alpha$ is any string of X's):\n- Rule 2: $M\\alpha \\to M\\alpha\\alpha$ (doubles the X's)\n- Rule 3: $MXXX\\alpha \\to M\\alpha$ (or removing any three consecutive X's)\nCan you ever produce the string **MXXX**?",
+    "hints": [
+      "Look for an **invariant**—specifically, count the number of `X`'s, $N_X(w)$, at each step.",
+      "What does doubling ($N_X \\to 2N_X$) or subtracting $3$ ($N_X \\to N_X - 3$) do to $N_X \\bmod 3$?",
+      "Check the starting value $N_X(\\text{MX}) = 1 \\pmod 3$ vs the target $N_X(\\text{MXXX}) = 3 \\equiv 0 \\pmod 3$."
+    ],
+    "solution": "Track $N_X(w) \\pmod 3$:\n- Start: $N_X(\\text{MX}) = 1 \\equiv 1 \\pmod 3$.\n- Doubling ($N_X \\to 2N_X$): if $N_X \\not\\equiv 0 \\pmod 3$, then $2N_X \\not\\equiv 0 \\pmod 3$ ($1 \\to 2 \\to 1 \\to 2\\dots$).\n- Subtracting $3$ ($N_X \\to N_X - 3$): leaves $N_X \\bmod 3$ unchanged.\n\nThus $N_X(w)$ can **never** become a multiple of $3$. Since $N_X(\\text{MXXX}) = 3 \\equiv 0 \\pmod 3$, **MXXX can never be formed**.",
+    "number": 68
+  },
+  {
+    "id": "5-p7",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Bayes' Theorem: Rare Disease Test Paradox",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Probability",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "A disease affects $1$ in $1000$ people. A diagnostic test has $99.9\\%$ accuracy (both sensitivity $P(+\\mid D)=0.999$ and specificity $P(-\\mid \\neg D)=0.999$). If a randomly chosen person tests positive, what is the probability they actually have the disease?",
+    "hints": [
+      "Imagine a population of $1{,}000{,}000$ people (or $1000$ people!) and count true positives vs false positives.",
+      "Alternatively, apply Bayes' Theorem: $P(D \\mid +) = \\frac{P(+\\mid D)P(D)}{P(+\\mid D)P(D) + P(+\\mid \\neg D)P(\\neg D)}$."
+    ],
+    "solution": "In $1{,}000{,}000$ people:\n- $1000$ have the disease $\\implies 999$ test positive (true positives).\n- $999{,}000$ do not have the disease $\\implies 0.001 \\times 999{,}000 = 999$ test positive (false positives).\n\nBy Bayes' Theorem:\n$$P(D \\mid +) = \\frac{0.999 \\times 0.001}{0.999 \\times 0.001 + 0.001 \\times 0.999} = \\frac{1}{2} = \\mathbf{50\\%}.$$",
+    "number": 69
+  },
+  {
+    "id": "5-p8",
+    "section": "5. Past Oxbridge Questions (Archive Sheet H)",
+    "subset": "5.1 Archive Sheet H",
+    "title": "Boat on a Lake: Throwing Rocks Overboard",
+    "college": "Oxbridge Archive (Sheet H)",
+    "year": "Archive H",
+    "topic": "Mechanics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "You are in a boat floating on a lake with heavy rocks on board. If you throw the rocks overboard into the lake, does the water level of the lake rise, fall, or stay the same?",
+    "hints": [
+      "Compare the volume of water displaced while the rocks are floating inside the boat vs after they sink to the bottom.",
+      "In the boat, Archimedes' principle says displaced water equals the *weight* of the rocks. At the bottom, displaced water equals the *volume* of the rocks.",
+      "Since rocks sink ($\\rho_{\\text{rock}} > \\rho_{\\text{water}}$), which displaced volume is larger?"
+    ],
+    "solution": "- **In the boat:** The boat floats, so the rocks cause an extra displaced water volume equal to their **weight** divided by water density: $V_{\\text{in boat}} = \\frac{M_{\\text{rocks}}}{\\rho_{\\text{water}}}$.\n- **Sunk in the lake:** The rocks sink and displace only their own **volume**: $V_{\\text{in water}} = \\frac{M_{\\text{rocks}}}{\\rho_{\\text{rock}}}$.\n\nSince rocks are denser than water ($\\rho_{\\text{rock}} > \\rho_{\\text{water}}$), $V_{\\text{in water}} < V_{\\text{in boat}}$, so the total displaced volume decreases and **the water level falls**.",
+    "number": 70
+  },
+  {
+    "id": "6.1-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.1 Problem Sheet B1",
+    "title": "Number of Digits in $100!$",
+    "college": "Oxbridge Archive (Sheet B1)",
+    "year": "Sheet B1",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "How many digits does $100!$ have?",
+    "hints": [
+      "Recall that the number of base-10 digits in a positive integer $N$ is $\\lfloor \\log_{10} N \\rfloor + 1$.",
+      "Estimate $\\ln(100!)$ using Stirling's approximation $N! \\approx \\sqrt{2\\pi N}(N/e)^N$, or by bounding $\\sum_{k=1}^{100} \\ln k$ with an integral $\\int_1^{100} \\ln x\\,dx$.",
+      "Divide $\\ln(100!) \\approx 363.74$ by $\\ln 10 \\approx 2.3026$ (note: $\\ln 100 = 2\\ln 10 \\approx 4.6052$!)."
+    ],
+    "solution": "Number of digits $= \\lfloor \\log_{10}(100!) \\rfloor + 1$. Using Stirling's formula $N! \\approx \\sqrt{2\\pi N}(N/e)^N$:\n$$\\ln(100!) \\approx 100\\ln 100 - 100 + \\frac{1}{2}\\ln(200\\pi) \\approx 460.517 - 100 + 3.22 = 363.738.$$\nConverting to base $10$ (dividing by $\\ln 10 \\approx 2.302585$):\n$$\\log_{10}(100!) \\approx \\frac{363.738}{2.302585} \\approx 157.97.$$\nThus $100!$ has $\\lfloor 157.97 \\rfloor + 1 = \\mathbf{158}$ digits.",
+    "number": 71
+  },
+  {
+    "id": "6.1-p2",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.1 Problem Sheet B1",
+    "title": "Biased Coin Alternating Game",
+    "college": "Oxbridge Archive (Sheet B1)",
+    "year": "Sheet B1",
+    "topic": "Probability",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Players A and B take turns flipping a biased coin with $P(\\text{Heads}) = p$ ($0 < p \\le 1$). First head wins, and Player A starts. Find $P(\\text{A wins})$.",
+    "hints": [
+      "Write a self-similar equation for $P(A)$: A either wins on toss 1 (prob $p$), or both A and B flip Tails so the game resets to A's turn!",
+      "Solve $P(A) = p + (1-p)^2 P(A)$ for $P(A)$."
+    ],
+    "solution": "A wins immediately with probability $p$; if A flips Tails $(1-p)$ and B flips Tails $(1-p)$, the game resets identically to A's turn:\n$$P(A) = p + (1-p)^2 P(A) \\implies P(A)\\left[1 - (1-p)^2\\right] = p.$$\nSince $1 - (1-p)^2 = 2p - p^2 = p(2-p)$:\n$$P(A) = \\frac{p}{p(2-p)} = \\mathbf{\\frac{1}{2-p}}.$$",
+    "number": 72
+  },
+  {
+    "id": "6.1-p3",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.1 Problem Sheet B1",
+    "title": "Derivative of Infinite Power Tower $x^{x^{x^{\\dots}}}$",
+    "college": "Oxbridge Archive (Sheet B1)",
+    "year": "Sheet B1",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Evaluate $\\displaystyle \\frac{d}{dx}\\left(x^{x^{x^{\\dots}}}\\right)$ (within the interval where the infinite tower converges, $e^{-e} < x < e^{1/e}$).",
+    "hints": [
+      "Let $y = x^{x^{x^{\\dots}}}$. Notice the infinite tower satisfies the recursive equation $y = x^y$!",
+      "Take natural logarithms of both sides: $\\ln y = y \\ln x$.",
+      "Differentiate implicitly with respect to $x$ and isolate $\\frac{dy}{dx}$."
+    ],
+    "solution": "Let $y = x^{x^{x^{\\dots}}}$, so $y = x^y$. Taking $\\ln$:\n$$\\ln y = y \\ln x.$$\nDifferentiating implicitly with respect to $x$:\n$$\\frac{1}{y}\\frac{dy}{dx} = \\frac{dy}{dx}\\ln x + \\frac{y}{x} \\implies \\frac{dy}{dx}\\left(\\frac{1}{y} - \\ln x\\right) = \\frac{y}{x}.$$\nSolving for $\\frac{dy}{dx}$:\n$$\\frac{dy}{dx} = \\frac{y^2}{x(1 - y\\ln x)}.$$",
+    "number": 73
+  },
+  {
+    "id": "6.2-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.2 Problem Sheet C1: Combinatorics & Series",
+    "title": "Sum of Binomial Coefficients $\\sum_{k=0}^n \\binom{n}{k} = 2^n$",
+    "college": "Oxbridge Archive (Sheet C1)",
+    "year": "Sheet C1",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that $\\displaystyle \\sum_{k=0}^n \\binom{n}{k} = 2^n$.",
+    "hints": [
+      "Use the Binomial Theorem expansion of $(1+x)^n$ with a clever choice of $x$—or give a combinatorial double-counting proof counting subsets of an $n$-element set!"
+    ],
+    "solution": "**Algebraic proof:** By the Binomial Theorem, $(1+x)^n = \\sum_{k=0}^n \\binom{n}{k} x^k$. Setting $x=1$ gives:\n$$2^n = \\sum_{k=0}^n \\binom{n}{k}.$$\n**Combinatorial proof:** Both sides count the total number of subsets of an $n$-element set ($2$ choices—in or out—per element vs summing over subset size $k=0,\\dots,n$).",
+    "number": 74
+  },
+  {
+    "id": "6.2-p2",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.2 Problem Sheet C1: Combinatorics & Series",
+    "title": "Number of Diagonals in an $n$-gon",
+    "college": "Oxbridge Archive (Sheet C1)",
+    "year": "Sheet C1",
+    "topic": "Combinatorics",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many internal diagonals does a convex $n$-gon have? Evaluate for a decagon ($n = 10$).",
+    "hints": [
+      "Count all pairs of vertices $\\binom{n}{2}$, then subtract the $n$ perimeter sides (or count diagonals from each of the $n$ vertices and divide by $2$)."
+    ],
+    "solution": "An $n$-gon has $\\binom{n}{2} = \\frac{n(n-1)}{2}$ segments joining pairs of vertices, of which $n$ are perimeter edges:\n$$\\text{Diagonals} = \\binom{n}{2} - n = \\frac{n(n-1)}{2} - n = \\mathbf{\\frac{n(n-3)}{2}}.$$\nFor a decagon ($n=10$): $\\frac{10 \\times 7}{2} = \\mathbf{35}$ diagonals.",
+    "number": 75
+  },
+  {
+    "id": "6.2-p3",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.2 Problem Sheet C1: Combinatorics & Series",
+    "title": "Telescoping Series $\\frac{1}{2} + \\frac{1}{6} + \\frac{1}{12} + \\dots + \\frac{1}{9900}$",
+    "college": "Oxbridge Archive (Sheet C1)",
+    "year": "Sheet C1",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Evaluate\n$$\\frac{1}{2} + \\frac{1}{6} + \\frac{1}{12} + \\frac{1}{20} + \\dots + \\frac{1}{9900}.$$",
+    "hints": [
+      "Factor each denominator as a product of consecutive integers: $2 = 1\\cdot 2$, $6 = 2\\cdot 3$, $\\dots$, $9900 = 99 \\cdot 100$.",
+      "Use partial fractions: $\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$ and telescope!"
+    ],
+    "solution": "Each term is $\\frac{1}{k(k+1)} = \\frac{1}{k} - \\frac{1}{k+1}$ for $k = 1, 2, \\dots, 99$ (since $99 \\times 100 = 9900$). The sum telescopes:\n$$\\sum_{k=1}^{99} \\left(\\frac{1}{k} - \\frac{1}{k+1}\\right) = 1 - \\frac{1}{100} = \\mathbf{\\frac{99}{100}}.$$",
+    "number": 76
+  },
+  {
+    "id": "6.3-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.3 Problem Sheet C2: Integrals",
+    "title": "Symmetric Integral $\\int_{-1/2}^{1/2} \\cos x \\ln\\left(\\frac{1+x}{1-x}\\right)dx$",
+    "college": "Oxbridge Archive (Sheet C2)",
+    "year": "Sheet C2",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Compute $\\displaystyle \\int_{-1/2}^{1/2} \\cos x \\ln\\!\\left(\\frac{1+x}{1-x}\\right) dx$.",
+    "hints": [
+      "Notice the symmetric integration interval $[-1/2, 1/2]$! Test the integrand $f(x)$ for even/odd parity by computing $f(-x)$.",
+      "What is $\\ln\\!\\left(\\frac{1-x}{1+x}\\right)$ in terms of $\\ln\\!\\left(\\frac{1+x}{1-x}\\right)$?"
+    ],
+    "solution": "Let $f(x) = \\cos x \\ln\\!\\left(\\frac{1+x}{1-x}\\right)$. Since $\\cos(-x) = \\cos x$ (even) and\n$$\\ln\\!\\left(\\frac{1-x}{1+x}\\right) = \\ln\\!\\left[\\left(\\frac{1+x}{1-x}\\right)^{-1}\\right] = -\\ln\\!\\left(\\frac{1+x}{1-x}\\right) \\quad (\\text{odd}),$$\nthe integrand $f(x)$ is an **odd** continuous function on the symmetric interval $[-1/2, 1/2]$. Hence the integral is **0**.",
+    "number": 77
+  },
+  {
+    "id": "6.4-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.4 Problem Sheet C3: Counting & Divisibility",
+    "title": "Odd Integers in $[3000, 8000]$ with Distinct Digits",
+    "college": "Oxbridge Archive (Sheet C3)",
+    "year": "Sheet C3",
+    "topic": "Combinatorics",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "How many odd integers between $3000$ and $8000$ have no repeated digits?",
+    "hints": [
+      "Write the 4-digit number as $d_1 d_2 d_3 d_4$. Which digits are allowed for $d_1$ and for $d_4$?",
+      "Notice that $d_1 \\in \\{3,4,5,6,7\\}$ overlaps with the odd digits $d_4 \\in \\{1,3,5,7,9\\}$! Split into Case 1 ($d_1$ odd) and Case 2 ($d_1$ even) before choosing $d_4$, then $d_2, d_3$."
+    ],
+    "solution": "For $d_1 d_2 d_3 d_4 \\in (3000, 8000)$ to be odd, $d_1 \\in \\{3,4,5,6,7\\}$ and $d_4 \\in \\{1,3,5,7,9\\}$:\n- **Case 1 ($d_1 \\in \\{3,5,7\\}$, odd — 3 choices):** $d_4$ has $4$ remaining odd choices; $d_2$ has $8$ remaining digits; $d_3$ has $7$. Count $= 3 \\times 4 \\times 8 \\times 7 = 672$.\n- **Case 2 ($d_1 \\in \\{4,6\\}$, even — 2 choices):** $d_4$ has all $5$ odd choices; $d_2$ has $8$; $d_3$ has $7$. Count $= 2 \\times 5 \\times 8 \\times 7 = 560$.\n\nTotal $= 672 + 560 = \\mathbf{1232}$.",
+    "number": 78
+  },
+  {
+    "id": "6.4-p2",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.4 Problem Sheet C3: Counting & Divisibility",
+    "title": "Common Divisors of $10^{40}$ and $20^{30}$",
+    "college": "Oxbridge Archive (Sheet C3)",
+    "year": "Sheet C3",
+    "topic": "Number Theory",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "How many positive integers divide both $10^{40}$ and $20^{30}$?",
+    "hints": [
+      "Prime factorise both $10^{40}$ and $20^{30}$ in terms of $2$ and $5$.",
+      "Common divisors of two numbers are precisely the divisors of their $\\gcd$. Take $\\min$ of each prime's exponent!"
+    ],
+    "solution": "Prime factorise:\n$$10^{40} = 2^{40} \\times 5^{40}, \\qquad 20^{30} = (2^2 \\times 5)^{30} = 2^{60} \\times 5^{30}.$$\nTheir greatest common divisor is $\\gcd(10^{40}, 20^{30}) = 2^{\\min(40,60)} \\times 5^{\\min(40,30)} = 2^{40} \\times 5^{30}$.\nThe number of positive common divisors is $(40+1)(30+1) = 41 \\times 31 = \\mathbf{1271}$.",
+    "number": 79
+  },
+  {
+    "id": "6.5-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.5 Problem Sheet C4: Trig & Curves",
+    "title": "Half-Angle Identity $\\csc\\theta - \\cot\\theta = \\tan(\\theta/2)$",
+    "college": "Oxbridge Archive (Sheet C4)",
+    "year": "Sheet C4",
+    "topic": "Calculus & Trigonometry",
+    "difficulty": "Warm-up",
+    "isSketch": false,
+    "statement": "Prove that $\\csc\\theta - \\cot\\theta = \\tan(\\theta/2)$ (where defined).",
+    "hints": [
+      "Rewrite $\\csc\\theta - \\cot\\theta$ in terms of $\\sin\\theta$ and $\\cos\\theta$ over a common denominator.",
+      "Apply the half-angle formulas $1 - \\cos\\theta = 2\\sin^2(\\theta/2)$ and $\\sin\\theta = 2\\sin(\\theta/2)\\cos(\\theta/2)$."
+    ],
+    "solution": "$$\\csc\\theta - \\cot\\theta = \\frac{1 - \\cos\\theta}{\\sin\\theta} = \\frac{2\\sin^2(\\theta/2)}{2\\sin(\\theta/2)\\cos(\\theta/2)} = \\frac{\\sin(\\theta/2)}{\\cos(\\theta/2)} = \\tan\\!\\left(\\frac{\\theta}{2}\\right).$$",
+    "number": 80
+  },
+  {
+    "id": "6.6-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.6 Problem Sheet C5: Sequences & Number Theory",
+    "title": "Telescoping Recurrence $\\sum_{k=1}^n f(k) = n^2 f(n)$",
+    "college": "Oxbridge Archive (Sheet C5)",
+    "year": "Sheet C5",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Given $f(1) = 2015$ and $\\displaystyle \\sum_{k=1}^n f(k) = n^2 f(n)$ for all $n > 1$, calculate $f(2015)$.",
+    "hints": [
+      "Let $S_n = \\sum_{k=1}^n f(k) = n^2 f(n)$. How do you isolate $f(n)$ from $S_n$ and $S_{n-1}$?",
+      "Write $f(n) = S_n - S_{n-1} = n^2 f(n) - (n-1)^2 f(n-1)$ and solve for $\\frac{f(n)}{f(n-1)}$.",
+      "Factor $n^2 - 1 = (n-1)(n+1)$ to cancel $(n-1)$ and telescope the product down to $f(1)$!"
+    ],
+    "solution": "For $n \\ge 2$, $f(n) = S_n - S_{n-1} = n^2 f(n) - (n-1)^2 f(n-1)$, so $(n^2 - 1)f(n) = (n-1)^2 f(n-1)$. Dividing by $n-1 > 0$:\n$$(n+1)f(n) = (n-1)f(n-1) \\implies \\frac{f(n)}{f(n-1)} = \\frac{n-1}{n+1}.$$\nTelescoping from $n$ down to $2$:\n$$f(n) = \\frac{n-1}{n+1} \\cdot \\frac{n-2}{n} \\cdot \\frac{n-3}{n-1} \\cdots \\frac{2}{4} \\cdot \\frac{1}{3} f(1) = \\frac{2 \\times 1}{n(n+1)} f(1).$$\nFor $n = 2015$ and $f(1) = 2015$:\n$$f(2015) = \\frac{2}{2015 \\times 2016} \\times 2015 = \\frac{2}{2016} = \\mathbf{\\frac{1}{1008}}.$$",
+    "number": 81
+  },
+  {
+    "id": "6.6-p2",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.6 Problem Sheet C5: Sequences & Number Theory",
+    "title": "Smallest Integer Whose Square Ends in $444$",
+    "college": "Oxbridge Archive (Sheet C5)",
+    "year": "Sheet C5",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Find the first (smallest) positive integer whose square ends in three $4$'s (i.e., $\\dots 444$).",
+    "hints": [
+      "We want the smallest positive integer $x$ with $x^2 \\equiv 444 \\pmod{1000}$. First check the last digit of $x$: what digits squared end in $4$?",
+      "Since $x$ is even, substitute $x = 2y$ so $4y^2 \\equiv 444 \\pmod{1000} \\implies y^2 \\equiv 111 \\pmod{250}$!",
+      "What must $y \\bmod 10$ or $y \\bmod 5$ and $y \\bmod 25$ be? Check small $y$ with $y^2 \\equiv 1 \\pmod 5$ and $y$ odd ($y = 19 \\implies 38$!)."
+    ],
+    "solution": "We solve $x^2 \\equiv 444 \\pmod{1000}$. Since the last digit of $x^2$ is $4$, $x$ is even ($x = 2y$), giving:\n$$4y^2 \\equiv 444 \\pmod{1000} \\implies y^2 \\equiv 111 \\pmod{250}.$$\nThus $y$ is odd and $y^2 \\equiv 1 \\pmod 5$, so $y \\equiv \\pm 1 \\pmod 5$ (and odd $\\implies y \\equiv 1, 9, 11, 19 \\pmod{10}$—specifically $y \\equiv 1$ or $9 \\pmod{10}$).\nTesting $y = 1, 9, 11, 19$: $19^2 = 361 = 250 + 111 \\equiv 111 \\pmod{250}$.\nThus $x = 2 \\times 19 = \\mathbf{38}$ (checking: $38^2 = 1444$, and no smaller candidate $\\{2,8,12,18,22,28,32\\}$ works).",
+    "number": 82
+  },
+  {
+    "id": "6.6-p3",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.6 Problem Sheet C5: Sequences & Number Theory",
+    "title": "Palindromic Quartic $2x^4 - 11x^3 + 16x^2 - 11x + 2 = 0$",
+    "college": "Oxbridge Archive (Sheet C5)",
+    "year": "Sheet C5",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "For $2x^4 - 11x^3 + 16x^2 - 11x + 2 = 0$, find the possible values of $x + \\dfrac{1}{x}$ and solve for all roots $x$.",
+    "hints": [
+      "Notice the coefficients are symmetric (palindromic): $2, -11, 16, -11, 2$! Since $x=0$ is not a root, divide by $x^2$.",
+      "Let $u = x + \\frac{1}{x}$. Express $x^2 + \\frac{1}{x^2}$ in terms of $u$ ($u^2 - 2$).",
+      "Solve the resulting quadratic in $u$, then solve $x + \\frac{1}{x} = u$ for $x$ (watch out for complex roots!)."
+    ],
+    "solution": "Dividing by $x^2$ gives $2(x^2 + \\frac{1}{x^2}) - 11(x + \\frac{1}{x}) + 16 = 0$. Setting $u = x + \\frac{1}{x}$ (so $x^2 + \\frac{1}{x^2} = u^2 - 2$):\n$$2(u^2 - 2) - 11u + 16 = 2u^2 - 11u + 12 = (2u - 3)(u - 4) = 0.$$\nThus $u = 4$ or $u = \\frac{3}{2}$.\n- If $x + \\frac{1}{x} = 4 \\implies x^2 - 4x + 1 = 0 \\implies \\mathbf{x = 2 \\pm \\sqrt{3}}$.\n- If $x + \\frac{1}{x} = \\frac{3}{2} \\implies 2x^2 - 3x + 2 = 0 \\implies \\mathbf{x = \\frac{3 \\pm i\\sqrt{7}}{4}}$.",
+    "number": 83
+  },
+  {
+    "id": "6.7-p1",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.7 Problem Sheet C6: Algebra & Polynomials",
+    "title": "Diophantine Equation $(u+v)^2 = u^3 + v^3$",
+    "college": "Oxbridge Archive (Sheet C6)",
+    "year": "Sheet C6",
+    "topic": "Number Theory",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Find all pairs of positive integers $(u, v)$ satisfying $(u + v)^2 = u^3 + v^3$.",
+    "hints": [
+      "Factor $u^3 + v^3 = (u+v)(u^2 - uv + v^2)$. Since $u, v > 0$, you can safely divide both sides by $u + v > 0$!",
+      "Treat the remaining equation $u^2 - (v+1)u + (v^2 - v) = 0$ as a quadratic in $u$.",
+      "Require the discriminant $\\Delta \\ge 0$ to bound $v$ to just a tiny set of positive integers ($v \\in \\{1, 2\\}$)!"
+    ],
+    "solution": "Since $u, v > 0 \\implies u + v > 0$, dividing $(u+v)^2 = (u+v)(u^2 - uv + v^2)$ by $u+v$ yields:\n$$u + v = u^2 - uv + v^2 \\implies u^2 - (v+1)u + (v^2 - v) = 0.$$\nFor real $u$, the discriminant must satisfy:\n$$\\Delta = (v+1)^2 - 4(v^2 - v) = -3v^2 + 6v + 1 \\ge 0.$$\nThe roots of $-3v^2 + 6v + 1 = 0$ are $1 \\pm \\frac{2}{\\sqrt{3}} \\approx 1 \\pm 1.155$, so the only positive integers in range are $v \\in \\{1, 2\\}$:\n- $v = 1$: $\\Delta = 4 \\implies u = \\frac{2 \\pm 2}{2} \\implies u = 2$ (since $u>0$), giving $(2, 1)$.\n- $v = 2$: $\\Delta = 1 \\implies u = \\frac{3 \\pm 1}{2} \\implies u \\in \\{1, 2\\}$, giving $(1, 2)$ and $(2, 2)$.\n\nSolutions: **$(u, v) \\in \\{(1, 2),\\, (2, 1),\\, (2, 2)\\}$**.",
+    "number": 84
+  },
+  {
+    "id": "6.7-p2",
+    "section": "6. Handwritten Problem Sheets",
+    "subset": "6.7 Problem Sheet C6: Algebra & Polynomials",
+    "title": "Condition for $x^3 + ax^2 + b = 0$ to Have 3 Distinct Real Roots",
+    "college": "Oxbridge Archive (Sheet C6)",
+    "year": "Sheet C6",
+    "topic": "Algebra & Inequalities",
+    "difficulty": "Standard",
+    "isSketch": false,
+    "statement": "Show that if $x^3 + ax^2 + b = 0$ has $3$ distinct real solutions, then $27b^2 + 4a^3 b < 0$.",
+    "hints": [
+      "Let $f(x) = x^3 + ax^2 + b$. For a cubic to cross the $x$-axis $3$ distinct times, what must happen to its two stationary points (local max and local min)?",
+      "Find the two stationary points $x_1, x_2$ from $f'(x) = 3x^2 + 2ax = 0$.",
+      "Express the condition that the local max and local min lie on opposite sides of the $x$-axis as $f(x_1) \\cdot f(x_2) < 0$."
+    ],
+    "solution": "Let $f(x) = x^3 + ax^2 + b$. Then $f'(x) = 3x^2 + 2ax = x(3x + 2a)$, giving stationary points $x_1 = 0$ and $x_2 = -\\frac{2a}{3}$.\nA cubic has $3$ distinct real roots iff it has two distinct turning points of strictly opposite $y$-signs: $f(x_1) f(x_2) < 0$.\nEvaluating:\n$$f(0) = b, \\qquad f\\!\\left(-\\frac{2a}{3}\\right) = -\\frac{8a^3}{27} + \\frac{4a^3}{9} + b = \\frac{4a^3}{27} + b.$$\nHence:\n$$b\\left(b + \\frac{4a^3}{27}\\right) < 0 \\iff 27b^2 + 4a^3 b < 0.$$",
+    "number": 85
+  }
+]

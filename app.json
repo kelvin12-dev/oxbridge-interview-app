@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Oxbridge Interview AI",
+    "slug": "oxbridge-interview-ai",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0d1321"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.oxbridge.interviewai",
+      "buildNumber": "1",
+      "infoPlist": {
+        "UIRequiresFullScreen": true,
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0d1321"
+      },
+      "package": "com.oxbridge.interviewai"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
