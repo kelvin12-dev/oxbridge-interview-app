@@ -1,8 +1,6 @@
 name: Build GoodNotes Pro iOS IPA (No Mac Required)
 
 on:
-  push:
-    branches: [ main, master, goodnotes-ipa ]
   workflow_dispatch:
 
 jobs:
