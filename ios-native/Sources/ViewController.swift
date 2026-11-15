@@ -55,7 +55,9 @@ final class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate
     }
 
     private func loadAppHTML() {
-        if let url = Bundle.main.url(forResource: "index", withExtension: "html"),
+        let htmlUrl = Bundle.main.url(forResource: "index", withExtension: "html")
+            ?? Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "Resources")
+        if let url = htmlUrl,
            let html = try? String(contentsOf: url, encoding: .utf8) {
             // Load with HTTPS baseURL so IndexedDB, localStorage, getUserMedia, and Google Drive APIs have a secure origin.
             webView.loadHTMLString(html, baseURL: URL(string: "https://goodnotespro.local"))

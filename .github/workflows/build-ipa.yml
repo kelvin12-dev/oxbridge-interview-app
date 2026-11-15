@@ -52,12 +52,26 @@ jobs:
             echo "Error: Could not find built .app bundle"
             exit 1
           fi
+          echo "=== Contents of $APP_PATH ==="
+          ls -lh "$APP_PATH"
+          HTML_FILE=$(find "$APP_PATH" -maxdepth 2 -name "index.html" | head -n 1)
+          if [ -z "$HTML_FILE" ]; then
+            echo "Error: index.html was NOT bundled inside $APP_PATH!"
+            exit 1
+          fi
+          HTML_SIZE=$(wc -c < "$HTML_FILE")
+          echo "Found bundled $HTML_FILE ($HTML_SIZE bytes)"
+          if [ "$HTML_SIZE" -lt 100000 ]; then
+            echo "Error: Bundled index.html is unexpectedly small ($HTML_SIZE bytes)"
+            exit 1
+          fi
           cp -R "$APP_PATH" ipa_out/Payload/
           codesign --force --deep --sign - "ipa_out/Payload/$(basename "$APP_PATH")" || true
           cd ipa_out
           zip -r ../GoodNotesPro.ipa Payload
           cd ..
           ls -lh GoodNotesPro.ipa
+          unzip -l GoodNotesPro.ipa | head -n 40
 
       - name: Upload downloadable .ipa artifact
         uses: actions/upload-artifact@v4
