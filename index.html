@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Study Studio" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0b1120" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <title>GoodNotes Pro &amp; Oxbridge Maths AI — Web Studio</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #131c31;
+      --surface-2: #1a2642;
+      --border: rgba(148, 163, 184, 0.2);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --blue: #38bdf8;
+      --blue-strong: #0284c7;
+      --gold: #f59e0b;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 15% 15%, #172554 0%, var(--bg) 52%, #070b14 100%);
+      color: var(--text);
+      padding: max(24px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 1040px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .hero {
+      text-align: center;
+      padding: 18px 12px 4px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.5vw, 44px);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .subtitle {
+      margin: 0 auto;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: rgba(19, 28, 49, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .app-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .icon-gn { background: linear-gradient(135deg, #0284c7, #38bdf8); }
+    .icon-ox { background: linear-gradient(135deg, #1d4ed8, #7c3aed); }
+    .card h2 { margin: 0; font-size: 21px; }
+    .card-tag { font-size: 12.5px; color: var(--blue); font-weight: 600; margin-top: 2px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .feature-list {
+      margin: 0;
+      padding: 0 0 0 18px;
+      color: #cbd5e1;
+      font-size: 13.5px;
+      line-height: 1.65;
+      flex: 1;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14.5px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.12s, filter 0.12s;
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    .btn-primary { background: linear-gradient(135deg, var(--blue-strong), var(--blue)); color: #04121f; flex: 1; }
+    .btn-gold { background: linear-gradient(135deg, #d97706, var(--gold)); color: #1f1300; flex: 1; }
+    .btn-ghost { background: var(--surface-2); border-color: var(--border); color: var(--text); }
+    .guide {
+      background: rgba(19, 28, 49, 0.72);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 18px;
+      padding: 20px 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .guide h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      color: var(--green);
+    }
+    .guide p {
+      margin: 0;
+      font-size: 13.5px;
+      color: #cbd5e1;
+      line-height: 1.55;
+    }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12.5px;
+      padding-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="pill">🌐 Live Web Apps • No .IPA Sideloading or Certificates Needed</div>
+      <h1>iPad Study &amp; Note-Taking Suite</h1>
+      <p class="subtitle">
+        Run both apps straight from your browser or add them to your iPad Home Screen for a full-screen, offline-ready, zero-delay Apple Pencil experience.
+      </p>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <div class="card-head">
+          <div class="app-icon icon-gn">✒️</div>
+          <div>
+            <h2>GoodNotes Pro</h2>
+            <div class="card-tag">Zero-Delay Apple Pencil Note Studio</div>
+          </div>
+        </div>
+        <p>Full Goodnotes feature suite running directly in Safari or Chrome with IndexedDB storage and Google Drive backup.</p>
+        <ul class="feature-list">
+          <li>0-delay 3-layer canvas (<code>pointerrawupdate</code>, coalesced &amp; predicted strokes)</li>
+          <li>Fountain / Ball / Brush pens, Highlighter under ink, Eraser modes, Draw &amp; Hold shapes, Scribble-to-Erase &amp; Circle-to-Lasso</li>
+          <li>Elements, Sticky Notes, Text Box, Study Tape, Zoom Window, Ruler, Laser Pointer, Timer &amp; Stroke-Synced Audio</li>
+          <li>Study Sets (spaced repetition), Split View, Document Tabs, PDF Import/Export, Ask AI &amp; Google Drive Backup</li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-primary" href="goodnotes.html">🚀 Launch GoodNotes Pro</a>
+          <a class="btn btn-ghost" href="goodnotes/">PWA App</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <div class="app-icon icon-ox">🎓</div>
+          <div>
+            <h2>Oxbridge Maths Interviewer AI</h2>
+            <div class="card-tag">85 Problems • Live Gemini Vision Canvas</div>
+          </div>
+        </div>
+        <p>Interactive Oxford &amp; Cambridge Mathematics admissions mock interviewer with an Apple Pencil scratchpad.</p>
+        <ul class="feature-list">
+          <li>85 curated Oxbridge interview &amp; STEP-style problems rendered cleanly with LaTeX (KaTeX)</li>
+          <li>Multi-page grid / dot / lined / blank Apple Pencil workspace with palm rejection</li>
+          <li>Auto-See Gemini Vision canvas tutor, progressive 3-stage hints &amp; full worked solutions</li>
+          <li>Interview timer, spoken voice responses, and interactive follow-up tutor chat</li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-gold" href="interview.html">🚀 Launch Oxbridge Interviewer</a>
+          <a class="btn btn-ghost" href="interview/">PWA App</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="guide">
+      <div>
+        <h3>1. Instant Browser Use</h3>
+        <p>Tap either launch button above. All notebooks, handwriting strokes, flashcards, settings, and API keys save locally in your browser (plus Google Drive backup in GoodNotes Pro).</p>
+      </div>
+      <div>
+        <h3>2. Full-Screen iPad Home Screen Install</h3>
+        <p>Open the app in <strong>Safari</strong> on iPad/iPhone, tap the <strong>Share (⬆️)</strong> button, and choose <strong>Add to Home Screen</strong>. It runs full-screen without Safari toolbars or 7-day .ipa expiry.</p>
+      </div>
+      <div>
+        <h3>3. Switch Anytime</h3>
+        <p>Both apps include a topbar shortcut to jump directly between <strong>GoodNotes Pro</strong> and the <strong>Oxbridge Interviewer</strong>.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Hosted directly from GitHub • Hosted for Safari, iPadOS, Chrome &amp; Edge
+    </footer>
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !location.hostname.includes("htmlpreview")) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

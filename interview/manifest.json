@@ -1,0 +1,22 @@
+{
+  "name": "Oxbridge Maths Interviewer AI",
+  "short_name": "Oxbridge AI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d1321",
+  "theme_color": "#0d1321",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

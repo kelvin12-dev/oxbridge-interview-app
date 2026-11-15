@@ -6,6 +6,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Oxbridge AI" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0d1321" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.png" />
   <title>Oxbridge Maths Interviewer AI</title>
 
   <!-- KaTeX for crisp LaTeX math rendering -->
@@ -798,6 +802,8 @@
           ⏱️ <span id="timer-display">00:00</span>
         </div>
         <button class="btn" id="btn-toggle-chat" title="Open AI Interviewer Chat">💬 Tutor Chat</button>
+        <a class="btn" href="goodnotes.html" style="text-decoration:none;" title="Switch to GoodNotes Pro">✒️ <span class="hide-sm">GoodNotes Pro</span></a>
+        <button class="btn btn-icon" id="btn-fullscreen" title="Toggle Fullscreen / Web App Guide">⛶</button>
         <button class="btn btn-icon" id="btn-settings" title="Gemini API & iPad Settings">⚙️</button>
       </div>
     </header>
@@ -1005,6 +1011,8 @@
 
   <script>
     (function () {
+      if (window.__OXBRIDGE_AI_BOOTED__) return;
+      window.__OXBRIDGE_AI_BOOTED__ = true;
       const QUESTIONS = window.OXBRIDGE_QUESTIONS || [];
       const STORAGE_PREFIX = "oxbridge_ai_v1_";
 
@@ -1066,6 +1074,52 @@
           .replace(/>/g, "&gt;");
       }
 
+      let katexBootPromise = null;
+      function ensureKatexLoaded() {
+        if (typeof window.renderMathInElement === "function") return Promise.resolve(true);
+        if (katexBootPromise) return katexBootPromise;
+        katexBootPromise = new Promise((resolve) => {
+          if (!document.querySelector('link[href*="katex.min.css"]')) {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css";
+            link.crossOrigin = "anonymous";
+            document.head.appendChild(link);
+          }
+          const loadScript = (src) => new Promise((res, rej) => {
+            const s = document.createElement("script");
+            s.src = src;
+            s.crossOrigin = "anonymous";
+            s.onload = res;
+            s.onerror = rej;
+            document.head.appendChild(s);
+          });
+          const runAuto = () =>
+            loadScript("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js")
+              .then(() => resolve(true))
+              .catch(() => resolve(false));
+          if (typeof window.katex === "undefined") {
+            loadScript("https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js")
+              .then(runAuto)
+              .catch(() => resolve(false));
+          } else {
+            runAuto();
+          }
+        });
+        return katexBootPromise;
+      }
+
+      const KATEX_OPTS = {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        throwOnError: false,
+        strict: false,
+      };
+
       function renderRichMath(targetEl, rawText) {
         if (!targetEl) return;
         // Preserve math blocks while formatting basic markdown (**bold**, *italic*, line breaks)
@@ -1091,17 +1145,16 @@
 
         if (typeof window.renderMathInElement === "function") {
           try {
-            window.renderMathInElement(targetEl, {
-              delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true },
-              ],
-              throwOnError: false,
-              strict: false,
-            });
+            window.renderMathInElement(targetEl, KATEX_OPTS);
           } catch (_) {}
+        } else {
+          ensureKatexLoaded().then((ok) => {
+            if (ok && targetEl && targetEl.isConnected && typeof window.renderMathInElement === "function") {
+              try {
+                window.renderMathInElement(targetEl, KATEX_OPTS);
+              } catch (_) {}
+            }
+          });
         }
       }
 
@@ -2136,6 +2189,31 @@ Respond as an Oxford/Cambridge maths interviewer: reference what you see written
           state.model = prevModel;
         }
       };
+
+      // Fullscreen / Web App Guide
+      $("btn-fullscreen").onclick = () => {
+        const docEl = document.documentElement;
+        const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        if (!fsEl) {
+          const req = docEl.requestFullscreen || docEl.webkitRequestFullscreen;
+          if (req) {
+            Promise.resolve(req.call(docEl)).catch(() => {
+              alert("On iPad/iPhone Safari: tap Share -> Add to Home Screen to launch Oxbridge AI Interviewer in full-screen app mode (no .ipa needed!).");
+            });
+          } else {
+            alert("On iPad/iPhone Safari: tap Share -> Add to Home Screen to launch Oxbridge AI Interviewer in full-screen app mode (no .ipa needed!).");
+          }
+        } else {
+          const exit = document.exitFullscreen || document.webkitExitFullscreen;
+          if (exit) Promise.resolve(exit.call(document)).catch(() => {});
+        }
+      };
+
+      if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !location.hostname.includes("htmlpreview")) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
 
       // Timer
       $("btn-timer").onclick = toggleTimer;
